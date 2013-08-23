@@ -1,0 +1,20 @@
+package com.project.dao;
+
+import java.util.List;
+
+import com.project.dto.DTOSportPlan;
+import com.project.model.RoutineOrder;
+import com.project.model.RoutineType;
+
+public interface DAOSportPlan {
+
+	public void createSportPlanStepOne(DTOSportPlan dtoSportPlan);
+
+	public Integer getSessionsPerWeek(String levelId, String objetiveId);
+
+	public Integer getRecuperationTime(String level, String objetive);
+
+	public List<RoutineOrder> getRoutineOrders();
+
+	public List<RoutineType> getRoutineTypes();
+}

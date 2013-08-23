@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+ <tiles-definitions> 
+ 	<!-- Login -->
+ 	<definition name="login" extends="login-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.bienvenido" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/public/login.jsp" />
+		<put-attribute name="idPagina" value="login" type="string"/>
+	</definition>
+	
+ 	<!-- Inicio -->		
+	<definition name="inicio" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.inicio" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/inicio.jsp" />
+	</definition> 
+	
+	<!-- Form User -->		
+	<definition name="formSportCentre" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.nuevoSportCentre" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/public/formSportCentre.jsp" />
+		<put-attribute name="idPagina" value="formSportCentre" type="string"/>
+	</definition>
+	
+	<!-- Menus -->
+	<definition name="menuSportCentre" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.menu.sport.centre" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/menuSportCentre.jsp" />
+		<put-attribute name="idPagina" value="menuSportCentre" type="string"/>
+	</definition>
+	<definition name="menuSportTrainer" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.menu.sport.trainer" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/menuSportTrainer.jsp" />
+		<put-attribute name="idPagina" value="menuSportTrainer" type="string"/>
+	</definition>
+	<definition name="menuAdmin" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.menu.admin" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/menuAdmin.jsp" />
+		<put-attribute name="idPagina" value="menuAdmin" type="string"/>
+	</definition>
+	<definition name="modifyCredentialsSportCentre" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.modify.credentials" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/credentials/modifyCredentialsSportCentre.jsp" />
+		<put-attribute name="idPagina" value="formModifySportCentre" type="string"/>
+	</definition>
+	<definition name="modifyCredentialsSportTrainer" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.modify.credentials" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/credentials/modifyCredentialsSportTrainer.jsp" />
+		<put-attribute name="idPagina" value="formModifySportTrainer" type="string"/>
+	</definition>
+	<definition name="modifyCredentialsCustomer" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.modify.credentials" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/credentials/modifyCredentialsCustomer.jsp" />
+		<put-attribute name="idPagina" value="formModifyCustomer" type="string"/>
+	</definition>
+	<definition name="modifyPassWord" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.modify.password" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/credentials/modifyPassWord.jsp" />
+		<put-attribute name="idPagina" value="modifyPassWord" type="string"/>
+	</definition>	
+	<definition name="modifyProfile" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.modify.profile" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/profile/modifyProfile.jsp" />
+		<put-attribute name="idPagina" value="modifyProfile" type="string"/>
+	</definition>
+	<definition name="menuGenerator" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.menu.generator" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/generator/menuGenerator.jsp" />
+		<put-attribute name="idPagina" value="menuGenerator" type="string"/>
+	</definition>
+	<definition name="modifyExercise" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.modify.exercise" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/exercise/modifyExercise.jsp" />
+		<put-attribute name="idPagina" value="modifyExercise" type="string"/>
+	</definition>
+	<definition name="prueba" extends="base-layout">
+		<put-attribute name="titulo" value="etiqueta.titulo.modify.exercise" />
+		<put-attribute name="contenido" value="/WEB-INF/pages/private/prueba.jsp" />
+	</definition>
+ </tiles-definitions>

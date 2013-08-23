@@ -1,0 +1,88 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+<script>
+$(document).ready(function() {
+	$('#slatMensaje').delay(10000).fadeOut(2000);
+});
+$(function() {
+    $( ".accordion" ).accordion({
+    	collapsible: true,
+    	active : false
+    });
+    $( ".explanation p" ).hide();
+    $( ".explanation" ).on('click',function(){
+    	$( ".explanation p" ).toggle();	
+    });
+});
+</script>
+<section id="sportPlanExercises">
+	<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication!=null}">
+		<sec:authorize ifAnyGranted="ROLE_SPORT_TRAINER">
+			<input type="button" class="estiloBotones" onclick="location='menuSportTrainer.do'" value="<spring:message code="etiqueta.link.menu"/>"/>
+		</sec:authorize>
+		<sec:authorize ifAnyGranted="ROLE_CUSTOMER">
+			<input type="button" class="estiloBotones" onclick="location='menuCustomer.do'" value="<spring:message code="etiqueta.link.menu"/>"/>
+		</sec:authorize>
+	</c:if>
+	<div class="explanation">
+		<h5>Como interpretar el plan de entrenamiento</h5>
+		<p>El plan está separado en periodos. Cada periodo tiene un número de semanas especificado.</p>
+		<p>En cada semana aparecen los días en los que se ha planificado entrenamiento.</p>
+		<p>Cada sesión está compuesta de un número de ejercicios.</p>
+		<p>En la cabecera de la sesión se indica la frecuencia con la que se ha de realizar los ejercicios.</p>
+		<p>RM = Repeticiones por minuto. Nos indica el número de repeticiones que debemos realizar en cada serie.</p>
+		<p>Cada ejercicio aparece con una imagen en la que se nos explica como realizar dicho ejercicio.</p>
+	</div><br><br>
+	
+	<div id="exercises">
+	<c:set var="periodCount" value="1"/>
+	<c:set var="weekCount" value="1"/>
+		<c:forEach items="${sportPlan.plan.periods}" var="period">
+			<div class="periodo">
+			<h1>Periodo ${periodCount}</h1>
+			<c:forEach items="${period.weeks}" var="week">
+				<div class="week">
+					<h2>Semana ${weekCount}</h2>
+					<c:forEach items="${week.sessions}" var="session">						
+						<div class="session accordion">
+							<h3>Sesión ${session.dayOfWeek.day} (${session.intensity.minIntensity} - ${session.intensity.maxIntensity} RM)</h3>
+							<div>
+							<div>
+								${fn:length(session.exercises)} ejercicios
+							</div>
+								<c:forEach items="${session.exercises}" var="exercise">										
+									<div>						
+										<div>Nombre: <span>${exercise.exercise.name}</span></div>
+										<div>
+											<!-- IMAGEN -->
+												<c:set var="src" value="${exercise.exercise.image.src}"/>
+												<c:set var="ruta" value="images\\storage\\exercises\\"/>
+												<c:set var="barra" value="\\"/>
+												<c:set var="ppalMuscle" value="${exercise.exercise.principalMuscleType.muscle.muscle}"/>
+												<img alt="" class="generatorImage" src="<c:url value="${ruta}${ppalMuscle}${barra}${src}"/>">		
+											<!-- FIN IMAGEN -->
+										</div>
+										<div>Número de series: <span>${exercise.numSeries}</span></div>
+										<div>Músculo: <span>${exercise.exercise.principalMuscleType.muscle.muscle}</span></div>
+										<div>Equipamiento: <span>${exercise.exercise.equipment.equipment}</span></div>
+										<div>Descanso: <span>${session.restTime}</span> segundos</div>
+									</div>
+								</c:forEach>
+							</div>												
+						</div>									
+					</c:forEach>
+					</div>
+					<c:set var="weekCount" value="${weekCount + 1 }"/>
+			</c:forEach>
+			</div>
+			<c:set var="periodCount" value="${periodCount + 1 }"/>
+		</c:forEach>		
+	</div>
+</section>
+<c:if test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication!=null}">
+	<sec:authorize ifAnyGranted="ROLE_SPORT_TRAINER">
+		<input type="button" class="estiloBotones" onclick="location='menuSportTrainer.do'" value="<spring:message code="etiqueta.link.menu"/>"/>
+	</sec:authorize>
+	<sec:authorize ifAnyGranted="ROLE_CUSTOMER">
+		<input type="button" class="estiloBotones" onclick="location='menuCustomer.do'" value="<spring:message code="etiqueta.link.menu"/>"/>
+	</sec:authorize>
+</c:if>

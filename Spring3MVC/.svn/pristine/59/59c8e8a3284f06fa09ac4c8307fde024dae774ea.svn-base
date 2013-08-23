@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="base-layout" template="/WEB-INF/layouts/layoutBase.jsp">
+		<put-attribute name="piePagina" value="/WEB-INF/layouts/footer.jsp" />
+	</definition>
+	
+	<definition name="login-layout" template="/WEB-INF/layouts/layoutBase.jsp">
+		<put-attribute name="piePagina" value="/WEB-INF/layouts/footer.jsp" />
+	</definition>	
+</tiles-definitions>

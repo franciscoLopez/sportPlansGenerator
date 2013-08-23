@@ -1,0 +1,95 @@
+package com.project.model;
+
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name=Tabla.SPORT_TRAINER)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class SportTrainer extends User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String A_NAME = "name";
+	public static final String A_SURNAME = "surName";
+	public static final String A_DATE_BIRTH = "dateBirth";
+	public static final String A_CONTACT_INFO = "contact_info";
+	public static final String A_INSERT_DATE = "insertDate";
+	public static final String A_FECHA_MODIFICACION = "fechaModificacion";
+
+	// Constantes para definir nombres de columnas
+	private static final String C_NAME = "name";
+	private static final String C_SURNAME = "surname";
+	private static final String C_DATE_BIRTH = "dateBirth";
+
+	@Column(name = C_NAME,nullable = false)
+	private String name;
+
+	@Column(name = C_SURNAME)
+	private String surName;
+
+	@Column(name = C_DATE_BIRTH)
+	private Date dateBirth;
+
+	@OneToOne
+	@JoinColumn(name="contactInfo_id")
+	private ContactInfo contactInfo;
+	
+	@ManyToOne
+	private SportCentre sportCenter;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+	public Date getDateBirth() {
+		return dateBirth;
+	}
+
+	public void setDateBirth(Date dateBirth) {
+		this.dateBirth = dateBirth;
+	}
+
+	public ContactInfo getContactInfo() {
+		return contactInfo;
+	}
+
+	public void setContactInfo(ContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
+	}
+
+	public SportCentre getSportCenter() {
+		return sportCenter;
+	}
+
+	public void setSportCenter(SportCentre sportCenter) {
+		this.sportCenter = sportCenter;
+	}
+
+	
+}

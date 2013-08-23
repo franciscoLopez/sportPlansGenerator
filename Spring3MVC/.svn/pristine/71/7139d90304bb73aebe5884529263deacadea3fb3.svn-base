@@ -1,0 +1,108 @@
+package com.project.model;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name = Tabla.PROFILE)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Profile extends BaseEntity implements Serializable {
+
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String A_CUSTOMER = "customer";
+	public static final String A_DATE_BIRTH = "dateBirth";
+	public static final String A_WEIGTH = "weigth";
+	public static final String A_HEIGTH = "heigth";
+	public static final String A_LABORAL_ACTIVITY = "laboralActivity";
+	public static final String A_LEVEL = "customerLevel";
+	
+
+	// Constantes para definir nombres de columnas
+	private static final String C_DATE_BIRTH = "dateBirth";
+	private static final String C_WEIGTH = "weigth";
+	private static final String C_HEIGTH = "heigth";
+	private static final String C_LABORAL_ACTIVITY = "laboralActivity";
+	private static final String C_LEVEL = "customerLevel";
+	
+
+	private static final long serialVersionUID = 1L;
+
+	@OneToOne(mappedBy = "profile")
+	private Customer customer;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = C_DATE_BIRTH, nullable = false)
+	private Date dateBirth;
+
+	@Column(name = C_WEIGTH, nullable = false)
+	private Float weight;
+	
+	@Column(name = C_HEIGTH, nullable = false)
+	private Integer height;
+
+	@Column(name = C_LABORAL_ACTIVITY, nullable = true)
+	private String laboralActivity;
+	
+	@ManyToOne
+	private CustomerLevel customerLevel;
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Date getDateBirth() {
+		return dateBirth;
+	}
+
+	public void setDateBirth(Date dateBirth) {
+		this.dateBirth = dateBirth;
+	}
+
+	public Float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Float weight) {
+		this.weight = weight;
+	}
+
+	public Integer getHeight() {
+		return height;
+	}
+
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public String getLaboralActivity() {
+		return laboralActivity;
+	}
+
+	public void setLaboralActivity(String laboralActivity) {
+		this.laboralActivity = laboralActivity;
+	}
+
+	public CustomerLevel getLevel() {
+		return customerLevel;
+	}
+
+	public void setLevel(CustomerLevel level) {
+		this.customerLevel = level;
+	}
+}

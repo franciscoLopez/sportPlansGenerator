@@ -1,0 +1,35 @@
+package com.project.util;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public abstract class Util {
+
+	public static String encriptarPassword(String password) {
+		return encriptarPassword(password, "SHA1");
+	}
+	
+	public static String encriptarPassword(String password, String method) {
+		MessageDigest md = null;
+		byte[] buffer, digest;
+		String hash = "";
+
+		try {
+			buffer = password.getBytes();
+			md = MessageDigest.getInstance(method);
+			md.update(buffer);
+			digest = md.digest();
+
+			for (byte aux : digest) {
+				int b = aux & 0xff;
+				if (Integer.toHexString(b).length() == 1)
+					hash += "0";
+				hash += Integer.toHexString(b);
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
+		return hash;
+	}
+}

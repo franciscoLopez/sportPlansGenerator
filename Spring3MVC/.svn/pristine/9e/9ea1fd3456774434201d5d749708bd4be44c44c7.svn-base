@@ -1,0 +1,21 @@
+package com.project.util;
+
+public class Vista {
+
+	public static final String LOGIN = "login";
+	public static final String INICIO = "inicio";
+	
+	//FORMS
+	public static final String FORM_SPORT_CENTRE = "formSportCentre";
+	public static final String FORM_MODIFY_CREDENTIALS_SPORT_CENTRE = "modifyCredentialsSportCentre";
+	public static final String FORM_MODIFY_CREDENTIALS_SPORT_TRAINER = "modifyCredentialsSportTrainer";
+	public static final String FORM_MODIFY_CREDENTIALS_CUSTOMER = "modifyCredentialsCustomer";
+	public static final String FORM_MODIFY_PASSWORD = "modifyPassWord";
+	public static final String FORM_MODIFY_PROFILE = "modifyProfile";
+	
+	//MENUS
+	public static final String MENU_SPORT_CENTRE = "menuSportCentre";
+	public static final String MENU_SPORT_TRAINER = "menuSportTrainer";
+	public static final String MENU_ADMIN = "menuAdmin";
+	public static final String MENU_GENERATOR = "menuGenerator";
+}

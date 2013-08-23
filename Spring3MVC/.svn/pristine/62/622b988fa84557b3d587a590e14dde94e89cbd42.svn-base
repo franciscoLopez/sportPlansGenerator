@@ -1,0 +1,22 @@
+package com.project.servicios;
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import com.project.dao.DAOAcceso;
+import com.project.dto.DTOExerciseModify;
+import com.project.model.User;
+
+public class ValidarDTOExercise extends DAOAcceso implements Validator{
+
+	public boolean supports(Class<?> clazz) {
+		return User.class.isAssignableFrom(clazz);
+	}
+
+	public void validate(Object target, Errors errors) {
+		DTOExerciseModify dto = (DTOExerciseModify)target;
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "etiqueta.error.name.is.required", "Error en nombre");
+	}
+
+}

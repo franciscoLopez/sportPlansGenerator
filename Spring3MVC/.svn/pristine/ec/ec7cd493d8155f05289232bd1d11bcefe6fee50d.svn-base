@@ -1,0 +1,66 @@
+package com.project.controller;
+
+import java.util.SortedSet;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.project.model.SportCentre;
+import com.project.util.Vista;
+
+@Controller
+public class SportCentreController extends GenericController {
+
+	
+	@RequestMapping(value="/formSportCentre.do", method = RequestMethod.POST)
+	public ModelAndView newUser(ModelMap model,@ModelAttribute("sportCentre") SportCentre sportCentre,BindingResult result){
+		return new ModelAndView(Vista.FORM_SPORT_CENTRE);
+	}
+	@RequestMapping(value="/formSportCentre.do", method = RequestMethod.GET)
+	public ModelAndView newUserGET(ModelMap model,@ModelAttribute("sportCentre") SportCentre sportCentre,BindingResult result){
+		return new ModelAndView(Vista.FORM_SPORT_CENTRE);
+	}
+	
+	@RequestMapping(value= "/addSportCentre.do", method = RequestMethod.POST)
+	public String addSportCentre(ModelMap model,@ModelAttribute("sportCentre") SportCentre sportCentre, BindingResult result){
+		String res = null;
+		validarSportCentre.validate(sportCentre, result);
+		if(result.hasErrors()){
+			res = "redirect:/formSportCentre.do";
+		}else{
+			if(sportCentre.getPassword().equals(sportCentre.getRepetirPassword())){
+				SortedSet<String> users = this.daoUser.getUsernames();
+				if(!users.contains(sportCentre.getUsername())){
+					this.daoSportCentre.addSportCentre(sportCentre);
+					res = Vista.LOGIN;
+				}else{
+					result.rejectValue("username", "etiqueta.error.username.repetido");
+					res = "redirect:/formSportCentre.do";
+				}			
+			}else{
+				result.rejectValue("repetirPassword", "etiqueta.error.password.incorrecto");
+				res = "redirect:/formSportCentre.do";
+			}
+		}
+//		if(res.equals("redirect:/formSportCentre.do")){
+//			model.addAttribute("error","true");
+//		}
+		return res;
+	}		
+	
+	@RequestMapping(value= "/modifyCredentialsSportCentre.do", method = RequestMethod.GET)
+	public ModelAndView modifyCredentialsSportCentre(ModelMap model,@ModelAttribute("sportCentre") SportCentre sportCentre){
+		return new ModelAndView(Vista.FORM_MODIFY_CREDENTIALS_SPORT_CENTRE);
+	}
+	
+	@RequestMapping(value= "/modifySportCentre.do", method = RequestMethod.POST)
+	public ModelAndView modifySportCentre(ModelMap model,@ModelAttribute("sportCentre") SportCentre sportCentre){
+		
+		return new ModelAndView(Vista.FORM_MODIFY_CREDENTIALS_SPORT_CENTRE);
+	}
+}

@@ -1,0 +1,150 @@
+package com.project.model;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name=Tabla.CUSTOMER)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Customer extends User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String A_NAME = "name";
+	public static final String A_SURNAME = "surName";
+	public static final String A_CONTACT_INFO = "contactInfo";
+
+	// Constantes para definir nombres de columnas
+	private static final String C_NAME = "name";
+	private static final String C_SURNAME = "surname";
+
+
+	@Column(name = C_NAME,nullable = false)
+	private String name;
+
+	@Column(name = C_SURNAME)
+	private String surName;
+
+	@OneToOne
+	@JoinColumn(name="contactInfo_id",nullable = true)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private ContactInfo contactInfo;
+	
+	@ManyToOne
+	private SportCentre customerSportCenter;
+	
+	@OneToOne
+	@JoinColumn(name="profile_id",nullable = true)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private Profile profile;
+	
+	@OneToMany(mappedBy = "customer")
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private List<SportPlan> sportPlan;
+
+	public SportCentre getCustomerSportCenter() {
+		return customerSportCenter;
+	}
+
+	public void setCustomerSportCenter(SportCentre customerSportCenter) {
+		this.customerSportCenter = customerSportCenter;
+	}
+
+	public List<SportPlan> getSportPlan() {
+		return sportPlan;
+	}
+
+	public void setSportPlan(List<SportPlan> sportPlan) {
+		this.sportPlan = sportPlan;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+
+	public ContactInfo getContactInfo() {
+		return contactInfo;
+	}
+
+	public void setContactInfo(ContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
+	}
+
+	public SportCentre getSportCenter() {
+		return customerSportCenter;
+	}
+
+	public void setSportCenter(SportCentre sportCenter) {
+		this.customerSportCenter = sportCenter;
+	}
+
+	public void modifyCustomer(ContactInfo contactInfo2) {
+		if(contactInfo2 != null){
+			if(this.getContactInfo() != null){
+				if(contactInfo2.getMobileNumber() != null && !contactInfo2.getMobileNumber().equals("")){
+					this.getContactInfo().setMobileNumber(contactInfo2.getMobileNumber());
+				}
+				if(contactInfo2.getPhoneNumber() != null && !contactInfo2.getPhoneNumber().equals("")){
+					this.getContactInfo().setPhoneNumber(contactInfo2.getPhoneNumber());
+				}
+				if(this.getContactInfo().getAddress() != null){
+					if(contactInfo2.getAddress().getCity() != null && !contactInfo2.getAddress().getCity().equals("")){
+						this.getContactInfo().getAddress().setCity(contactInfo2.getAddress().getCity());
+					}
+					if(contactInfo2.getAddress().getCountry() != null && !contactInfo2.getAddress().getCountry().equals("")){
+						this.getContactInfo().getAddress().setCountry(contactInfo2.getAddress().getCountry());
+					}
+					if(contactInfo2.getAddress().getPostalCode() != null && !contactInfo2.getAddress().getPostalCode().equals("")){
+						this.getContactInfo().getAddress().setPostalCode(contactInfo2.getAddress().getPostalCode());
+					}
+					if(contactInfo2.getAddress().getAddress() != null && !contactInfo2.getAddress().getAddress().equals("")){
+						this.getContactInfo().getAddress().setAddress(contactInfo2.getAddress().getAddress());
+					}
+				}else{
+					this.getContactInfo().setAddress(contactInfo2.getAddress());
+				}
+				
+			}else{
+				this.setContactInfo(contactInfo2);
+			}
+			
+		}
+	}	
+}

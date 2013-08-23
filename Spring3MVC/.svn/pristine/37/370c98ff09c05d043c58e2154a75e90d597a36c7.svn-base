@@ -1,0 +1,51 @@
+package com.project.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name = Tabla.ROUTINE_PARAMS)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class RoutineParams extends BaseEntity implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	@ManyToOne
+	private RoutineType routineType;
+	
+	@ManyToOne
+	private RoutineOrder routineOrder;
+	
+	private Integer exercisesPerSession;
+
+	public RoutineType getRoutineType() {
+		return routineType;
+	}
+
+	public void setRoutineType(RoutineType routineType) {
+		this.routineType = routineType;
+	}
+
+	public RoutineOrder getRoutineOrder() {
+		return routineOrder;
+	}
+
+	public void setRoutineOrder(RoutineOrder routineOrder) {
+		this.routineOrder = routineOrder;
+	}
+
+	public Integer getExercisesPerSession() {
+		return exercisesPerSession;
+	}
+
+	public void setExercisesPerSession(Integer exercisesPerSession) {
+		this.exercisesPerSession = exercisesPerSession;
+	}	
+}

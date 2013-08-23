@@ -1,0 +1,35 @@
+package com.project.servicios;
+
+import com.project.model.SportPlan;
+
+// Implementacion del patron software "Template method"
+public abstract class SportPlanCreator {
+
+	// Metodos primitivos
+	public abstract SportPlan createSportPlanStructure(SportPlan sportPlan);
+	
+	public abstract SportPlan definePeriodization(SportPlan sportPlan);
+	
+	public abstract SportPlan defineExercisesType(SportPlan sportPlan);
+	
+	public abstract SportPlan defineSpeedExecution(SportPlan sportPlan);
+
+	public abstract SportPlan defineIntensity(SportPlan sportPlan);
+	
+	public abstract SportPlan defineRestTime(SportPlan sportPlan);
+	
+	public abstract SportPlan defineNumOfSeries(SportPlan sportPlan);
+	
+	// Metodo template
+	public SportPlan createSportPlan(SportPlan sportPlan){
+		createSportPlanStructure(sportPlan);
+		definePeriodization(sportPlan);
+		defineExercisesType(sportPlan);
+		defineSpeedExecution(sportPlan);
+		defineIntensity(sportPlan);
+		defineRestTime(sportPlan);
+		defineNumOfSeries(sportPlan);
+		
+		return sportPlan;
+	}
+}

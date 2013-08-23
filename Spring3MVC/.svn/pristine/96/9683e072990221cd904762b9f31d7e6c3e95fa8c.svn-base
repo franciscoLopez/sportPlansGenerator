@@ -1,0 +1,2 @@
+layouts = /WEB-INF/layouts/layouts.xml
+views = /WEB-INF/controllers/configuration/views.xml

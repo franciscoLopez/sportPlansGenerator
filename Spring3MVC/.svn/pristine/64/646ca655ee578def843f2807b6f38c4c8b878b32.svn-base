@@ -1,0 +1,101 @@
+package com.project.dao.impl;
+
+import java.util.Calendar;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.project.dao.DAOCustomer;
+import com.project.dao.DAOSecurity;
+import com.project.model.Authority;
+import com.project.model.Customer;
+import com.project.model.Group;
+import com.project.model.SportCentre;
+import com.project.model.SportTrainer;
+import com.project.util.Util;
+
+public class DAOCustomerImpl extends DAOComunImpl implements DAOCustomer{
+
+	@Autowired
+	private DAOSecurity	daoSecurity;
+	
+	public void addCustomer(Customer customer, Long idUser) {
+		Calendar hoy = Calendar.getInstance();
+		customer.setInsertDate(hoy.getTime());
+		customer.setModifyDate(hoy.getTime());
+		List<Group> grupos = daoSecurity.getGrupos();
+		Group grupo = null;
+		for(Group g : grupos){
+			List<Authority> authorities = g.getAuthorities();
+			for(Authority a : authorities){
+				if(a.getAuthority().equals("ROLE_CUSTOMER")){
+					grupo = g;
+				}
+			}
+		}
+		customer.addGrupo(grupo);
+		SportCentre sportCentre = this.obtenerObjetoId(SportCentre.class, idUser);
+		customer.setSportCenter(sportCentre);
+		customer.setPassword(Util.encriptarPassword(customer.getPassword()));
+		this.guardarObjeto(customer);
+		
+	}
+	
+	public void addCustomerBySportTrainer(Customer customer, Long id) {
+		Calendar hoy = Calendar.getInstance();
+		customer.setInsertDate(hoy.getTime());
+		customer.setModifyDate(hoy.getTime());
+		List<Group> grupos = daoSecurity.getGrupos();
+		Group grupo = null;
+		for(Group g : grupos){
+			List<Authority> authorities = g.getAuthorities();
+			for(Authority a : authorities){
+				if(a.getAuthority().equals("ROLE_CUSTOMER")){
+					grupo = g;
+				}
+			}
+		}
+		customer.addGrupo(grupo);
+		SportTrainer sportTrainer = this.obtenerObjetoId(SportTrainer.class, id);
+		customer.setSportCenter(sportTrainer.getSportCenter());
+		customer.setPassword(Util.encriptarPassword(customer.getPassword()));
+		this.guardarObjeto(customer);		
+	}
+
+	public Customer getCustomer(Long userId) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Customer.class);
+		crit.add(Restrictions.idEq(userId));
+		Customer customer = (Customer) crit.uniqueResult();
+		return customer;
+	}
+
+	public void modifyCustomer(Customer infoCustomer) {
+		Customer c = this.getCustomer(infoCustomer.getId());
+		if(infoCustomer.getName() != null && !infoCustomer.getName().equals("")){
+			c.setName(infoCustomer.getName());
+		}
+		if(infoCustomer.getSurName() != null && !infoCustomer.getSurName().equals("")){
+			c.setSurName(infoCustomer.getSurName());
+		}
+		if(!infoCustomer.getContactInfo().isEmpty()){
+			c.modifyCustomer(infoCustomer.getContactInfo());
+		}
+		Calendar hoy = Calendar.getInstance();		
+		c.setModifyDate(hoy.getTime());	
+		sessionFactory.getCurrentSession().saveOrUpdate(c);		
+	}
+	
+	public boolean deleteCustomer(Long userId) {
+		boolean res = false;
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Customer.class);
+		crit.add(Restrictions.idEq(userId));
+		Customer customer = (Customer) crit.uniqueResult();
+		customer.setEnabled((short) 0);
+		if(this.guardarObjeto(customer)){
+			res = true;
+		}
+		return res;
+	}
+}

@@ -1,0 +1,143 @@
+### TITULOS
+etiqueta.titulo.bienvenido = Bienvenido
+etiqueta.titulo.inicio = Inicio
+etiqueta.titulo.menu.sport.centre = Centro Deportivo
+etiqueta.titulo.menu.sport.trainer = Monitor Deportivo
+etiqueta.titulo.menu.admin = Administrador
+etiqueta.titulo.menu.customer = Cliente
+etiqueta.titulo.menu.generator = Gestion planes de entrenamiento
+etiqueta.titulo.nuevoSportCentre = Nuevo Centro Deportivo
+etiqueta.titulo.nuevoSportTrainer = Nuevo Monitor Deportivo
+etiqueta.titulo.nuevoCustomer = Nuevo Cliente
+etiqueta.titulo.modify.credentials = Modificar datos
+etiqueta.titulo.modify.password = Modificar contrase&ntilde;a
+etiqueta.titulo.modify.profile = Modificar perfil
+etiqueta.titulo.modify.exercise = Modificar ejercicio
+etiqueta.titulo.sport.centre = Centro deportivo
+etiqueta.titulo.panel = Panel
+etiqueta.titulo.monitores = Monitores
+etiqueta.titulo.socios = Socios
+etiqueta.titulo.configuracion = Configuracion
+etiqueta.titulo.perfil = Perfil
+etiqueta.titulo.sport.trainer = Monitor deportivo
+etiqueta.titulo.ejercicios = Administrar ejercicios
+etiqueta.titulo.generate = Generar Plan Deportivo
+
+### LINKS
+etiqueta.link.registrar = registrarse
+etiqueta.link.aniadirSporCentre = Dar de alta
+etiqueta.link.registrar.SporTrainer = Nuevo monitor deportivo
+etiqueta.link.registrar.customer = Nuevo cliente
+etiqueta.link.aniadirSporTrainer = Nuevo
+etiqueta.link.modify.credentials.SporCentre = Perfil
+etiqueta.link.modificar = Guardar
+etiqueta.link.cancelar = Cancelar
+etiqueta.link.siguiente = Siguiente
+etiqueta.link.menu = Volver Menu
+etiqueta.link.generar.plan.automatico = Generar Plan Automaticamente
+etiqueta.link.generar.plan.manual = Generar Plan Manualmente
+
+
+### MODELO
+#User
+etiqueta.modelo.user.username = usuario
+etiqueta.modelo.user.password = password
+etiqueta.modelo.user.repetirPassword = repita password
+
+
+	### SportCentre
+	etiqueta.modelo.sportCentre.name = centro deportivo
+	etiqueta.modelo.sportCentre.email = email
+	
+	etiqueta.panel.sport.centre.monitores = Monitores
+	etiqueta.panel.sport.centre.socios = Socios
+	etiqueta.panel.sport.centre.planes = Planes generados
+	
+	etiqueta.modelo.user.mail = email
+	etiqueta.modelo.user.mobileNumber = Tlf. Movil
+	etiqueta.modelo.user.phoneNumber = Tlf. Fijo
+	
+	### SportTrainer
+	etiqueta.modelo.sportTrainer.name = monitor deportivo
+	etiqueta.modelo.sportCentre.surname = apellidos
+	etiqueta.modelo.sportCentre.mail = email
+	etiqueta.modelo.sportCentre.mobileNumber = tlf. movil
+	etiqueta.modelo.sportCentre.phoneNumber = tlf. fijo
+	etiqueta.modelo.sportCentre.city = ciudad
+	etiqueta.modelo.sportCentre.country = pais
+	etiqueta.modelo.sportCentre.postalCode = codigo postal
+ 	etiqueta.modelo.sportCentre.address = direccion
+ 	etiqueta.modelo.sportTrainer.password = contrase&ntilde;a
+ 	etiqueta.modelo.sportTrainer.repetir.password = repita la contrase&ntilde;a
+ 	
+ 	etiqueta.panel.sport.trainer.clientes = Socios
+ 	
+ 	### Customer
+ 	etiqueta.modelo.customer.nombre = nombre
+ 	etiqueta.modelo.customer.customerLevel = Nivel
+ 	etiqueta.modelo.customer.consultar.plan = Consultar Plan Deportivo
+
+	### Profile
+	etiqueta.modelo.profile.dateBirth = fecha de nacimiento
+	etiqueta.modelo.profile.weight = peso(kg)
+	etiqueta.modelo.profile.height = altura(cm)
+	etiqueta.modelo.profile.laboralActivity = actividad laboral
+	etiqueta.modelo.profile.customerLevel = nivel
+	
+	### Ejercicio
+	etiqueta.modelo.exercise.name = Ejercicio
+	etiqueta.modelo.exercise.description = Descripcion
+	etiqueta.modelo.exercise.image = Imagen
+	etiqueta.modelo.exercise.musculo.principal = Musculo principal
+	etiqueta.modelo.exercise.musculo.secundario = Musculo secundario
+	etiqueta.modelo.exercise.tipo = Tipo de ejercicio
+	etiqueta.modelo.exercise.equipment = Material
+	etiqueta.modelo.exercise.musculo.tipo = Tipo
+	
+	### SportPlan
+	etiqueta.modelo.sport.plan.name = Nombre del Plan
+	etiqueta.modelo.sport.plan.objetive = Objetivo
+	etiqueta.modelo.sport.plan.physical.quality = Cualidad fisica a entrenar
+	etiqueta.modelo.sport.plan.duration = Duracion
+	etiqueta.modelo.sport.plan.sessions.per.week = Numero de sesiones a la semana
+	etiqueta.modelo.sport.days.of.week = Dias de entrenamiento
+	etiqueta.modelo.sport.plan.routine.order = Orden de la rutina
+	etiqueta.modelo.sport.plan.routine.type = Tipo de rutina
+	etiqueta.modelo.sport.plan.exercises.per.session = Ejercicios por sesion
+	etiqueta.modelo.sport.plan.equipment.to.discard = Material a descartar
+	etiqueta.modelo.sport.plan.equipment.explanation = ( Seleccione aquellos materiales que desea incluir en su plan de entrenamiento )
+	etiqueta.modelo.sport.plan.startDate= Fecha de comienzo 
+	
+### ERRORES
+etiqueta.error.username.is.required = campo unsername es obligatorio
+etiqueta.error.password.is.required = campo password es obligatorio
+etiqueta.error.repPassword.is.required = campo password es obligatorio
+etiqueta.error.name.is.required = error en el campo nombre centro deportivo
+etiqueta.error.username.repetido = eliga otro nombre de usuario
+etiqueta.error.password.incorrecto = error en el campo password
+etiqueta.error.email.is.required = error en el campo email
+etiqueta.error.surname.is.required = error en el campo apellidos
+etiqueta.error.phone.number.is.required = error en numero de telefono
+etiqueta.error.mobile.number.is.required = error en tfl. movil
+etiqueta.error.city.is.required = error en ciudad
+etiqueta.error.country.is.required = error en pais
+etiqueta.error.postal.code.is.required = error en codigo postal
+etiqueta.error.address.is.required = error en direccion
+etiqueta.error.password.is.required = error en la contraseña
+etiqueta.error.datebirth = error en la fecha de nacimiento
+etiqueta.error.weigth = error en el peso
+etiqueta.error.height = error en la altura
+etiqueta.error.laboralActivity = error en la actividad laboral
+etiqueta.error.customerLevel = error en el nivel
+etiqueta.error.objetive = error en el objetivo
+etiqueta.error.physicalQuality = error en la cualidad fisica
+etiqueta.error.sessionsPerWeek = error en las sesiones por semana
+etiqueta.error.daysOfWeek = error en los dias de entrenamiento
+etiqueta.error.routine.type = error en el tipo de rutina
+etiqueta.error.routine.order = error en el orden de rutina
+etiqueta.error.routine.exercises.per.session = error en el número de ejercicios
+
+	##SportTrainer
+	etiqueta.error.sport.trainer.name.is.required = campo nombre es obligatorio
+	etiqueta.error.sport.trainer.surname.is.required = campo apellido es obligatorio
+	etiqueta.error.sport.trainer.date.birth.is.required = campo fecha de nacimiento es obligatorio

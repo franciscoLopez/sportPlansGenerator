@@ -1,0 +1,24 @@
+package com.project.dao;
+
+import java.util.List;
+
+import com.project.dto.DTOCustomer;
+import com.project.dto.DTOSportTrainer;
+import com.project.model.SportCentre;
+
+public interface DAOSportCentre {
+	
+	public void addSportCentre(SportCentre sportCentre);
+	
+	public Integer getNumberSportTrainers(Long sportCentreID);
+	
+	public List<DTOSportTrainer> getSportTrainers(Long sportCentreID);
+
+	public Integer getNumberCustomers(Long sportCentreID);
+
+	public List<DTOCustomer> getCustomers(Long sportCentreID);
+
+	public SportCentre getSportCentre(String username);
+
+	public void modifySportCentre(SportCentre infoSportCentre); 
+}

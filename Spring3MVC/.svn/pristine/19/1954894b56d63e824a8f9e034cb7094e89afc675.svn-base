@@ -1,0 +1,78 @@
+package com.project.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name=Tabla.CUSTOMER)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Customer extends User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String A_NAME = "name";
+	public static final String A_SURNAME = "surName";
+	public static final String A_CONTACT_INFO = "contactInfo";
+
+	// Constantes para definir nombres de columnas
+	private static final String C_NAME = "name";
+	private static final String C_SURNAME = "password";
+
+
+	@Column(name = C_NAME,nullable = false)
+	private String name;
+
+	@Column(name = C_SURNAME)
+	private String surName;
+
+	@OneToOne
+	@JoinColumn(name="contactInfo_id",nullable = true)
+	private ContactInfo contactInfo;
+	
+	@ManyToOne
+	private SportCentre customerSportCenter;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+
+	public ContactInfo getContactInfo() {
+		return contactInfo;
+	}
+
+	public void setContactInfo(ContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
+	}
+
+	public SportCentre getSportCenter() {
+		return customerSportCenter;
+	}
+
+	public void setSportCenter(SportCentre sportCenter) {
+		this.customerSportCenter = sportCenter;
+	}	
+}

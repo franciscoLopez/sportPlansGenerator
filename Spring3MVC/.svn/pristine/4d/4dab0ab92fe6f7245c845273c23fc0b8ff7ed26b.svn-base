@@ -1,0 +1,226 @@
+package com.project.dao.impl;
+
+import java.util.Calendar;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.project.dao.DAOCustomer;
+import com.project.dao.DAOMuscle;
+import com.project.dao.DAOSportPlan;
+import com.project.dao.DAOSportTrainer;
+import com.project.dto.DTOSportPlan;
+import com.project.model.Customer;
+import com.project.model.CustomerLevel;
+import com.project.model.DayOfWeek;
+import com.project.model.Duration;
+import com.project.model.Objetive;
+import com.project.model.PhysicalQuality;
+import com.project.model.RoutineOrder;
+import com.project.model.RoutineType;
+import com.project.model.SportPlan;
+import com.project.model.SportTrainer;
+
+public class DAOSportPlanImpl extends DAOComunImpl implements DAOSportPlan {
+
+	@Autowired
+	protected DAOSportTrainer daoSportTrainer;
+	
+	@Autowired
+	protected DAOCustomer daoCustomer;
+	
+	@Autowired
+	protected DAOMuscle daoMuscle;
+	
+	// Niveles
+	private final  String aclimatacion = remove1(CustomerLevel.C_L_ACLIMATACION);
+	private final  String principiante = remove1(CustomerLevel.C_L_PRINCIPIANTE);
+	private final  String intermedio = remove1(CustomerLevel.C_L_INTERMEDIO);
+	private final  String avanzado = remove1(CustomerLevel.C_L_AVANZADO);
+	
+	// Tipos de entrenamiento
+	private final   String mantenimiento = remove1(Objetive.O_MANTENIMIENTO);
+	private final   String ppeso = remove1(Objetive.O_PERDIDA_PESO);
+	private final   String adaptacion = remove1(Objetive.O_ADAPTACION);
+	private final   String hipertrofia = remove1(Objetive.O_HIPERTROFIA);
+	private final   String salud = remove1(Objetive.O_SALUD);
+	private final   String aFuerza = remove1(Objetive.O_AUMENTO_DE_LA_FUERZA);
+	
+	
+	public void createSportPlanStepOne(DTOSportPlan dtoSportPlan) {
+		SportPlan sp = new SportPlan();
+		SportTrainer sTrainer = this.daoSportTrainer.getSportTrainer(dtoSportPlan.getSportTrainerId());
+		sp.setSportTrainer(sTrainer);
+		
+		Customer cus = this.daoCustomer.getCustomer(dtoSportPlan.getCustomerId());
+		sp.setCustomer(cus);
+		
+		CustomerLevel cl = this.daoMuscle.getCustomerLevel(dtoSportPlan.getLevel());
+		sp.setLevel(cl);
+		
+		Objetive obj = this.daoMuscle.getObjetive(dtoSportPlan.getObjetive());
+		sp.setObjetive(obj);
+		
+		PhysicalQuality pq = this.daoMuscle.getPhysicalQuality(dtoSportPlan.getPhysicalQuality());
+		sp.setPhysicalQuality(pq);
+		
+		Duration d = new Duration();
+		d.setPeriods(dtoSportPlan.getPeriods());
+		d.setWeeks(dtoSportPlan.getWeeks());
+		d.setSessionsPerWeek(dtoSportPlan.getSessionsPerWeek());
+		d.setRecuperationTime(dtoSportPlan.getRecuperationTime());
+		d.setRecuperationTimeMuscularGroup(dtoSportPlan.getRecuperationTimeMuscleGroup());
+		List<DayOfWeek> days = this.daoMuscle.getDaysOfWeek(dtoSportPlan.getDaysOfWeek());
+		d.setDays(days);
+		sessionFactory.getCurrentSession().saveOrUpdate(d);
+		sp.setDuration(d);
+		
+		Calendar hoy = Calendar.getInstance();
+		sp.setInsertDate(hoy.getTime());
+		sp.setModifyDate(hoy.getTime());
+		
+		// Aun no hemos creado el SportPlan por completo
+		sp.setDefined(false);
+		
+		sessionFactory.getCurrentSession().saveOrUpdate(sp);
+	}
+
+	/**
+	 * FunciÛn que elimina acentos y caracteres especiales de
+	 * una cadena de texto.
+	 * @param input
+	 * @return cadena de texto limpia de acentos y caracteres especiales.
+	 */
+	private static String remove1(String input) {
+	    // Cadena de caracteres original a sustituir.
+	    String original = "·‡‰ÈËÎÌÏÔÛÚˆ˙˘uÒ¡¿ƒ…»ÀÕÃœ”“÷⁄Ÿ‹—Á«";
+	    // Cadena de caracteres ASCII que reemplazar·n los originales.
+	    String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+	    String output = input;
+	    for (int i=0; i<original.length(); i++) {
+	        // Reemplazamos los caracteres especiales.
+	        output = output.replace(original.charAt(i), ascii.charAt(i));
+	    }//for i
+	    return output;
+	}
+	
+	private static String changeLevel(String level){
+		String res ="";
+		if(level.startsWith("Aclimat")){
+			res = "Aclimatacion";
+		}else if(level.startsWith("Princip")){
+			res = "Principiante";
+		}else if(level.startsWith("Intermedio")){
+			res = "Intermedio";
+		}else if(level.startsWith("Avanzado")){
+			res = "Avanzado";
+		}
+		return res;
+	}
+	private static String changeObjetive(String objetive){
+		String res = "";
+		if(objetive.startsWith("Adaptac")){
+			res = "Adaptacion";
+		}else if(objetive.startsWith("Aumento de la fuerza")){
+			res = "Aumento de la fuerza";
+		}else if(objetive.startsWith("Hipertrofia")){
+			res = "Hipertrofia";
+		}else if(objetive.startsWith("Mantenimiento")){
+			res = "Mantenimiento";
+		}else if(objetive.endsWith("peso")){
+			res = "Perdida de peso";
+		}else if(objetive.startsWith("Salud")){
+			res = "Salud";
+		}
+		return res;
+	}
+	
+	
+	
+	public Integer getSessionsPerWeek(String level, String objetive) {
+		String nivel = changeLevel(level);
+		String objetivo = changeObjetive(objetive);
+		Integer res = 0;
+		if(nivel.equals(aclimatacion)){
+			if(objetivo.equals(mantenimiento)){
+				res = 1;
+			}else{
+				res = 2;
+			}
+		}else if (nivel.equals(principiante)){
+			if(objetivo.equals(mantenimiento) || objetivo.equals(ppeso)){
+				res = 2;
+			}else{
+				res = 3;
+			}
+		}else if (nivel.equals(intermedio) || nivel.equals(avanzado)){
+			if(objetivo.equals(mantenimiento)){
+				res = 2;
+			}else if (objetivo.equals(ppeso)){
+				res = 3;
+			}else{
+				res = 6;
+			}
+		}
+		return res;
+	}
+	/*
+	 * @param 
+	 * muscleGrop if true represents the recuperation time for the same muscular group
+	 * */
+	public Integer getRecuperationTime(String level, String objetive){
+		String nivel = changeLevel(level);
+		String objetivo = changeObjetive(objetive);
+		Integer res = 48;
+		if(nivel.equals(intermedio) || nivel.equals(avanzado)){
+			if(objetivo.equals(hipertrofia) || objetivo.equals(salud) || objetivo.equals(aFuerza)){
+				res = -1;
+			}
+		}
+		return res;
+	}
+
+	public List<RoutineOrder> getRoutineOrders() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(RoutineOrder.class);
+		List<RoutineOrder> res = crit.list();
+		return res;
+	}
+
+	public List<RoutineType> getRoutineTypes() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(RoutineType.class);
+		List<RoutineType> res = crit.list();
+		return res;
+	}
+	
+	// Es necesario conocer el tipo de rutina para saber el orden
+	public Integer[] getExercisesPerSession(String level, String objetive,String routineType){
+		Integer exercises [] = new Integer[2];
+		String nivel = changeLevel(level);
+		String objetivo = changeObjetive(objetive);
+		if(nivel.equals(aclimatacion)){
+			exercises[0] = 6;
+			exercises[1] = 8;
+		}else if(nivel.equals(principiante)){
+			exercises[0] = 8;
+			exercises[1] = 12;
+		}else if(nivel.equals(intermedio)){
+			if(routineType.equals(RoutineType.R_TYPE_POR_GRUPO_MUSCULAR)){
+				exercises[0] = 6;
+				exercises[1] = 9;
+			}else{
+				exercises[0] = 8;
+				exercises[1] = 12;
+			}			
+		}else if(nivel.equals(avanzado)){
+			if(routineType.equals(RoutineType.R_TYPE_POR_GRUPO_MUSCULAR)){
+				exercises[0] = 9;
+				exercises[1] = 12;
+			}else{
+				exercises[0] = 8;
+				exercises[1] = 12;
+			}
+		}
+		return exercises;
+	}
+}

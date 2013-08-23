@@ -1,0 +1,39 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+<script>
+$(function() {
+    $( ".accordion" ).accordion({
+    	collapsible: true,
+    	active : false
+    });
+});
+</script>
+<section id="sportPlanInfo">
+	<div id="infoSportPlan">
+	
+	</div>
+</section>
+<section id="sportPlanExercises">
+	<div id="exercises">
+		<c:forEach items="${plan.periods}" var="period">
+			<c:forEach items="${period.weeks}" var="week">
+					<c:forEach items="${week.sessions}" var="session">
+						<div class="accordion">
+							<h3>Sesión ${session.dayOfWeek.day}</h3>
+							<div>
+								<c:forEach items="${session.exercises}" var="exercise">							
+									<p>${exercise.exercise.name}</p>
+											<!-- IMAGEN -->
+												<c:set var="src" value="${exercise.exercise.image.src}"/>
+												<c:set var="ruta" value="images\\storage\\exercises\\"/>
+												<c:set var="barra" value="\\"/>
+												<c:set var="ppalMuscle" value="${exercise.exercise.principalMuscleType.muscle.muscle}"/>
+												<img alt="" src="<c:url value="${ruta}${ppalMuscle}${barra}${src}"/>">		
+											<!-- FIN IMAGEN -->
+								</c:forEach>
+							</div>
+						</div>					
+					</c:forEach>
+			</c:forEach>
+		</c:forEach>		
+	</div>
+</section>

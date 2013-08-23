@@ -1,0 +1,149 @@
+package com.project.dto;
+
+import java.util.List;
+
+
+public class DTOSportPlan {
+
+	private Long customerId;
+	
+	private Long sportTrainerId;
+	
+	private String level;
+	
+	private String objetive;
+	
+	private String physicalQuality;
+	
+	private Integer periods;
+
+	private Integer weeks;	
+	
+	private Integer sessionsPerWeek;
+	
+	private List<String> daysOfWeek;
+	
+	private Integer recuperationTime;
+	
+	private Integer recuperationTimeMuscleGroup;
+	
+	private String routineType;
+	
+	private String routineOrder;
+	
+	private Integer exercisesPerSession;
+	
+	
+
+	public Long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+
+	public Long getSportTrainerId() {
+		return sportTrainerId;
+	}
+
+	public void setSportTrainerId(Long sportTrainerId) {
+		this.sportTrainerId = sportTrainerId;
+	}
+
+	public String getObjetive() {
+		return objetive;
+	}
+
+	public void setObjetive(String objetive) {
+		this.objetive = objetive;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getPhysicalQuality() {
+		return physicalQuality;
+	}
+
+	public void setPhysicalQuality(String physicalQuality) {
+		this.physicalQuality = physicalQuality;
+	}
+
+	public Integer getWeeks() {
+		return weeks;
+	}
+
+	public void setWeeks(Integer weeks) {
+		this.weeks = weeks;
+	}
+
+	public Integer getSessionsPerWeek() {
+		return sessionsPerWeek;
+	}
+
+	public void setSessionsPerWeek(Integer sessionsPerWeek) {
+		this.sessionsPerWeek = sessionsPerWeek;
+	}
+
+	public Integer getPeriods() {
+		return periods;
+	}
+
+	public void setPeriods(Integer periods) {
+		this.periods = periods;
+	}
+
+	public List<String> getDaysOfWeek() {
+		return daysOfWeek;
+	}
+
+	public void setDaysOfWeek(List<String> daysOfWeek) {
+		this.daysOfWeek = daysOfWeek;
+	}
+	public Integer getRecuperationTime() {
+		return recuperationTime;
+	}
+
+	public void setRecuperationTime(Integer recuperationTime) {
+		this.recuperationTime = recuperationTime;
+	}
+
+	public Integer getRecuperationTimeMuscleGroup() {
+		return recuperationTimeMuscleGroup;
+	}
+
+	public void setRecuperationTimeMuscleGroup(Integer recuperationTimeMuscleGroup) {
+		this.recuperationTimeMuscleGroup = recuperationTimeMuscleGroup;
+	}
+
+	public String getRoutineType() {
+		return routineType;
+	}
+
+	public void setRoutineType(String routineType) {
+		this.routineType = routineType;
+	}
+
+	public String getRoutineOrder() {
+		return routineOrder;
+	}
+
+	public void setRoutineOrder(String routineOrder) {
+		this.routineOrder = routineOrder;
+	}
+
+	public Integer getExercisesPerSession() {
+		return exercisesPerSession;
+	}
+
+	public void setExercisesPerSession(Integer exercisesPerSession) {
+		this.exercisesPerSession = exercisesPerSession;
+	}
+	
+}

@@ -1,0 +1,16 @@
+package com.project.util;
+
+public class Tabla {
+
+	// Tablas para Spring Security
+		public static final String	AUTHORITIES	= "authorities";
+		public static final String	GROUPS		= "groups";
+		public static final String	USERS		= "users";
+		
+	// Modelo
+		public static final String CONTACT_INFO = "contact_info";
+		public static final String ADDRESS  	= "address";
+		public static final String SPORT_CENTRE = "sport_centre";
+		public static final String SPORT_TRAINER = "sport_trainer";
+		public static final String CUSTOMER = "customer";
+}

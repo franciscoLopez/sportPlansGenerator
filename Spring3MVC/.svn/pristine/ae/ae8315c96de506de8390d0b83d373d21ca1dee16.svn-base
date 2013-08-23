@@ -1,0 +1,57 @@
+package com.project.model;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name = Tabla.DURATION_LIMIT)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class DurationLimit extends BaseEntity implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	@OneToMany
+	@JoinTable(joinColumns = @JoinColumn(name = "duration_limitID"),
+				inverseJoinColumns = @JoinColumn(name = "periodID"))
+	private List<Period> periods;
+	
+	@ManyToOne
+	private CustomerLevel level;
+	
+	private String observations;	
+
+	public List<Period> getPeriods() {
+		return periods;
+	}
+
+	public void setPeriods(List<Period> periods) {
+		this.periods = periods;
+	}
+
+	public CustomerLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(CustomerLevel level) {
+		this.level = level;
+	}
+
+	public String getObservations() {
+		return observations;
+	}
+
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}	
+}

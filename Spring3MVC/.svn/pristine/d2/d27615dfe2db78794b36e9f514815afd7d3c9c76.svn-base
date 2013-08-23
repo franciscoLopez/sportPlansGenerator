@@ -1,0 +1,14 @@
+package com.project.dao;
+
+import com.project.model.Customer;
+
+public interface DAOCustomer {
+
+	public void addCustomer(Customer customer,Long idUser);
+
+	public Customer getCustomer(Long userId);
+
+	public void modifyCustomer(Customer infoCustomer);
+
+	public boolean deleteCustomer(Long userId);
+}

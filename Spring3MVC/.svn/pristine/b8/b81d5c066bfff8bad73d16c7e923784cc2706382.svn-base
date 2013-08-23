@@ -1,0 +1,40 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+<script>
+$(document).ready(function() {
+	$('#slatMensaje').delay(10000).fadeOut(2000);
+});
+</script>
+<section id="fSportPlansGenerator">
+	<form:form id="formSportPlansGenerator" action="generateSportPlanStep1.do"
+		commandName="dtoSportPlan" class="redondeado shadow fondoForm padding2">
+
+		<p class="titleForm">
+			<spring:message code="etiqueta.titulo.generate" />
+		</p>
+		<c:if test="${not empty error}">
+			<div class="errorblock redondeado shadow">
+				<spring:hasBindErrors name="dtoSportPlan">
+				</spring:hasBindErrors>
+			</div>
+		</c:if>
+		<div class="step redondeado shadow fondoForm">
+			<p>PASO 2</p>
+		</div>
+		<div id="level">
+			<p>NIVEL: <span id="contenidoLevel">${dtoSportPlan.level}</span></p>
+		</div>
+		<div id="objetive">
+			<p>OBJETIVO: <span id="contenidoObjetive">${dtoSportPlan.objetive}</span></p>
+		</div>
+		<div id="level">
+			<p>DURACIÓN: <span id="contenidoLevel">${dtoSportPlan.periods} periodos de ${dtoSportPlan.weeks} semanas ( ${dtoSportPlan.sessionsPerWeek} dias a la semana - ${dtoSportPlan.sessionsPerWeek * dtoSportPlan.periods * dtoSportPlan.weeks } días en total )</span></p>
+		</div>
+		<form:hidden path="customerId"/>
+		<div class="marginTop20">
+			<input id="submitSportPlansGenerator" name="submit" type="submit"
+				value="<spring:message code="etiqueta.link.siguiente" />"
+				class="estiloBotones" />		
+			<input type="button" class="estiloBotones" onclick="location='menuGenerarPlan.do?customerId='${customerId}" value="<spring:message code="etiqueta.link.cancelar"/>"/>
+		</div>
+	</form:form>
+</section>

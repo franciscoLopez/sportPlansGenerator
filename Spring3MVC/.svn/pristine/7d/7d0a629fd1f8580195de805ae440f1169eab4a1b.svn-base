@@ -1,0 +1,12 @@
+package com.project.dao;
+
+import com.project.dto.DTOSportPlan;
+
+public interface DAOSportPlan {
+
+	void createSportPlanStepOne(DTOSportPlan dtoSportPlan);
+
+	Integer getSessionsPerWeek(String levelId, String objetiveId);
+
+	Integer getRecuperationTime(String level, String objetive);
+}

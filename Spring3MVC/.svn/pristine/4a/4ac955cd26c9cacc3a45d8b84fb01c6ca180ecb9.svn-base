@@ -1,0 +1,57 @@
+package com.project.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name = Tabla.DURATION)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Duration extends BaseEntity implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String D_PERIODS 	= "periods";
+	
+	private Integer periods;
+	
+	private Integer weeks;
+
+	private Integer sessionsPerWeek;
+
+	
+	public Integer getPeriods() {
+		return periods;
+	}
+
+	public void setPeriods(Integer periods) {
+		this.periods = periods;
+	}
+
+	public Integer getWeeks() {
+		return weeks;
+	}
+
+
+	public void setWeeks(Integer weeks) {
+		this.weeks = weeks;
+	}
+
+
+	public Integer getSessionsPerWeek() {
+		return sessionsPerWeek;
+	}
+
+
+	public void setSessionsPerWeek(Integer sessionsPerWeek) {
+		this.sessionsPerWeek = sessionsPerWeek;
+	}
+
+	
+}

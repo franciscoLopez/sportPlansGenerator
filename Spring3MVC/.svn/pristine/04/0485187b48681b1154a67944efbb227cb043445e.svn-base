@@ -1,0 +1,76 @@
+package com.project.dao.impl;
+
+import java.util.Calendar;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.project.dao.DAOSecurity;
+import com.project.dao.DAOSportTrainer;
+import com.project.model.Authority;
+import com.project.model.Group;
+import com.project.model.SportCentre;
+import com.project.model.SportTrainer;
+import com.project.servicios.SportTrainerManager;
+import com.project.util.Util;
+
+public class DAOSportTrainerImpl extends DAOComunImpl implements DAOSportTrainer{
+
+	@Autowired
+	private DAOSecurity	daoSecurity;
+	
+	@Autowired
+	private SportTrainerManager sportTrainerManager;
+	
+	public void addSportTrainer(SportTrainer sportTrainer,Long userId) {
+		Calendar hoy = Calendar.getInstance();
+		sportTrainer.setInsertDate(hoy.getTime());
+		sportTrainer.setModifyDate(hoy.getTime());
+		List<Group> grupos = daoSecurity.getGrupos();
+		Group grupo = null;
+		for(Group g : grupos){
+			List<Authority> authorities = g.getAuthorities();
+			for(Authority a : authorities){
+				if(a.getAuthority().equals("ROLE_SPORT_TRAINER")){
+					grupo = g;
+				}
+			}
+		}
+		sportTrainer.addGrupo(grupo);
+		SportCentre sportCentre = this.obtenerObjetoId(SportCentre.class, userId);
+		sportTrainer.setSportCenter(sportCentre);
+		sportTrainer.setPassword(Util.encriptarPassword(sportTrainer.getPassword()));
+		this.guardarObjeto(sportTrainer);
+	}
+
+	public boolean deleteSportTrainer(Long userId) {
+		boolean res = false;
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(SportTrainer.class);
+		crit.add(Restrictions.idEq(userId));
+		SportTrainer sportTrainer = (SportTrainer) crit.uniqueResult();
+		sportTrainer.setEnabled((short) 0);
+		if(this.guardarObjeto(sportTrainer)){
+			res = true;
+		}
+		return res;
+	}
+	
+	public SportTrainer getSportTrainer(Long userId) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(SportTrainer.class);
+		crit.add(Restrictions.idEq(userId));
+		SportTrainer sportTrainer = (SportTrainer) crit.uniqueResult();
+		return sportTrainer;
+	}
+
+	public void modifySportTrainer(SportTrainer sp) {
+		SportTrainer s = this.getSportTrainer(sp.getId());
+		if(!sp.getContactInfo().isEmpty()){
+			s.modifySportTrainer(sp.getContactInfo());
+		}
+		Calendar hoy = Calendar.getInstance();		
+		s.setModifyDate(hoy.getTime());	
+		sessionFactory.getCurrentSession().saveOrUpdate(s);
+	}
+}

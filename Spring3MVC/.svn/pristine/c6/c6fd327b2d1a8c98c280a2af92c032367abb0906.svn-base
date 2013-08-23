@@ -1,0 +1,88 @@
+### TITULOS
+etiqueta.titulo.bienvenido = Bienvenido
+etiqueta.titulo.inicio = Inicio
+etiqueta.titulo.menu.sport.centre = Centro Deportivo
+etiqueta.titulo.menu.sport.trainer = Monitor Deportivo
+etiqueta.titulo.menu.admin = Administrador
+etiqueta.titulo.nuevoSportCentre = Nuevo Centro Deportivo
+etiqueta.titulo.nuevoSportTrainer = Nuevo Monitor Deportivo
+etiqueta.titulo.nuevoCustomer = Nuevo Cliente
+etiqueta.titulo.modify.credentials = Modificar perfil
+etiqueta.titulo.modify.password = Modificar contrase&ntilde;a
+etiqueta.titulo.sport.centre = Centro deportivo
+etiqueta.titulo.panel = Panel
+etiqueta.titulo.monitores = Monitores
+etiqueta.titulo.socios = Socios
+etiqueta.titulo.configuracion = Configuracion
+etiqueta.titulo.perfil = Perfil
+etiqueta.titulo.sport.trainer = Monitor deportivo
+
+### LINKS
+etiqueta.link.registrar = registrarse
+etiqueta.link.aniadirSporCentre = Dar de alta
+etiqueta.link.registrar.SporTrainer = Nuevo monitor deportivo
+etiqueta.link.registrar.customer = Nuevo cliente
+etiqueta.link.aniadirSporTrainer = Nuevo
+etiqueta.link.modify.credentials.SporCentre = Perfil
+etiqueta.link.modificar = Guardar
+
+
+
+### MODELO
+#User
+etiqueta.modelo.user.username = usuario
+etiqueta.modelo.user.password = password
+etiqueta.modelo.user.repetirPassword = repita password
+
+
+	### SportCentre
+	etiqueta.modelo.sportCentre.name = centro deportivo
+	etiqueta.modelo.sportCentre.email = email
+	
+	etiqueta.panel.sport.centre.monitores = Monitores
+	etiqueta.panel.sport.centre.socios = Socios
+	etiqueta.panel.sport.centre.planes = Planes generados
+	
+	etiqueta.modelo.user.mail = email
+	etiqueta.modelo.user.mobileNumber = Tlf. Movil
+	etiqueta.modelo.user.phoneNumber = Tlf. Fijo
+	
+	### SportTrainer
+	etiqueta.modelo.sportTrainer.name = monitor deportivo
+	etiqueta.modelo.sportCentre.surname = apellidos
+	etiqueta.modelo.sportCentre.mail = email
+	etiqueta.modelo.sportCentre.mobileNumber = tlf. movil
+	etiqueta.modelo.sportCentre.phoneNumber = tlf. fijo
+	etiqueta.modelo.sportCentre.city = ciudad
+	etiqueta.modelo.sportCentre.country = pais
+	etiqueta.modelo.sportCentre.postalCode = codigo postal
+ 	etiqueta.modelo.sportCentre.address = direccion
+ 	etiqueta.modelo.sportTrainer.password = contrase&ntilde;a
+ 	etiqueta.modelo.sportTrainer.repetir.password = repita la contrase&ntilde;a
+ 	
+ 	etiqueta.panel.sport.trainer.clientes = Socios
+ 	
+ 	### Customer
+ 	etiqueta.modelo.customer.nombre = nombre
+
+### ERRORES
+etiqueta.error.username.is.required = campo unsername es obligatorio
+etiqueta.error.password.is.required = campo password es obligatorio
+etiqueta.error.repPassword.is.required = campo password es obligatorio
+etiqueta.error.name.is.required = error en el campo nombre centro deportivo
+etiqueta.error.username.repetido = eliga otro nombre de usuario
+etiqueta.error.password.incorrecto = error en el campo password
+etiqueta.error.email.is.required = error en el campo email
+etiqueta.error.surname.is.required = error en el campo apellidos
+etiqueta.error.phone.number.is.required = error en numero de telefono
+etiqueta.error.mobile.number.is.required = error en tfl. movil
+etiqueta.error.city.is.required = error en ciudad
+etiqueta.error.country.is.required = error en pais
+etiqueta.error.postal.code.is.required = error en codigo postal
+etiqueta.error.address.is.required = error en direccion
+etiqueta.error.password.is.required = error en la contraseña
+
+	##SportTrainer
+	etiqueta.error.sport.trainer.name.is.required = campo nombre es obligatorio
+	etiqueta.error.sport.trainer.surname.is.required = campo apellido es obligatorio
+	etiqueta.error.sport.trainer.date.birth.is.required = campo fecha de nacimiento es obligatorio

@@ -1,0 +1,58 @@
+package com.project.model;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "period")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Period extends BaseEntity implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	@Column
+	private Long order;
+	
+	@OneToMany
+	@JoinTable(name="weeks_period", joinColumns = @JoinColumn(name = "period_ID"),
+				inverseJoinColumns = @JoinColumn(name = "week_ID"))
+	private List<Week> weeks;
+	
+	@ManyToOne
+	private Plan plan;
+
+	public Plan getPlan() {
+		return plan;
+	}
+
+	public void setPlan(Plan plan) {
+		this.plan = plan;
+	}
+
+	public Long getOrder() {
+		return order;
+	}
+
+	public void setOrder(Long order) {
+		this.order = order;
+	}
+
+	public List<Week> getWeeks() {
+		return weeks;
+	}
+
+	public void setWeeks(List<Week> weeks) {
+		this.weeks = weeks;
+	}
+	
+}

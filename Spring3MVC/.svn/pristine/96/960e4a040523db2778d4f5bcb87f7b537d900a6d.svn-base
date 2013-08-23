@@ -1,0 +1,78 @@
+package com.project.dao.impl;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.project.dao.DAOSecurity;
+import com.project.dao.DAOSportCentre;
+import com.project.dto.DTOSportTrainer;
+import com.project.model.Authority;
+import com.project.model.Group;
+import com.project.model.SportCentre;
+import com.project.model.SportTrainer;
+import com.project.util.Util;
+
+public class DAOSportCentreImpl extends DAOComunImpl implements DAOSportCentre{
+	
+	@Autowired
+	private DAOSecurity	daoSecurity;
+	
+	public void addSportCentre(SportCentre sportCentre) {
+		Calendar hoy = Calendar.getInstance();
+		sportCentre.setInsertDate(hoy.getTime());
+		sportCentre.setModifyDate(hoy.getTime());
+		List<Group> grupos = daoSecurity.getGrupos();
+		Group grupo = null;
+		for(Group g : grupos){
+			List<Authority> authorities = g.getAuthorities();
+			for(Authority a : authorities){
+				if(a.getAuthority().equals("ROLE_SPORT_CENTRE")){
+					grupo = g;
+				}
+			}
+		}
+		sportCentre.addGrupo(grupo);
+		sportCentre.setPassword(Util.encriptarPassword(sportCentre.getPassword()));
+		this.guardarObjeto(sportCentre);		
+	}
+
+	
+	public Integer getNumberSportTrainers(Long id) {
+		Session session = sessionFactory.getCurrentSession();
+		String queryString = "select sportTrainer from SportCentre as sportCentre "
+						+ " join sportCentre.sportTrainers as sportTrainer "
+						+ " where sportTrainer.enabled = 1 "
+						+ " and sportCentre.id = :id";
+		Query query = session.createQuery(queryString);
+		query.setParameter("id",id);
+		Integer res  = query.list().size();
+		
+		return res;
+	}
+
+	public List<DTOSportTrainer> getSportTrainers(Long sportCentreID) {
+		Session session = sessionFactory.getCurrentSession();
+		String queryString = "select sportTrainer from SportCentre as sportCentre "
+						+ " join sportCentre.sportTrainers as sportTrainer "
+						+ " where sportTrainer.enabled = 1 "
+						+ " and sportCentre.id = :id";
+		Query query = session.createQuery(queryString);
+		query.setParameter("id",sportCentreID);
+		List<SportTrainer> res  = query.list();
+		List<DTOSportTrainer> lstRes = new ArrayList<DTOSportTrainer>();
+		for(SportTrainer s: res){
+			DTOSportTrainer dto = new DTOSportTrainer();
+			dto.setName(s.getName());
+			dto.setSurName(s.getSurName());
+			dto.setId(s.getId());
+			lstRes.add(dto);			
+		}
+		return lstRes;
+	}
+
+}

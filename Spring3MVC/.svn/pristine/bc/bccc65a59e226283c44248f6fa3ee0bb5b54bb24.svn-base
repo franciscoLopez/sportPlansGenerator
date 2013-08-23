@@ -1,0 +1,102 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd ">
+
+	<context:component-scan base-package="com.project"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<tx:annotation-driven/>
+
+	<bean id="validarSportCentre" class="com.project.servicios.ValidarSportCentre" />
+	<bean id="validarSportTrainer" class="com.project.servicios.ValidarSportTrainer" />
+	<bean id="validarInfoSportTrainer" class="com.project.servicios.ValidarInfoSportTrainer" />
+	<bean id="validarCustomer" class="com.project.servicios.ValidarCustomer" />
+	<bean id="validarInfoCustomer" class="com.project.servicios.ValidarInfoCustomer" />
+	<bean id="validarInfoSportCentre" class="com.project.servicios.ValidarInfoSportCentre" />
+	<bean id="validarPassword" class="com.project.servicios.ValidarPassword" />	
+	<bean id="validarDTOExercise" class="com.project.servicios.ValidarDTOExercise" />
+	<bean id="validarDTOProfile" class="com.project.servicios.ValidarDTOProfile" />
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
+		<property name="basenames"> <list> <value>mymessages</value> </list> </property> 
+		</bean> -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<!-- <value>classpath:messages</value> -->
+				<value>classpath:proyecto</value>
+				<value>classpath:jdbc</value>
+				<!--<value>classpath:sistema</value> -->
+				<value>/bundle/messages</value>
+				<value>mymessages</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+		
+		<!-- Tiempo para la actualización del archivo properties -->
+		<property name="cacheSeconds" value="60"></property>
+	</bean>
+
+	<!-- Configurer that replaces ${...} placeholders with values from a properties 
+		file -->
+	<context:property-placeholder location="classpath:*.properties" />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass">
+			<value> org.springframework.web.servlet.view.tiles2.TilesView</value>
+		</property>
+		<property name="contentType" value="text/html;charset=UTF-8" />
+	</bean>
+	<!-- Configure Apache Tiles for the view -->
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>${layouts}</value>
+				<value>${views}</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="tilesResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />		
+		<!-- In case you have more than one resolver you can set the order here -->
+		<!-- The order 0 will be the first one in the order -->
+		<property name="order" value="1" />
+	</bean>
+
+	<bean id="viewResolver2" class="org.springframework.web.servlet.view.XmlViewResolver"> 
+		<property name="location" value="/WEB-INF/json.xml" /> <property name="order" 
+		value="1" /> </bean> 
+
+	<!-- <bean id="tilesResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"> 
+		<property name="requestContextAttribute" value="requestContext" /> <property 
+		name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" 
+		/> <property name="contentType" value="text/html;charset=UTF-8" /> <property 
+		name="redirectContextRelative" value="true" /> </bean> -->
+
+	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver"> 
+		<property name="basename" value="views"></property> </bean> -->
+</beans>

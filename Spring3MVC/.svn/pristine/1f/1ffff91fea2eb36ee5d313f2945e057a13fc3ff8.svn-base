@@ -1,0 +1,13 @@
+package com.project.dao;
+
+import com.project.dto.DTOSportTrainer;
+import com.project.model.SportTrainer;
+
+public interface DAOSportTrainer {
+
+	public void addSportTrainer(SportTrainer sportTrainer,Long idUser);
+	
+	public boolean deleteSportTrainer(Long userId);
+	
+	public DTOSportTrainer getSportTrainer(Long userId);
+}

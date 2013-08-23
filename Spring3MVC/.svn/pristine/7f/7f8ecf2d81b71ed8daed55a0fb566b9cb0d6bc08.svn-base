@@ -1,0 +1,13 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+<script>
+$(document).ready(function() {
+	$('#slatMensaje').delay(10000).fadeOut(2000);	
+});
+</script>
+<section id="fSportPlansGenerator">	
+	<input type="button" class="estiloBotones" onclick="location='modifyProfile.do?customerId=<c:out value="${customerId}" />'" value="<spring:message code="etiqueta.link.modify.credentials.SporCentre"/>"/>
+	<input type="button" class="estiloBotones" onclick="location='showSportPlans.do?customerId=<c:out value="${customerId}" />'" value="<spring:message code="etiqueta.panel.sport.centre.planes"/>"/>
+	<input type="button" class="estiloBotones" onclick="location='menuGenerarPlanStep1.do?customerId=<c:out value="${customerId}" />'" value="<spring:message code="etiqueta.link.generar.plan.automatico"/>"/>
+	<input type="button" class="estiloBotones" onclick="location='menuGenerarPlanStep1Manual.do?customerId=<c:out value="${customerId}" />'" value="<spring:message code="etiqueta.link.generar.plan.manual"/>"/>
+	<input type="button" class="estiloBotones" onclick="location='menuSportTrainer.do'" value="<spring:message code="etiqueta.link.cancelar"/>"/>
+</section>

@@ -1,0 +1,28 @@
+package com.project.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name = Tabla.PERIOD)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Period extends BaseEntity implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	private Integer weeks;
+
+	public Integer getWeeks() {
+		return weeks;
+	}
+
+	public void setWeeks(Integer weeks) {
+		this.weeks = weeks;
+	}
+}

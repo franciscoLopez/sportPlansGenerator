@@ -1,0 +1,19 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+<section id="menuSportTrainer">
+	<h1>SPORT TRAINER</h1>
+	<h3>Users</h3>
+	<c:if test="${!empty lstUsers}">
+		<table>
+			<tr>
+				<th>UserName</th>
+				<th>ID</th>
+			</tr>
+			<c:forEach items="${lstUsers}" var="user">
+				<tr>
+					<td>${user.username}</td>
+					<td>${user.id}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</c:if>
+</section>

@@ -1,0 +1,406 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+<script type="text/javascript">
+/*codigo para el filtro en la tabla de monitores*/
+  	$(function() { 
+ 		var theTable = $('#sportTrainersTable')
+ 		$("#filterMonitores").keyup(function() {
+   			$.uiTableFilter( theTable, this.value );
+  		})
+	});
+/*codigo para el filtro en la tabla de socios*/
+  	$(function() { 
+ 		var theTable2 = $('#customerTable')
+ 		$("#filterCustomers").keyup(function() {
+   			$.uiTableFilter( theTable2, this.value );
+  		})
+	});
+
+	$(document).ready(function() {
+		$('#variableSocios').hide();
+		$('#variableConfiguracion').hide();
+		$('#fsportTrainer').hide();
+		$('#fCustomer').hide();
+		$("#formSportTrainer").validate();
+		$("#formCustomer").validate();
+		getMonitores();
+		getCustomers();
+		$('#slatMensaje').delay(10000).fadeOut(2000);
+	});
+	function mostrarMonitores() {
+		$('#variableSocios').hide();
+		$('#variableMonitores').show();
+		$('#variableConfiguracion').hide();
+		$('#fCustomer').hide();
+	}
+	function mostrarSocios() {
+		$('#variableSocios').show();
+		$('#variableMonitores').hide();
+		$('#variableConfiguracion').hide();
+		$('#fsportTrainer').hide();
+	}
+	function mostrarConfiguracion() {
+		$('#variableSocios').hide();
+		$('#variableMonitores').hide();
+		$('#variableConfiguracion').show();
+		$('#fsportTrainer').hide();
+		$('#fCustomer').hide();
+	}
+	function muestraFormSportTrainer() {
+		$('#fsportTrainer').show();
+	}
+	function muestraFormCustomer(){
+		$('#fCustomer').show();
+	}
+	function muestraNotificacion(notificacion) {
+		$('#Notification').jnotifyAddMessage({
+			text : notificacion,
+			permanent : false
+		});
+	}
+	function getMonitores() {
+		jQuery.getJSON("getSportTrainers.do", function(json) {
+			muestraMonitores(json);
+		});
+	}
+	function muestraMonitores(json) {
+		var monitores = json.listaSportTrainers;
+		for (i = 0; i < monitores.length; i++) {
+			var locationInfo = "modifyInfoSportTrainer.do?userId="
+					+ monitores[i].id;
+			var enlaceInfo = "<input type='button' onclick=location='"+locationInfo+"' class='estiloBotones boton' value='+' />";
+			
+			var locationEliminar = "deleteSportTrainer.do?userId="
+					+ monitores[i].id;
+			var enlaceEliminar = "<input type='button' onclick='eliminarMonitor("+monitores[i].id+");' class='estiloBotones boton' value='X' />";
+			monitor = "<tr class='monitor'><td class='width100'>"
+					+ monitores[i].name + "</td><td class='width100'>"
+					+ monitores[i].surName + "</td><td class='width100'>"
+					+ enlaceInfo + "</td><td class='width100'>"
+					+ enlaceEliminar + "</td></tr>";
+			$('#sportTrainersTable').append(monitor);
+		}
+	}
+	function getCustomers() {
+		jQuery.getJSON("getCustomers.do", function(json) {
+			muestraCustomers(json);
+		});
+	}
+	function muestraCustomers(json) {
+		var customers = json.listaCustomers;
+		for (i = 0; i < customers.length; i++) {
+			var locationInfo = "modifyInfoCustomer.do?userId="
+					+ customers[i].id;
+			var enlaceInfo = "<input type='button' onclick=location='"+locationInfo+"' class='estiloBotones boton' value='+' />";
+			
+			var locationEliminar = "deleteCustomer.do?userId="
+					+ customers[i].id;
+			var enlaceEliminar = "<input type='button' onclick='eliminarCustomer("+customers[i].id+");' class='estiloBotones boton' value='X' />";
+			customer = "<tr class='monitor'><td class='width100'>"
+					+ customers[i].name + "</td><td class='width100'>"
+					+ customers[i].surName + "</td><td class='width100'>"
+					+ enlaceInfo + "</td><td class='width100'>"
+					+ enlaceEliminar + "</td></tr>";
+			$('#customerTable').append(customer);
+		}
+	}
+	function eliminarMonitor(id){
+		  var answer = confirm("¿Eliminar este monitor?")
+		    if (answer){
+		        location="deleteSportTrainer.do?userId="+id;
+		    }
+		    
+		    return false;
+	}
+	function eliminarCustomer(id){
+		  var answer = confirm("¿Eliminar este cliente?")
+		    if (answer){
+		        location="deleteCustomer.do?userId="+id;
+		    }
+		    
+		    return false;
+	}
+</script>
+<section class="panelIzq">
+	<div id="Notification"></div>
+	<div id="infoSportCentre">
+		<c:if test="${!empty user}">
+			<h2>
+				<spring:message code="etiqueta.titulo.sport.centre" />
+				${user.username}
+			</h2>
+		</c:if>
+		<div class="redondeado shadow fondoForm padding2">
+				<table>
+					<tr>
+						<td><spring:message
+								code="etiqueta.panel.sport.centre.monitores" />:</td>
+						<td class="paddingLeft35">
+							<c:if test="${!empty numSportTrainers}">${numSportTrainers}</c:if>
+							<c:if test="${empty numSportTrainers}">-</c:if>
+						</td>
+					</tr>
+					<tr>
+						<td><spring:message code="etiqueta.panel.sport.centre.socios" />:</td>
+						<td class="paddingLeft35">
+							<c:if test="${!empty numCustomers}"> ${numCustomers}</c:if>
+							<c:if test="${empty numCustomers}"> -</c:if>
+						</td>
+					</tr>
+					<tr>
+						<td><spring:message code="etiqueta.panel.sport.centre.planes" />:</td>
+						<td class="paddingLeft35">
+							<c:if test="${!empty numSportPlans}"> ${numSportPlans}</c:if>
+							<c:if test="${empty numSportPlans}"> -</c:if>
+						</td>
+					</tr>
+				</table>
+		</div>
+	</div>
+	<div id="menuSportCentre">
+		<h2>
+			<spring:message code="etiqueta.titulo.panel" />
+		</h2>
+		<div class="redondeado shadow fondoForm padding2">
+			<table>
+				<tr>
+					<td><spring:message code="etiqueta.titulo.monitores" /></td>
+					<td class="paddingLeft35"><input id="nuevoSportTrainer"
+						type="button" onclick="mostrarMonitores()"
+						class="estiloBotones boton" value="+" /></td>
+				</tr>
+				<tr>
+					<td><spring:message code="etiqueta.titulo.socios" /></td>
+					<td class="paddingLeft35"><input id="perfilSportTrainer"
+						type="button" onclick="mostrarSocios()"
+						class="estiloBotones boton" value="+" /></td>
+				</tr>
+				<tr>
+					<td><spring:message code="etiqueta.titulo.configuracion" /></td>
+					<td class="paddingLeft35"><input id="perfilSportTrainer"
+						type="button" onclick="mostrarConfiguracion()"
+						class="estiloBotones boton" value="+" /></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</section>
+<section class="panelDer">
+	<div id="variableMonitores">
+		<h2>
+			<spring:message code="etiqueta.titulo.monitores" />
+		</h2>
+		<div class="redondeado shadow fondoForm padding2">
+			<div><form id="filter-formMonitores"><label for="filterMonitores">Filtrar</label><input name="filter" id="filterMonitores" value="" maxlength="20" size="20" type="text"></form></div>
+			<table class="monitoresTable">
+				<tbody>
+					<tr>
+						<td class="width100">Nombre</td>
+						<td class="width100">Apellido</td>
+						<td class="width100">Info</td>
+						<td class="width100">Eliminar</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="scrollable">
+				<table id="sportTrainersTable"></table>
+			</div>
+			<div class="marginTop5">
+				<spring:message code="etiqueta.link.registrar.SporTrainer" />
+				<input id="nuevoSportTrainer" type="button"
+					onclick="muestraFormSportTrainer()" class="estiloBotones boton"
+					value="+" />
+			</div>
+		</div>
+	</div>
+	<div id="variableSocios">
+		<h2>
+			<spring:message code="etiqueta.titulo.socios" />
+		</h2>
+		<div class="redondeado shadow fondoForm padding2">
+			<div><form id="filter-formCustomers"><label for="filterCustomers">Filtrar</label><input name="filter" id="filterCustomers" value="" maxlength="20" size="20" type="text"></form></div>
+			<table>
+				<tr>
+					<td class="width100">Nombre</td>
+					<td class="width100">Apellido</td>
+					<td class="width100">Info</td>
+					<td class="width100">Eliminar</td>
+				</tr>
+			</table>
+			<div class="scrollable">
+				<table id="customerTable"></table>
+			</div>
+			<div class="marginTop5">
+				<spring:message code="etiqueta.link.registrar.customer" />
+				<input id="nuevoCustomer" type="button"
+					onclick="muestraFormCustomer()" class="estiloBotones boton"
+					value="+" />
+			</div>
+		</div>
+	</div>
+	<div id="variableConfiguracion">
+		<h2>
+			<spring:message code="etiqueta.titulo.configuracion" />
+		</h2>
+		<div class="redondeado shadow fondoForm padding2">
+			<div>
+				<input id="perfilSportCentre" type="button"
+					onclick="location='modifyCredentialsSportCentre.do'"
+					class="estiloBotones boton"
+					value="<spring:message code="etiqueta.titulo.modify.credentials" />" />
+			</div>
+			<div>
+				<input id="passSportCentre" type="button"
+					onclick="location='modifyPassWord.do'"
+					class="estiloBotones boton"
+					value="<spring:message code="etiqueta.titulo.modify.password" />" />
+			</div>
+		</div>
+	</div>
+	<section id="fsportTrainer">
+		<form:form action="addSportTrainer.do" id="formSportTrainer"
+			commandName="sportTrainer"
+			class="redondeado shadow fondoForm padding2">
+
+			<p class="titleForm padding2">
+				<spring:message code="etiqueta.titulo.nuevoSportTrainer" />
+			</p>
+			<c:if test="${not empty error}">
+				<div class="errorblock redondeado shadow">
+					<spring:hasBindErrors name="sportTrainer">
+						<p>
+							<form:errors path="username" />
+						</p>
+						<p>
+							<form:errors path="password" />
+						</p>
+						<p>
+							<form:errors path="repetirPassword" />
+						</p>
+						<p>
+							<form:errors path="name" />
+						</p>
+						<p>
+							<form:errors path="surName" />
+						</p>
+						<p>
+							<form:errors path="email" />
+						</p>
+					</spring:hasBindErrors>
+				</div>
+			</c:if>
+			<div>
+				<label for="username" class="labelForm"><spring:message
+						code="etiqueta.modelo.user.username" /></label>
+				<form:input path="username" class="required" />
+			</div>
+
+			<div>
+				<label for="password" class="labelForm"><spring:message
+						code="etiqueta.modelo.user.password" /></label>
+				<form:password path="password" class="required" minlength="6" />
+			</div>
+			<div>
+				<label for="repetirPassword" class="labelForm"><spring:message
+						code="etiqueta.modelo.user.repetirPassword" /></label>
+				<form:password path="repetirPassword" class="required" minlength="6" />
+			</div>
+			<div id="columnaFormSportCentre">
+				<div>
+					<label for="name" class="labelForm"><spring:message
+							code="etiqueta.modelo.sportTrainer.name" /></label>
+					<form:input path="name" id="inputNameFormSportTrainer"
+						class="required" />
+				</div>
+				<div>
+					<label for="surName" class="labelForm"><spring:message
+							code="etiqueta.modelo.sportCentre.surname" /></label>
+					<form:input path="surName" id="inputSurnameFormSportTrainer"
+						class="required" />
+				</div>
+				<div>
+					<label for="email" class="labelForm"><spring:message
+							code="etiqueta.modelo.sportCentre.email" /></label>
+					<form:input path="email" id="inputEmailFormSportTrainer"
+						class="required email" />
+				</div>
+			</div>
+
+			<input id="submitSportTrainer" name="submit" type="submit"
+				value="<spring:message code="etiqueta.link.aniadirSporTrainer" />"
+				class="estiloBotones" />
+		</form:form>
+	</section>
+	<section id="fCustomer">
+		<form:form action="addCustomer.do" id="formCustomer"
+			commandName="customer"
+			class="redondeado shadow fondoForm padding2">
+			<p class="titleForm padding2">
+				<spring:message code="etiqueta.titulo.nuevoCustomer" />
+			</p>
+			
+			<c:if test="${not empty error}">
+				<div class="errorblock redondeado shadow">
+					<spring:hasBindErrors name="customer">
+						<p>
+							<form:errors path="username" />
+						</p>
+						<p>
+							<form:errors path="password" />
+						</p>
+						<p>
+							<form:errors path="repetirPassword" />
+						</p>
+						<p>
+							<form:errors path="name" />
+						</p>
+						<p>
+							<form:errors path="surName" />
+						</p>
+						<p>
+							<form:errors path="email" />
+						</p>
+					</spring:hasBindErrors>
+				</div>
+			</c:if>
+			<div>
+				<label for="username" class="labelForm"><spring:message
+						code="etiqueta.modelo.user.username" /></label>
+				<form:input path="username" class="required" />
+			</div>
+
+			<div>
+				<label for="password" class="labelForm"><spring:message
+						code="etiqueta.modelo.user.password" /></label>
+				<form:password path="password" class="required" minlength="6" />
+			</div>
+			<div>
+				<label for="repetirPassword" class="labelForm"><spring:message
+						code="etiqueta.modelo.user.repetirPassword" /></label>
+				<form:password path="repetirPassword" class="required" minlength="6" />
+			</div>
+			<div id="columnaFormSportCentre">
+				<div>
+					<label for="name" class="labelForm"><spring:message
+							code="etiqueta.modelo.customer.nombre" /></label>
+					<form:input path="name" id="inputNameFormSportTrainer"
+						class="required" />
+				</div>
+				<div>
+					<label for="surName" class="labelForm"><spring:message
+							code="etiqueta.modelo.sportCentre.surname" /></label>
+					<form:input path="surName" id="inputSurnameFormSportTrainer"
+						class="required" />
+				</div>
+				<div>
+					<label for="email" class="labelForm"><spring:message
+							code="etiqueta.modelo.sportCentre.email" /></label>
+					<form:input path="email" id="inputEmailFormSportTrainer"
+						class="required email" />
+				</div>
+			</div>
+			<input id="submitCustomer" name="submit" type="submit"
+				value="<spring:message code="etiqueta.link.aniadirSporTrainer" />"
+				class="estiloBotones" />
+		</form:form>
+	</section>
+</section>

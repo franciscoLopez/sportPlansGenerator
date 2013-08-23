@@ -1,0 +1,126 @@
+package com.project.dto;
+
+import java.util.Date;
+
+import com.project.model.SportTrainer;
+
+public class DTOSportTrainer {
+
+	private String name;
+	
+	private String surName;
+	
+	private Date dateBirth;
+	
+	private String mail;
+	
+	private String phoneNumber;
+	
+	private String mobileNumber;
+	
+	private String city;
+	
+	private String country;
+	
+	private String postalCode;
+	
+	private String address;
+	
+	public DTOSportTrainer(SportTrainer sp){
+		this.name = sp.getName();		
+		this.surName = sp.getSurName();		
+		this.dateBirth = sp.getDateBirth();
+		this.mail = sp.getEmail();
+		if(sp.getContactInfo() != null){
+			this.phoneNumber = sp.getContactInfo().getPhoneNumber();
+			this.mobileNumber = sp.getContactInfo().getMobileNumber();
+			if(sp.getContactInfo().getAddress() != null){
+				this.city = sp.getContactInfo().getAddress().getCity();
+				this.country = sp.getContactInfo().getAddress().getCountry();
+				this.postalCode = sp.getContactInfo().getAddress().getPostalCode();
+				this.address = sp.getContactInfo().getAddress().getAddress();
+			}
+		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+	public Date getDateBirth() {
+		return dateBirth;
+	}
+
+	public void setDateBirth(Date dateBirth) {
+		this.dateBirth = dateBirth;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+}

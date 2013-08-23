@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xml:base="http://www.springsource.org"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+ <title>SpringSource.org</title>
+ <link>http://www.springsource.org</link>
+ <description>Welcome to the home of Spring, the leading platform to build and run enterprise Java applications. Led and sustained by SpringSource, Spring delivers significant benefits for many projects, increasing development productivity and runtime performance while improving test coverage and application quality.</description>
+ <language>en</language>
+<item>
+ <title>Lessons Learned Moving from GWT to Spring MVC</title>
+ <link>http://www.springsource.org/node/22602</link>
+ <description>&lt;div class=&quot;event-nodeapi&quot;&gt;
+  &lt;div class=&quot;event-start dtstart&quot; title=&quot;2013-05-28T17:00:00Z&quot;&gt;&lt;label&gt;Start:  &lt;/label&gt; 2013-05-28 10:00 &lt;/div&gt;
+&lt;/div&gt;
+  &lt;div class=&quot;event-nodeapi&quot;&gt;
+    &lt;div class=&quot;event-end dtend&quot; title=&quot;2013-05-28T18:00:00Z&quot;&gt;&lt;label&gt;End: &lt;/label&gt; 2013-05-28 11:00 &lt;/div&gt;
+  &lt;/div&gt;
+ &lt;div class=&quot;event-nodeapi&quot;&gt;
+   &lt;div class=&quot;event-tz&quot;&gt;&lt;label&gt;Timezone: &lt;/label&gt;US/Pacific &lt;/div&gt;
+  &lt;/div&gt;
+&lt;div class=&quot;event-nodeapi&quot;&gt;
+  &lt;div class=&quot;event-start dtstart&quot; title=&quot;2013-05-28T17:00:00Z&quot;&gt;&lt;label&gt;Start:  &lt;/label&gt; 2013-05-28 10:00 &lt;/div&gt;
+&lt;/div&gt;
+  &lt;div class=&quot;event-nodeapi&quot;&gt;
+    &lt;div class=&quot;event-end dtend&quot; title=&quot;2013-05-28T18:00:00Z&quot;&gt;&lt;label&gt;End: &lt;/label&gt; 2013-05-28 11:00 &lt;/div&gt;
+  &lt;/div&gt;
+ &lt;div class=&quot;event-nodeapi&quot;&gt;
+   &lt;div class=&quot;event-tz&quot;&gt;&lt;label&gt;Timezone: &lt;/label&gt;US/Pacific &lt;/div&gt;
+  &lt;/div&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.event-nodeapi, .submitted {display:none}
+&lt;/style&gt;
+&lt;p&gt;
+Broadleaf Commerce is an eCommerce framework largely based on Spring. In the latest version 3.0, Broadleaf migrated its admin console from GWT to a Spring / Spring MVC / Thymeleaf application and updated the framework to Spring 3.2. This session will begin by discussing reasons for moving to Spring MVC as well as why Thymeleaf was chosen as the templating engine. We will also cover some of the more interesting Spring extension points we utilized to provide extensibility for users of Broadleaf.
+&lt;/p&gt;
+&lt;p&gt;
+Europe: Tuesday, May 28&lt;br&gt;
+3:00pm GMT Summer Time (London, GMT+01:00)&lt;br&gt;
+&lt;a href=&quot;https://vmwareevents.webex.com/vmwareevents/onstage/g.php?t=a&amp;d=663584780&quot; target=&quot;_blank&quot;&gt;Register&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+North America: Tuesday, May 28&lt;br&gt;
+10:00am Pacific Daylight (San Francisco, GMT-07:00)&lt;br&gt;
+&lt;a href=&quot;https://vmwareevents.webex.com/vmwareevents/onstage/g.php?t=a&amp;d=661660208&quot; target=&quot;_blank&quot;&gt;Register&lt;/a&gt;
+&lt;/p&gt;</description>
+ <comments>http://www.springsource.org/node/22602#comments</comments>
+ <pubDate>Thu, 09 May 2013 18:24:56 +0000</pubDate>
+ <dc:creator>Chloe Jackson</dc:creator>
+ <guid isPermaLink="false">22602 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Decomposing Applications for Deployability and Scalability</title>
+ <link>http://www.springsource.org/node/22601</link>
+ <description>&lt;div class=&quot;event-nodeapi&quot;&gt;
+  &lt;div class=&quot;event-start dtstart&quot; title=&quot;2013-05-16T17:00:00Z&quot;&gt;&lt;label&gt;Start:  &lt;/label&gt; 2013-05-16 10:00 &lt;/div&gt;
+&lt;/div&gt;
+  &lt;div class=&quot;event-nodeapi&quot;&gt;
+    &lt;div class=&quot;event-end dtend&quot; title=&quot;2013-05-16T18:00:00Z&quot;&gt;&lt;label&gt;End: &lt;/label&gt; 2013-05-16 11:00 &lt;/div&gt;
+  &lt;/div&gt;
+ &lt;div class=&quot;event-nodeapi&quot;&gt;
+   &lt;div class=&quot;event-tz&quot;&gt;&lt;label&gt;Timezone: &lt;/label&gt;US/Pacific &lt;/div&gt;
+  &lt;/div&gt;
+&lt;div class=&quot;event-nodeapi&quot;&gt;
+  &lt;div class=&quot;event-start dtstart&quot; title=&quot;2013-05-16T17:00:00Z&quot;&gt;&lt;label&gt;Start:  &lt;/label&gt; 2013-05-16 10:00 &lt;/div&gt;
+&lt;/div&gt;
+  &lt;div class=&quot;event-nodeapi&quot;&gt;
+    &lt;div class=&quot;event-end dtend&quot; title=&quot;2013-05-16T18:00:00Z&quot;&gt;&lt;label&gt;End: &lt;/label&gt; 2013-05-16 11:00 &lt;/div&gt;
+  &lt;/div&gt;
+ &lt;div class=&quot;event-nodeapi&quot;&gt;
+   &lt;div class=&quot;event-tz&quot;&gt;&lt;label&gt;Timezone: &lt;/label&gt;US/Pacific &lt;/div&gt;
+  &lt;/div&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.event-nodeapi, .submitted {display:none}
+&lt;/style&gt;
+&lt;p&gt;
+
+
+&lt;p&gt;In this talk we describe the limitations of a monolithic architecture. You will learn how to use the scale cube to decompose your application into a set of narrowly focused, independently deployable back-end services and an HTML 5 client. We will also discuss the role of technologies such as Spring and AMQP brokers. You will learn how a modern PaaS such as Cloud Foundry simplifies the development and deployment of this style of application.&lt;/p&gt;
+
+&lt;p&gt;Europe: Thursday, May 16&lt;br&gt;
+3:00pm GMT Summer Time (London, GMT+01:00)&lt;br&gt;
+&lt;a href=&quot;https://vmwareevents.webex.com/vmwareevents/onstage/g.php?t=a&amp;d=667443690&quot; target=&quot;_blank&quot;&gt;Register Now&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p&gt;North America: Thursday, May 16&lt;br&gt;
+10:00am Pacific Daylight (San Francisco, GMT-07:00)&lt;br&gt;
+&lt;a href=&quot;https://vmwareevents.webex.com/vmwareevents/onstage/g.php?t=a&amp;d=667990774&quot; target=&quot;_blank&quot;&gt;Register Now&lt;/a&gt;
+&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/22601#comments</comments>
+ <pubDate>Thu, 09 May 2013 18:21:45 +0000</pubDate>
+ <dc:creator>Chloe Jackson</dc:creator>
+ <guid isPermaLink="false">22601 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>This Week in Spring - 7 May, 2013</title>
+ <link>http://www.springsource.org/node/22605</link>
+ <description>&lt;h1&gt;This Week in Spring - 7 May, 2013&lt;/h1&gt;
+
+&lt;p&gt;Welcome to &lt;em&gt;An Epic Week in Spring&lt;/em&gt;! Lots of new sessions have been posted to SpringOne Conference, so head over to the &lt;a href=&quot;http://www.springone2gx.com&quot;&gt;site&lt;/a&gt; and check out the featured sessions!  We&#039;ll have the agenda grid online before the end of May. &lt;/p&gt;
+&lt;p&gt;Featured SpringOne2GX 2013 sessions accepted!&lt;/p&gt;
+&lt;ol&gt;
+  &lt;ul&gt;
+    
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29165&quot;&gt;Tackling Big Data Complexity with Spring&lt;/a&gt; (Mark Fisher and Mark Pollack)&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29395&quot;&gt;Reactor - an asynch  framework for distributed web and enterprise architectures&lt;/a&gt; (Jon Brisbin)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29409&quot;&gt;Spring for Snowboarders&lt;/a&gt; (Dave Syer and Phil Webb)    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ol&gt;
+&lt;p&gt;Many other new sessions accepted as well:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29168&quot;&gt;Taming client-server Communication&lt;/a&gt; (Scott Andrews)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29396&quot;&gt;Tuning Large Scale Java Platforms&lt;/a&gt;  (Emad Benjamin - VMware)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29408&quot;&gt;AOP-ing your JavaScript&lt;/a&gt;  (Brian Cavalier)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29405&quot;&gt;Integrating Splunk into your Spring Applications&lt;/a&gt;  (Damien Dallimore - Splunk)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29165&quot;&gt;&lt;/a&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29167&quot;&gt;REST-ful API Evolution&lt;/a&gt;  (Ben Hale)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29404&quot;&gt;Free Yourself with CloudFoundry:  A Private Cloud Experience&lt;/a&gt;  (Mike Heath - LDS Church)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29169&quot;&gt;Integrating Spring Batch and Spring Integration&lt;/a&gt;  (Gunnar Hillert and Michael Minella)        &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29406&quot;&gt;Your Data, Your Search, Elasticsearch&lt;/a&gt;  (Costin Leau - ElasticSearch)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29339&quot;&gt;Multi Environment Spring Applications&lt;/a&gt;  (Josh Long and Kevin Nilson)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29170&quot;&gt;JSR-352, Spring Batch and You&lt;/a&gt;  (Michael Minella)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29402&quot;&gt;Spring Scala&lt;/a&gt;  (Arjen Poutsma)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29340&quot;&gt;Open/Closed Software - Developing freemium application using Spring Framework&lt;/a&gt;  (Baruch Sadogursky - jFrog)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29407&quot;&gt;Spring Testing&lt;/a&gt;  (Mattias Severson - Jayway)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29341&quot;&gt;The Pitfalls of Building Enterprise Applications&lt;/a&gt;  (Jeffrey Sogolov - ADP Dealer Services)    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29409&quot;&gt;&lt;/a&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29411&quot;&gt;How Not to Measure Latency&lt;/a&gt; (Gil Tene - Azul)&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.springone2gx.com/conference/santa_clara/2013/09/session?id=29403&quot;&gt;Building Reactive Apps&lt;/a&gt;
+      (James Ward - TypeSafe)
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ol&gt;
+&lt;p&gt;And now, back to our regularly scheduled week in Spring... as usual, we&#039;ve got a lot to cover, so let&#039;s get to it!&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Juergen Hoeller and Marius  Bogoevici&#039;s talk, &lt;a href=&quot;http://www.springsource.org/node/22604&quot;&gt;&lt;em&gt;Java EE services for Spring applications&lt;/em&gt;&lt;/a&gt;,  from &lt;a href=&quot;http://www.twitter.com/SpringOne2GX&quot;&gt;SpringOne2GX 2012&lt;/a&gt; is now available in HD on YouTube!&lt;/li&gt;
+  &lt;li&gt;John Davies&#039;s talk, &lt;a href=&quot;http://www.springsource.org/node/22604&quot;&gt;&lt;em&gt;Spring Integration in the Wild&lt;/em&gt;&lt;/a&gt;,  from &lt;a href=&quot;http://www.twitter.com/SpringOne2GX&quot;&gt;SpringOne2GX 2012&lt;/a&gt; is now available HD on YouTube!&lt;/li&gt;
+  &lt;li&gt;Kim Saabye Pedersen has written a small example &lt;a href=&quot;http://kim.saabye-pedersen.org/2013/05/spring-annotation-on-interface-or-class.html&quot;&gt;on using &lt;code&gt;@Transactional&lt;/code&gt; on an interface with Spring&#039;s transaction management infrastructure&lt;/a&gt;. Nice job, Kim!&lt;/li&gt;
+  &lt;li&gt;Would it be possible to take Spring Petclinic as it is now and scale it up to 1000 requests per second on a single server instance? Julien Dubois from Ippon Technologies has written a great series of five blog entries on that topic. If you missed them from the previous roundups, check out the whole series, starting &lt;a href=&quot;http://blog.ippon.fr/2013/03/11/improving-the-performance-of-the-spring-petclinic-sample-application-part-1-of-5/&quot;&gt;here&lt;/a&gt;! &lt;/li&gt;
+  &lt;li&gt;Petri Kainulainen has written a great post introducing how to sort data using &lt;a href=&quot;http://www.petrikainulainen.net/programming/solr/spring-data-solr-tutorial-sorting/&quot;&gt;Spring Data SOLR&lt;/a&gt;.  &lt;/li&gt;
+  &lt;li&gt;By the by, I know I&#039;ve mentioned this before, but it &lt;em&gt;really&lt;/em&gt; is handy. Have you checked out &lt;a href=&quot;http://twitter.com/old_sound&quot;&gt;Alvaro Videla&#039;s&lt;/a&gt; &lt;a href=&quot;https://github.com/RabbitMQSimulator/RabbitMQSimulator&quot;&gt;RabbitMQ simulator&lt;/a&gt;?&lt;/li&gt;
+  &lt;li&gt;Spring Data ninja &lt;a href=&quot;https://twitter.com/olivergierke&quot;&gt;Oliver Gierke&lt;/a&gt; has written a &lt;a href=&quot;http://stackoverflow.com/questions/16325606/making-spring-data-mongodb-multi-tenant/16326023#16326023&quot;&gt;great response&lt;/a&gt; to the question, &lt;em&gt;How do I use Spring Data MongoDB in a multi-tenant fashion?&lt;/em&gt; Be sure to check it out. Generally, his advice is applicable to many such scenarios.&lt;/li&gt;
+  &lt;li&gt;Serkan �ZAL has put together &lt;a href=&quot;http://serkan-ozal.github.io/spring-jdbc-roma/&quot;&gt;an awesome, bytecode-based &lt;code&gt;RowMapper&lt;/code&gt;&lt;/a&gt; that can be used with Spring&#039;s JDBC infrastructure (like &lt;code&gt;JdbcTemplate&lt;/code&gt;) and that can handle relationships like an ORM might. Because it&#039;s bytecode-based, it&#039;s very fast and not given to the same reflection-based performance limitations of Spring&#039;s own &lt;code&gt;BeanPropertyRowMapper&lt;/code&gt;. I haven&#039;t tried this out yet, but it looks &lt;em&gt;very&lt;/em&gt; promising!&lt;/li&gt;
+  &lt;li&gt;Our friend Roger Hughes is back with a tutorial (of two posts, thus far). The first, &lt;a href=&quot;http://www.captaindebug.com/2013/04/spring-mvc-ajax-and-json-part-1-setting.html#.UYlw6StAQQQ&quot;&gt;&lt;em&gt;RESTful Ajax with Spring MVC&lt;/em&gt;&lt;/a&gt;, establishes an application (&lt;em&gt;without&lt;/em&gt; REST and Ajax) and the second then &lt;a href=&quot;http://www.captaindebug.com/2013/05/spring-mvc-ajax-and-json-part-2-server.html#.UYlxEStAQQQ&quot;&gt;introduces serializing data objects using Jackson&lt;/a&gt;, a JSON serializer.   &lt;/li&gt;
+  &lt;li&gt;Bharat Sharma &lt;em&gt;also&lt;/em&gt; &lt;a href=&quot;http://bharatonjava.wordpress.com/2013/05/05/spring-3-mvc-and-json-response/&quot;&gt;wrote a nice post on serializing to JSON&lt;/a&gt; with Spring MVC this week!&lt;/li&gt;
+  &lt;li&gt;Blogger &lt;a href=&quot;http://www.blogger.com/profile/00139250878494043682&quot;&gt;Kal&lt;/a&gt; wrote up a nice post on how &lt;a href=&quot;http://runkalrun.blogspot.com/2013/05/simple-file-upload-with-spring-mvc.html&quot;&gt;Spring MVC simplifies file-uploads with Spring MVC and &lt;code&gt;commons-fileupload&lt;/code&gt;&lt;/a&gt;.  &lt;/li&gt;  
+&lt;/ol&gt;</description>
+ <comments>http://www.springsource.org/node/22605#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/14">This Week in Spring</category>
+ <pubDate>Tue, 07 May 2013 23:18:23 +0000</pubDate>
+ <dc:creator>Josh Long</dc:creator>
+ <guid isPermaLink="false">22605 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>SpringOne2GX 2012 Replays: Spring Integration in the Wild, Java EE Services for Spring Applications</title>
+ <link>http://www.springsource.org/node/22604</link>
+ <description>&lt;H1&gt;Spring Integration in the Wild&lt;/H1&gt;
+&lt;div&gt;
+  &lt;p&gt;Few companies have been quite at the forefront of implementing Spring   Integration (Batch &amp;amp; Data etc.) as Incept5, this year&#039;s VMWare EMEA   cloud partner. John will cover a few of the more interesting   implementations from an architectural point of view, looking at the   choices, the reasoning, design and some of the issues behind the   implementations. From projects with no SI skills ramping up to teams of   several dozen programmers to experienced teams just looking for   training, best practices and better data services integration.&lt;/p&gt;
+  &lt;p&gt;A number of large banks are already in production with Scala-based SI   workflows, is this still leading edge or have it moved into   main-stream?  What next for spring Integration and the tooling, what are   the clients using and asking for?  John will be joined by some of the   Spring Integration team so an excellent opportunity to look at the   present and future of Spring Integration and tooling.&lt;/p&gt;
+  &lt;p&gt;
+    &lt;center&gt;
+      &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/AXnNnKJZLxs&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;/center&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;
+  &lt;div&gt;&lt;br /&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;h2&gt;About the speaker&lt;/h2&gt;
+        &lt;div&gt; &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/john_davies&quot;&gt;&lt;img src=&quot;http://www.springone2gx.com/s/images/bio/40957_Davies_20110418_104356_medium_sq.jpg&quot; alt=&quot;John Davies&quot; /&gt;&lt;/a&gt;
+          &lt;div&gt;
+            &lt;h3&gt;John Davies&lt;/h3&gt;
+            &lt;p&gt;John Davies is co-founder and CTO of Incept5. Incept5 have been   intimately involved in implementing Visa&#039;s new capabilities and   initiatives around the payments world. John&#039;s past includes global chief   architect at JP Morgan and BNP Paribas, co-founder and CTO of C24 later   sold to Iona and then Progress Software where he was technical   director. John specialises in high performance, low latency enterprise   architectures, Incept5 have products ranging form top selling   iPhone/iPad apps to a high performance matching and reconciliation   engine and consult to a number of large clients on IT strategy. John has   co-authored several enterprise Java and architecture books and is a   frequent speaker at banking and technology conferences.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;h2&gt;&lt;br /&gt;
+        &lt;/h2&gt;
+        &lt;div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;br /&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+&lt;/div&gt;
+        &lt;div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;br /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;h1&gt;Java EE Services for Spring Applications&lt;/h1&gt;
+&lt;div&gt;
+  &lt;p&gt;The continuous evolution of both the Spring Framework and the Java EE   platform presents us with new challenges and opportunities for   collaboration. Several recent EE services are very commonly used with   Spring, e.g. Servlet 3.0, JPA 2.0 and Bean Validation. This session   presents an up-to-date analysis:  How do recent Spring versions   (3.1/3.2) integrate with Java EE 6? How is this going to be affected by   Java EE 7 in a year&#039;s time? &lt;/p&gt;
+  &lt;p&gt;What kind of services may a Spring application expect from a modern   Java EE server, beyond the pre-packaging of common Java APIs? How much   effort does it take to add a custom selection of Java EE services to   e.g. Tomcat, for use in Spring-based applications? Does it make sense to   use Spring and Java EE component models such as EJB 3.1 or CDI   together? What are the integration options?&lt;/p&gt;
+  &lt;p&gt;
+    &lt;center&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/saWJYy15jDA&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;/center&gt;
+  &lt;/p&gt;
+  &lt;br /&gt;
+  &lt;h2&gt;&amp;nbsp;&lt;/h2&gt;
+  &lt;div&gt;
+    &lt;h2&gt;About the speakers&lt;/h2&gt;
+    &lt;div&gt; &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/juergen_hoeller&quot;&gt;&lt;img src=&quot;http://www.springone2gx.com/s/images/bio/10339_Hoeller_20110418_112109_medium_sq.jpg&quot; alt=&quot;Juergen Hoeller&quot; /&gt;&lt;/a&gt;
+      &lt;div&gt;
+        &lt;h3&gt;Juergen Hoeller&lt;/h3&gt;
+        &lt;p&gt;Juergen Hoeller is co-founder of the Spring Framework open   source project and has been serving as the project lead and release   manager for the core framework since 2003. Juergen is an experienced   software architect and consultant with outstanding expertise in code   organization, transaction management and enterprise messaging.&lt;/p&gt;
+        &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/juergen_hoeller&quot;&gt;More About Juergen �&lt;/a&gt; &lt;br /&gt;
+      &lt;/div&gt;
+      &lt;br /&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;h3&gt;Marius Bogoevici&lt;/h3&gt;
+        &lt;p&gt;Marius Bogoevici is a Senior Software Engineer with Red Hat,   leading the Spring integration efforts for JBoss AS and other JBoss   projects. He is the lead for Snowdrop, a utility package that contains   JBoss-specific extensions to the Spring Framework, and also a   contributor to Weld, the JSR-299/CDI Reference Implementation and other   Java EE-related developer initiatives at JBoss.  Marius Bogoevici has an extensive experience of more than 15 years   developing and architecting software systems. Prior to joining Red Hat,   he was a Spring consultant with SpringSource. He is a contributor to the   Spring Integration enterprise integration framework and co-author of   &amp;ldquo;Spring Integration in Action&amp;rdquo;.&lt;/p&gt;
+        &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/marius_bogoevici&quot;&gt;More About Marius �&lt;/a&gt; &lt;br /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;br /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;h2&gt;&lt;br /&gt;
+  &lt;/h2&gt;
+  &lt;div&gt;
+  &lt;/div&gt;
+  &lt;br /&gt;
+  &lt;/div&gt;&lt;div&gt;
+&lt;/div&gt;
+&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;br /&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div&gt;      &lt;/div&gt;
+      &lt;div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</description>
+ <comments>http://www.springsource.org/node/22604#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Tue, 07 May 2013 20:41:42 +0000</pubDate>
+ <dc:creator>Pieter Humphrey</dc:creator>
+ <guid isPermaLink="false">22604 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Wishing WaveMaker good luck at Pramati</title>
+ <link>http://www.springsource.org/node/22603</link>
+ <description>&lt;p&gt;Many of you may have heard about Pramati&#039;s acquisition of  WaveMaker assets from VMware, and we wanted to officially wish them well  here.&amp;nbsp; &amp;nbsp;However, one of WaveMaker&amp;rsquo;s users, in response to the news of the upcoming transition, already &lt;a href=&quot;http://dev.wavemaker.com/blog/2013/03/14/announcing-the-release-of-wavemaker-6-5-3/&quot;&gt;expressed&lt;/a&gt; the sentiment  eloquently:&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;WaveMaker is by far the best tool I have had the  pleasure to use for building real world business apps and websites. You guys  have just put so much clever thinking into it. It&amp;rsquo;s not just a nice ajax screen  painter, but has huge depth with the way it binds to parts within.  &amp;nbsp;Please, Please keep it going.. &lt;br&gt;
+  I would happily pay for it �&amp;rdquo;&lt;br&gt;
+  Comment by jguy � March 20, 2013 @ 7:59 am&lt;/p&gt;
+&lt;p&gt;Well, it&amp;rsquo;s found a new steward and home.&amp;nbsp; The  SpringSource team is confident WaveMaker has a bright future at Pramati, whose  expertise in Java, Cloud and Mobile Computing  will serve it  well.&amp;nbsp;WaveMaker&#039;s recent releases had all been centered  around mobile and cloud support, making it a natural fit for Pramati&#039;s  goals.&amp;nbsp;We wish WaveMaker the best as it evolves - and continues to  generate new classes and types of applications that are at the core, Spring  applications.&amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;/p&gt;
+&lt;p&gt;Happy WaveMaking,&lt;br&gt;
+  The Spring Team&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/22603#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Thu, 02 May 2013 20:36:46 +0000</pubDate>
+ <dc:creator>The Spring Team</dc:creator>
+ <guid isPermaLink="false">22603 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>This Week In Spring - April 30th, 2013</title>
+ <link>http://www.springsource.org/node/22600</link>
+ <description>&lt;p&gt;Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! We&amp;#39;ve got a lot to cover this week, as usual, so let&amp;#39;s get to it. Did you miss last week&#039;s Pivotal public launch? Catch the &lt;a href=&quot;http://www.gopivotal.com/launch&quot;&gt;replay&lt;/a&gt; and learn about GE&#039;s investment in the new entity!  Pivotal&#039;s mission is about bringing consumer-grade software to the  enterprise -- where open source technology like Spring, Groovy, Grails, RabbitMQ,  Redis, and Cloud Foundry, are already widely adopted.  Check out the new Pivotal website, under the Community link (top right) for some other open source initiatives that might surprise you!&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://twitter.com/olivergierke/status/329270702723174400&quot;&gt;Oliver Gierke has announced Spring HATEOAS 0.5&lt;/a&gt;, which contains &lt;a href=&quot;https://github.com/SpringSource/spring-hateoas/issues?milestone=5&amp;amp;state=closed&quot;&gt;lots of new features&lt;/a&gt;!&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;Spring Security lead Rob Winch has announced that &lt;a href=&quot;http://www.springsource.org/node/22598&quot;&gt;Spring Security 3.1.4 is now available&lt;/a&gt;. This is a maintenance release with a number of bug fixes including OSGi support for Spring 3.2.&lt;/li&gt;
+&lt;li&gt;Spring Data ninja &lt;a href=&quot;https://twitter.com/olivergierke/status/328925143378300928&quot;&gt;Oliver Gierke&lt;/a&gt; &lt;em&gt;also&lt;/em&gt; (boy that guy gets around!) tweeted a look at the Spring Data roadmap: introducing &lt;a href=&quot;https://github.com/SpringSource/spring-data-commons/wiki/Release-Train-Babbage&quot;&gt;Spring Data &amp;quot;&lt;em&gt;Babbage&lt;/em&gt;.&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;  &lt;a href=&quot;http://blog.springsource.org/2013/04/25/spring-data-arora-sr1-released/&quot;&gt;Spring Data Arora SR1&lt;/a&gt; released this week (named for &lt;a href=&quot;http://en.wikipedia.org/wiki/Sanjeev_Arora&quot;&gt;Sanjeev Arora)&lt;/a&gt;. As an aside, you have probably noticed that the names of the various Spring Data release trains are adapted from various influential names in computer science. The new release is named for &lt;a href=&quot;http://en.wikipedia.org/wiki/Babbage&quot;&gt;Charles Babbage&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Adam Shook and Dr. Mark Pollack&amp;#39;s webinar, &lt;a href=&quot;http://www.youtube.com/watch?v=gxWXEBW0nMM&quot;&gt;Hadoop, Pivotal HD and Spring for Apache Hadoop&lt;/a&gt;, is now available online. &lt;/li&gt;
+&lt;li&gt;Gil Tene, of Azul Systems, gave an amazing talk at SpringOne2GX 2012 called &lt;a href=&quot;http://www.youtube.com/watch?v=we_enrM7TSY&quot;&gt;&lt;em&gt;Understanding Java Garbage Collection and what you can do about it&lt;/em&gt;&lt;/a&gt;, which is now online. &lt;/li&gt;
+&lt;li&gt;New SpringOne2GX replays now available in HD on YouTube: &lt;a href=&quot;http://www.springsource.org/node/22599&quot;&gt;Building for Performance with Spring Integration &amp;amp; Spring Batch, Case Study: Provisioning a Multi-Site In-Memory Database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://twitter.com/wattersjames&quot;&gt;James Watters&lt;/a&gt; shared a video he&amp;#39;d discovered on setting up Cloud Foundry and BOSH. It&amp;#39;s pretty epic and worth a watch if you want to get a handle on BOSH.&lt;/li&gt;
+&lt;li&gt;What people write blog posts about sometimes surprises me. The &lt;em&gt;Javarevisted&lt;/em&gt; blog has a nice post introducing Spring&amp;#39;s (fairly internal, albeit stable) &lt;code&gt;org.springframework.util.StringUtils&lt;/code&gt; class, with examples on how to &lt;a href=&quot;http://www.stumbleupon.com/su/85VzC7/javarevisited.blogspot.com.br/2012/08/convert-collection-to-string-in-java.html&quot;&gt;convert collections to delimited strings&lt;/a&gt;. I think this is perhaps &lt;em&gt;too&lt;/em&gt; much information on the subject, but I love the enthusiasm!&lt;/li&gt;
+&lt;li&gt;RabbitMQ developer-advocate &lt;a href=&quot;https://twitter.com/old_sound&quot;&gt;Alvaro Videla&lt;/a&gt; has put together a post &lt;a href=&quot;http://videlalvaro.github.io/2013/04/using-rabbitmq-in-unit-tests.html&quot;&gt;on how to unit-test RabbitMQ from PHPUnit&lt;/a&gt;. This approach is pretty cool, though I wonder how well it would play in Java and jUnit with concurrent test suite execution. Either way, this is a nice way to unit test my favorite message queue!&lt;/li&gt;
+&lt;li&gt;Do you need a Spring Integration adapter? Have you checked out the &lt;a href=&quot;http://github.com/SpringSource/spring-integration-extensions&quot;&gt;Spring Integration extensions repository&lt;/a&gt;? This repository simply collects adapters that move faster than the Spring Integration core, or that are still being polished. It&amp;#39;s a great place to find solutions to various problems. Heck, even &lt;a href=&quot;https://github.com/SpringSource/spring-integration-extensions/pulls&quot;&gt;the &lt;em&gt;pull requests&lt;/em&gt; are chock full of useful stuff&lt;/a&gt; - I see an &lt;a href=&quot;http://mqtt.org&quot;&gt;MQTT&lt;/a&gt; adapter in there by the amazing &lt;a href=&quot;https://github.com/garyrussell&quot;&gt;Gary Russell&lt;/a&gt;! &lt;/li&gt;
+&lt;li&gt;Check out this amazing post on &lt;a href=&quot;http://twitter.com/gopivotal&quot;&gt;@gopivotal&lt;/a&gt; blog called &lt;a href=&quot;http://ow.ly/kzy1o&quot;&gt;800,000 Messages/Minute: How Nokia�s HERE Uses #RabbitMQ to Make Real-time Traffic Maps&lt;/a&gt; over on the &lt;a href=&quot;http://gopivotal.com&quot;&gt;@gopivotal&lt;/a&gt; blog. It introduces the Nokia HERE architecture that builds on &lt;a href=&quot;http://springsource.org/spring-amqp&quot;&gt;Spring AMQP&lt;/a&gt; and &lt;a href=&quot;http://rabbitmq.org&quot;&gt;RabbitMQ&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/body&gt;
+&lt;/html&gt;</description>
+ <comments>http://www.springsource.org/node/22600#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/14">This Week in Spring</category>
+ <pubDate>Tue, 30 Apr 2013 21:30:23 +0000</pubDate>
+ <dc:creator>Josh Long</dc:creator>
+ <guid isPermaLink="false">22600 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>SpringOne2GX 2012 Replays: Building for Performance with Spring Integration &amp; Spring Batch, Case Study: Provisioning a Multi-Site In-Memory Database</title>
+ <link>http://www.springsource.org/node/22599</link>
+ <description>&lt;H1&gt;Building for Performance with Spring Integration &amp;amp; Spring Batch&lt;/H1&gt;
+&lt;div&gt;
+  &lt;p&gt;Spring Integration &amp;amp; Spring Batch greatly simplify the process of   developing enterprise integration architectures and messaging systems.   This session covers architectural patterns and real world examples   showing how comprehensive the capabilities of Spring Integration &amp;amp;   Batch are, while being lightweight enough to be suitable for very high   performance environments.&lt;/p&gt;
+  &lt;p&gt;At C24 we work closely with a large number of major financial   institutions to help them architect high volume, low latency, scalable   messaging systems. It&#039;s always great fun showing a client how a handful   of Spring Integration configuration files can replace large chunks of   their existing codebase, typically closing dozens of bugs in the   process. Moreover, the resulting design is cleaner with a consistent   approach to monitoring, error handling &amp;amp; processing. Spring Batch   allows large file processing to be wired into the same flows usually   with substantial improvements in throughput.&lt;/p&gt;
+  &lt;p&gt;We&#039;ll review how to maximise performance while ensuring application robustness for mission critical usage.&lt;/p&gt;
+  &lt;p&gt;
+    &lt;center&gt;
+      &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/xFGo-eai7ag&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;/center&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;
+  &lt;div&gt;&lt;br /&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;h2&gt;About the speaker&lt;/h2&gt;
+        &lt;div&gt; &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/andrew_elmore&quot;&gt;&lt;img src=&quot;http://www.springone2gx.com/s/images/bio/53677_Elmore_20120820_054432_medium_sq.jpg&quot; alt=&quot;Andrew Elmore&quot; /&gt;&lt;/a&gt;
+          &lt;div&gt;
+            &lt;h3&gt;Andrew Elmore&lt;/h3&gt;
+            &lt;p&gt;Andrew Elmore is Head of Development at C24, a provider of   financial services messaging software to many of the world&#039;s largest   financial institutions. Prior to joining C24, Andrew built and managed   the front &amp;amp; middle office systems at a Mastercard-owned credit card   issuer &amp;amp; processor, led the development of numerous products at   SmartStream Technologies and worked on a number of highly scalable   systems including PitneyBowes&#039; Portrait suite &amp;amp; British Telecom&#039;s   call-routing software.  Andrew is a Chartered Engineer &amp;amp; Chartered IT Practitioner and holds   a BEng in Computer Science &amp;amp; Electronics from the University of   Edinburgh, UK.&lt;/p&gt;
+            &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/andrew_elmore&quot;&gt;More About Andrew �&lt;/a&gt; &lt;br /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;br /&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+&lt;/div&gt;
+        &lt;div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;br /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;h1&gt;Case Study: Provisioning a Multi-Site In-Memory Database&lt;/h1&gt;
+&lt;div&gt;
+  &lt;p&gt;In this session we will analyze the architecture and optimization for   creating a multi-site in-memory database that provides high availability   for a prominent consumer service . The session will cover the use of   Spring Gemfire to significantly simplify deployment in a Gemfire cluster   connected together using a WAN gateway . The same approach can be used   to solve other high availability, low latency problems.&lt;/p&gt;
+  &lt;p&gt;
+    &lt;center&gt;
+&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/p2tw50d_el0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;/center&gt;
+  &lt;/p&gt;
+  &lt;br /&gt;
+  &lt;h2&gt;About the speaker&lt;/h2&gt;
+  &lt;div&gt; &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/manuel_david&quot;&gt;&lt;img src=&quot;http://www.springone2gx.com/s/images/bio/54584_David_20121005_174217_medium_sq.jpg&quot; alt=&quot;Manuel David&quot; /&gt;&lt;/a&gt;
+    &lt;div&gt;
+      &lt;h3&gt;Manuel David&lt;/h3&gt;
+      &lt;p&gt;Manny is a GemFire consultant for VMware&#039;s vFabric Cloud   Application Platform.  He brings with him over 18 years of software   engineering experience in sectors such as finance, federal, pharma, and   technology.  His focus is on the server-side, but he also has experience   in Java Swing rich client and Web development.  He left the world of   Smalltalk development when he plunged into the Java world in 1996, and   hasn&#039;t looked back since.  Manny started working with GemFire after   joining Gemstone Systems as an Enterprise Architect in London in 2006,   based on his prior experience in Coherence technology.  He later joined   VMware in early 2011, continuing to build on his expertise in designing   GemFire-based solutions for applications that require in-memory   persistence and distributed grid compute technology.&lt;/p&gt;
+      &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/manuel_david&quot;&gt;More About Manuel �&lt;/a&gt; &lt;br /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;h2&gt;&lt;br /&gt;
+  &lt;/h2&gt;
+  &lt;div&gt;
+  &lt;/div&gt;
+  &lt;br /&gt;
+  &lt;/div&gt;&lt;div&gt;
+&lt;/div&gt;
+&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;br /&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div&gt;      &lt;/div&gt;
+      &lt;div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</description>
+ <comments>http://www.springsource.org/node/22599#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Tue, 30 Apr 2013 19:04:03 +0000</pubDate>
+ <dc:creator>Pieter Humphrey</dc:creator>
+ <guid isPermaLink="false">22599 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>Spring Security 3.1.4 Released</title>
+ <link>http://www.springsource.org/node/22598</link>
+ <description>&lt;p&gt;We&#039;re pleased to an announce the GA release of Spring Security 3.1.4&lt;br /&gt;
+The release is available from the &lt;a href=&quot;http://www.springsource.com/download/community?project=Spring%20Security&quot;&gt;Spring Community Downloads area&lt;/a&gt; and jars are available from Maven central repository. See the &lt;a href=&quot;http://www.springsource.org/spring-security&quot;&gt;project website&lt;/a&gt; for more information.&lt;/p&gt;
+&lt;p&gt;This is a maintenance release with a number of bug fixes including OSGi support for Spring 3.2. &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://jira.springsource.org/secure/ReleaseNote.jspa?projectId=10040&amp;amp;version=13618&quot;&gt;Changelog&lt;/a&gt; | &lt;a href=&quot;http://www.springsource.com/download/community?project=Spring%20Security&amp;amp;version=3.1.4.RELEASE&quot;&gt;Download&lt;/a&gt; | &lt;a href=&quot;http://static.springsource.org/spring-security/site/docs/3.1.x/reference/springsecurity-single.html&quot;&gt;Reference Manual&lt;/a&gt; | &lt;a href=&quot;http://static.springsource.org/spring-security/site/faq.html&quot;&gt;FAQ&lt;/a&gt;&lt;/p&gt;
+</description>
+ <comments>http://www.springsource.org/node/22598#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Mon, 29 Apr 2013 15:32:36 +0000</pubDate>
+ <dc:creator>rwinch</dc:creator>
+ <guid isPermaLink="false">22598 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>This Week in Spring - April 23rd, 2013</title>
+ <link>http://www.springsource.org/node/22582</link>
+ <description>&lt;p&gt;Welcome back to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! 
+Here in San Francisco, we&amp;#39;re experiencing the first fits of life and beautiful weather typical of &lt;em&gt;spring&lt;/em&gt; time. Fitting, too, as things are  busy-as-can-be in the Pivotal open source communities - including &lt;a href=&quot;http://www.cloudfoundry.com&quot;&gt;Cloud Foundry&lt;/a&gt; and &lt;a href=&quot;http://springsource.org&quot;&gt;SpringSource&lt;/a&gt; - as we march towards &lt;a href=&quot;http://www.gopivotal.com/&quot;&gt;the Pivotal Initiative launch on April 24th&lt;/a&gt;. See you then! &lt;/p&gt;
+
+&lt;p&gt;Without further ado, let&amp;#39;s get into this week&amp;#39;s roundup:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Have you guys seen the amazing &lt;a href=&quot;https://gist.github.com/joshlong/5441496&quot;&gt;Java configuration support in Spring Batch 2.2.0.RC1&lt;/a&gt;? The code I&amp;#39;ve just linked you to demonstrates a complete working Spring Batch job that reads in a &lt;code&gt;.csv&lt;/code&gt; file and then writes the records to a data source, all of which are configured in the class, entirely in Java. This demonstrates the &lt;code&gt;@EnableBatchProcessing&lt;/code&gt; annotation in 2.2.0. &lt;a href=&quot;http://www.springsource.org/node/9666&quot;&gt;Check it out&lt;/a&gt;!&lt;/li&gt;
+&lt;li&gt;New SpringOne2GX replays now available in HD on YouTube: &lt;a href=&quot;http://www.springsource.org/node/22581&quot;&gt;Implementing Domain Driven Design with Spring and vFabric&lt;/a&gt;, &lt;a href=&quot;http://www.springsource.org/node/22581&quot;&gt;Batch Processing and Integration on Cloud Foundry&lt;/a&gt; and a bonus session, &lt;a href=&quot;http://www.youtube.com/watch?v=we_enrM7TSY&quot;&gt;Understanding Java Garbage Collection and what you can do about it&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;a href=&quot;https://twitter.com/fuzzydb/status/325188720510767104&quot;&gt;FuzzyDB open source project&lt;/a&gt; tweeted that they&amp;#39;d &lt;a href=&quot;http://fuzzydb.blogspot.com/2013/04/fuzzydb-110-released.html?utm_medium=twitter&amp;amp;utm_campaign=fuzzydb+blog&amp;amp;utm_source=twitterfeed&quot;&gt;released a new version&lt;/a&gt; of FuzzyDB with Spring Data bindings aligned with the Spring Data Arora release train. Congratulations, guys!&lt;/li&gt;
+&lt;li&gt;Have you had a chance to play with &lt;a href=&quot;http://www.thymeleaf.org/&quot;&gt;Thymeleaf, the HTML5 and Spring MVC-friendly templating engine&lt;/a&gt;? If you&amp;#39;d like to learn &lt;em&gt;even more&lt;/em&gt;, you&amp;#39;ll probably like this presentation called &lt;a href=&quot;http://www.slideshare.net/jasha1/thymeleaf-will-it-blend&quot;&gt;&lt;em&gt;Thymeleaf, Will it Blend?&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/dwelch2344/spring-data-mongo-demo&quot;&gt;David Welch put together a quick demo of Spring Data Mongo&lt;/a&gt; and made the work available. He tweets that &lt;a href=&quot;https://twitter.com/david_welch/status/324277624434200576&quot;&gt;he went from working demo in 8 minutes with 4 classes and a &lt;code&gt;pom.xml&lt;/code&gt;&lt;/a&gt;. Nice work man!&lt;/li&gt;
+&lt;li&gt;Check out &lt;a href=&quot;http://twitter.com/laddad&quot;&gt;Ramnivas Laddad&amp;#39;s&lt;/a&gt; awesome talk &lt;a href=&quot;http://www.springsource.org/node/22417&quot;&gt;CloudFoundry Architecture talk at SpringOne2GX&lt;/a&gt; up live on &lt;a href=&quot;http://www.youtube.com/SpringSourceDev&quot;&gt;the SpringSource YouTube channel SpringSourceDev&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://twitter.com/olivergierke&quot;&gt;Spring HATEOAS lead Oliver Gierke&lt;/a&gt; tweeted a link to this post, &lt;a href=&quot;http://www.eioba.com/a/1htn/how-i-explained-rest-to-my-wife&quot;&gt;&amp;quot;&lt;em&gt;How I Explained REST to my wife&lt;/em&gt;&amp;quot;&lt;/a&gt;, which would seem at first to be just one person&amp;#39;s attempt at explaining a fairly deep technology concept to a person who didn&amp;#39;t have the same technical background, but quickly turns into a (I think &lt;em&gt;really&lt;/em&gt; insightful) look at the applicability of REST. Check out &lt;a href=&quot;http://github.com/SpringSource/spring-hateoas&quot;&gt;Spring HATEOAS&lt;/a&gt; if you want to take your REST-fu to the next level.&lt;/li&gt;
+&lt;li&gt;I&amp;#39;m personally enamored of the new Java configuration APIs, both those recently released and those currently available in preview releases. I showed a &lt;em&gt;very&lt;/em&gt; simple example of the Spring Batch API above. I also took a moment last week to &lt;a href=&quot;http://www.joshlong.com/jl/blogPost/java_configuration_with_spring_social.html&quot;&gt;write about the powerful Spring Social Java configuration API&lt;/a&gt; soon to be available in the 1.1.0.M2 release. &lt;/li&gt;
+&lt;li&gt;You can have Spring perform a sort of pre-condition check by using the &lt;a href=&quot;http://static.springsource.org/spring/docs/3.0.2.RELEASE/spring-framework-reference/html/metadata.html&quot;&gt;@Required annotation&lt;/a&gt; to &lt;em&gt;insist&lt;/em&gt; at runtime that a property be satisfied with a non-&lt;code&gt;null&lt;/code&gt; value, or Spring will abort the construction of the object. This helps avoid any silent &lt;code&gt;NullPointerException&lt;/code&gt;s. This &lt;a href=&quot;http://www.javabeat.net/2013/04/required-annotation-spring/&quot;&gt;JavaBeat post&lt;/a&gt; does a nice job explaining how to use &lt;code&gt;@Required&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;how to do in java&lt;/em&gt; blog has a nice posting on how to &lt;a href=&quot;http://howtodoinjava.com/2013/04/16/custom-userdetailsservice-example-for-spring-3-security/&quot;&gt;create a custom &lt;code&gt;UserDetailsService&lt;/code&gt; in Spring Security 3&lt;/a&gt;. &lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;JavaCodeGeeks&lt;/em&gt; blog has a nice post on &lt;a href=&quot;http://www.javacodegeeks.com/2013/04/spring-mvc-easy-rest-based-json-services-with-responsebody.html&quot;&gt;how to create RESTful services with Spring MVC&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Brian&amp;#39;s Java Blog&lt;/em&gt; has a nice post on &lt;a href=&quot;http://briansjavablog.blogspot.co.uk/2013/04/spring-aop-tutorial.html&quot;&gt;using Spring AOP with both annotation and XML-centric configuration&lt;/a&gt; options.&lt;/li&gt;
+&lt;/ol&gt;</description>
+ <comments>http://www.springsource.org/node/22582#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/14">This Week in Spring</category>
+ <pubDate>Tue, 23 Apr 2013 14:29:50 +0000</pubDate>
+ <dc:creator>Josh Long</dc:creator>
+ <guid isPermaLink="false">22582 at http://www.springsource.org</guid>
+</item>
+<item>
+ <title>SpringOne 2GX 2012 Replays: Implementing DDD with Spring and vFabric, Batch Processing and Integration on Cloud Foundry</title>
+ <link>http://www.springsource.org/node/22581</link>
+ <description>&lt;H1&gt;Implementing Domain-Driven Design with Spring and vFabric&lt;/H1&gt;
+&lt;div&gt;
+  &lt;p&gt;Sponsored by EMC Consulting, this presentation highlights the use of   Domain-Driven Design in a cloud-based, distributed architecture. There   are several working examples of highly scalable DDD models featuring the   NYSE Nanotrader system.&lt;/p&gt;
+  &lt;p&gt;NanoTrader is a VMWare working reference implementation featuring   SpringSource best-practices throughout the application stack. The   functioning high-performance trading application includes Spring MVC   with both web and mobile UI&amp;rsquo;s, Spring Integration, RabbitMQ, GemFire,   Hibernate using SQLFire and/or Postgres. Domain-Driven Design (DDD) is a   set of software development tools and best practices for crafting a   business strategic initiative in a core domain model. How does   NanoTrader apply DDD? This powerful approach to modeling a trading   system will be showcased from the DDD strategic and tactical modeling   perspectives.&lt;/p&gt;
+  &lt;p&gt;
+    &lt;center&gt;
+      &lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/gjhA-he3PVo&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;/center&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;
+  &lt;div&gt;&lt;br /&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;h2&gt;About the speakers&lt;/h2&gt;
+        &lt;div&gt; &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/vaughn_vernon&quot;&gt;&lt;img src=&quot;http://www.springone2gx.com/s/images/bio/37095_Vernon_20120827_125223_medium_sq.jpg&quot; alt=&quot;Vaughn Vernon&quot; /&gt;&lt;/a&gt;
+          &lt;div&gt;
+            &lt;h3&gt;Vaughn Vernon&lt;/h3&gt;
+            &lt;p&gt;Vaughn Vernon is the author of the book &lt;em&gt;&lt;a href=&quot;http://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577&quot;&gt;Implementing Domain-Driven Design&lt;/a&gt;,&lt;/em&gt; published by Addison-Wesley. Vaughn is a veteran software craftsman   with more than 25 years of experience in software design, development,   and architecture. Vaughn is a thought leader in simplifying software   design and implementation using innovative methods. Vaughn has been   programming with object-oriented languages since the 1980s and applying   the tenets of Domain-Driven Design since his Smalltalk domain modeling   days in the early 1990s. His experience spans a wide range of business   domains. He has also succeeded in technical endeavors creating reusable   frameworks, libraries, and implementation acceleration tools.&lt;/p&gt;
+            &lt;p&gt;Vaughn consults and speaks internationally, and has taught his &lt;em&gt;&lt;a href=&quot;http://www.idddtour.com/workshop-details.html&quot;&gt;Implementing Domain-Driven Design Workshop&lt;/a&gt;&lt;/em&gt; on multiple continents. He teaches both public and private classes and   workshops, and has presented at conferences such as: SpringOne 2gx;   PulsoConf in Bogota, Colombia; QCon; UberConf; IASA ITARC. As an author,   Vaughn has contributed to industry literature and software patterns and   is a founder of the &lt;a href=&quot;http://www.meetup.com/ddd-denver/&quot;&gt;DDD Denver Meetup group&lt;/a&gt;.&lt;/p&gt;
+            &lt;p&gt;His &lt;a href=&quot;http://idddtour.com&quot;&gt;IDDD Tour&lt;/a&gt; commences in Europe in April 2013: &lt;a href=&quot;http://idddtour.com&quot;&gt;idddtour.com&lt;/a&gt; You can read more about his latest efforts at &lt;a href=&quot;http://VaughnVernon.co&quot;&gt;VaughnVernon.co&lt;/a&gt; and follow him on Twitter here: &lt;a href=&quot;http://twitter.com/vaughnvernon&quot;&gt;@VaughnVernon&lt;/a&gt;&lt;/p&gt;
+            &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/vaughn_vernon&quot;&gt;More About Vaughn �&lt;/a&gt; &lt;br /&gt;
+          &lt;/div&gt;
+          &lt;br /&gt;
+        &lt;/div&gt;
+        &lt;div&gt; &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/wesley_williams&quot;&gt;&lt;img src=&quot;http://www.springone2gx.com/s/images/bio/53889_Williams_20120918_202856_medium_sq.jpg&quot; alt=&quot;Wesley Williams&quot; /&gt;&lt;/a&gt;
+          &lt;div&gt;
+            &lt;h3&gt;Wesley Williams&lt;/h3&gt;
+            &lt;p&gt;Wes Williams is a Senior Consultant with EMC specializing in vFabric technologies and Domain-Driven Design. &lt;/p&gt;
+            &lt;p&gt;He has extensive experience (25+ years) as a hands-on software   developer, architect and designer supporting the creation of   enterprise-class information technology systems in a wide variety of   industries from small businesses to Fortune 10 companies using big, fast   data. He is certified with both Microsoft and Java technologies,   including certifications with Java architecture and enterprise   architecture. He was formerly a guest instructor for Architecture at Sun   Microsystems.&lt;/p&gt;
+            &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/wesley_williams&quot;&gt;More About Wesley �&lt;/a&gt; &lt;br /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;h2&gt;&lt;br /&gt;
+        &lt;/h2&gt;
+        &lt;div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;br /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;h1&gt;Batch Processing and Integration on Cloud Foundry&lt;/h1&gt;
+&lt;div&gt;
+  &lt;p&gt;Spring Integration is a lightweight integration framework from the   makers of Spring. Integration of data and services between applications   is not easy � and often requires adaptation from one system to another.   Spring Integration also promotes loosely coupled, event-driven   applications. Spring Batch is a batch processing framework � providing a   simple, idiomatic way to crunch large amounts of data across in a   sustainable way. Spring Batch even allows you to distribute processing   across multiple machines in a cluster. Naturally, both of these   frameworks play very nicely on top of Cloud Foundry, which lets you   scale up and out as demand requires. &lt;/p&gt;
+  &lt;p&gt;In this talk, Josh Long introduces how to use Spring Batch and Spring   Integration on Cloud Foundry, the open source PaaS from VMware.&lt;/p&gt;
+  &lt;p&gt;
+    &lt;center&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/3QBrf3B6aA8&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;/center&gt;
+  &lt;/p&gt;
+  &lt;br /&gt;
+&lt;/div&gt;
+&lt;DIV&gt;
+&lt;center&gt;
+&lt;/center&gt;
+&lt;div&gt;
+  &lt;div&gt;
+    &lt;div&gt;&lt;br /&gt;
+      &lt;h2&gt;About the speaker&lt;/h2&gt;
+      &lt;div&gt; &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/josh_long&quot;&gt;&lt;img src=&quot;http://www.springone2gx.com/s/images/bio/40784_Long_20110418_132926_medium_sq.jpg&quot; alt=&quot;Josh Long&quot; /&gt;&lt;/a&gt;
+        &lt;div&gt;
+          &lt;h3&gt;Josh Long&lt;/h3&gt;
+          &lt;p&gt;Josh Long is the Spring developer advocate. Josh is the lead   author on Apress&amp;rsquo; Spring Recipes, 2nd Edition, and a SpringSource  committer and contributor. When he&#039;s not hacking on code, he can be   found at the local Java User Group or at the local coffee shop. Josh likes solutions that push the boundaries of the technologies that enable them. His interests include scalability, BPM, grid processing, mobile   computing and so-called &amp;quot;smart&amp;quot; systems. He blogs at blog.springsource.org or joshlong.com.&lt;/p&gt;
+          &lt;a href=&quot;http://www.springone2gx.com/conference/washington/2012/10/speakers/josh_long&quot;&gt;More About Josh �&lt;/a&gt;&lt;br /&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div&gt;      &lt;/div&gt;
+      &lt;div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</description>
+ <comments>http://www.springsource.org/node/22581#comments</comments>
+ <category domain="http://www.springsource.org/taxonomy/term/4">News and Announcements</category>
+ <pubDate>Tue, 23 Apr 2013 14:12:33 +0000</pubDate>
+ <dc:creator>Pieter Humphrey</dc:creator>
+ <guid isPermaLink="false">22581 at http://www.springsource.org</guid>
+</item>
+</channel>
+</rss>

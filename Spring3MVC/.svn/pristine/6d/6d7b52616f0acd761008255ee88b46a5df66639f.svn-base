@@ -1,0 +1,125 @@
+package com.project.model;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name = Tabla.SPORTPLAN)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class SportPlan extends BaseEntity implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String SP_CUSTOMER 			= "customer";
+	public static final String SP_SPORT_TRAINER		= "sportTrainer";
+	
+	private Date insertDate;
+	
+	private Date modifyDate;
+	
+	@ManyToOne
+	private Customer customer;
+	
+	@ManyToOne
+	private SportTrainer sportTrainer;
+	
+	@ManyToOne
+	private Objetive objetive;
+	
+	@ManyToOne
+	private CustomerLevel level;
+	
+	@ManyToOne
+	private PhysicalQuality physicalQuality;
+	
+	@OneToOne
+	@JoinColumn(name = "duration_ID")
+	private Duration duration;
+	
+	@Column
+	private Boolean defined;
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public SportTrainer getSportTrainer() {
+		return sportTrainer;
+	}
+
+	public void setSportTrainer(SportTrainer sportTrainer) {
+		this.sportTrainer = sportTrainer;
+	}
+
+	public Objetive getObjetive() {
+		return objetive;
+	}
+
+	public void setObjetive(Objetive objetive) {
+		this.objetive = objetive;
+	}
+
+	public PhysicalQuality getPhysicalQuality() {
+		return physicalQuality;
+	}
+
+	public void setPhysicalQuality(PhysicalQuality physicalQuality) {
+		this.physicalQuality = physicalQuality;
+	}
+
+	public Duration getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Duration duration) {
+		this.duration = duration;
+	}
+
+	public CustomerLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(CustomerLevel level) {
+		this.level = level;
+	}
+
+	public Date getInsertDate() {
+		return insertDate;
+	}
+
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	public Boolean getDefined() {
+		return defined;
+	}
+
+	public void setDefined(Boolean defined) {
+		this.defined = defined;
+	}
+}

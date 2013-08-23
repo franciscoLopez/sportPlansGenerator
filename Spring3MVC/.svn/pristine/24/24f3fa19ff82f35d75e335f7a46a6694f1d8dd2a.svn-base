@@ -1,0 +1,116 @@
+package com.project.model;
+
+import java.io.Serializable;
+import java.util.Calendar;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name=Tabla.CUSTOMER)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Customer extends User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String A_NAME = "name";
+	public static final String A_SURNAME = "surName";
+	public static final String A_DATE_BIRTH = "dateBirth";
+	public static final String A_CONTACT_INFO = "contact_info";
+	public static final String A_INSERT_DATE = "insertDate";
+	public static final String A_FECHA_MODIFICACION = "fechaModificacion";
+
+	// Constantes para definir nombres de columnas
+	private static final String C_NAME = "name";
+	private static final String C_SURNAME = "password";
+	private static final String C_DATE_BIRTH = "dateBirth";
+	private static final String C_FECHA_INSERCION = "inser_date";
+	private static final String C_FECHA_MODIFICACION = "modify_date";
+
+	@Column(name = C_NAME,nullable = false)
+	private String name;
+
+	@Column(name = C_SURNAME)
+	private String surName;
+
+	@Column(name = C_DATE_BIRTH)
+	private Calendar dateBirth;
+
+	@OneToOne
+	@JoinColumn(name="contactInfo_id")
+	private ContactInfo contactInfo;
+
+	@Column(name = C_FECHA_INSERCION)
+	private Calendar insertDate;
+
+	@Column(name = C_FECHA_MODIFICACION)
+	private Calendar modifyDate;
+	
+	@ManyToOne
+	private SportCentre customerSportCenter;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+	public Calendar getDateBirth() {
+		return dateBirth;
+	}
+
+	public void setDateBirth(Calendar dateBirth) {
+		this.dateBirth = dateBirth;
+	}
+
+	public ContactInfo getContactInfo() {
+		return contactInfo;
+	}
+
+	public void setContactInfo(ContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
+	}
+
+	public Calendar getInsertDate() {
+		return insertDate;
+	}
+
+	public void setInsertDate(Calendar insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	public Calendar getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Calendar modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	public SportCentre getSportCenter() {
+		return customerSportCenter;
+	}
+
+	public void setSportCenter(SportCentre sportCenter) {
+		this.customerSportCenter = sportCenter;
+	}	
+}

@@ -1,0 +1,35 @@
+package com.project.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+import com.project.util.Tabla;
+
+@Entity
+@Table(name = Tabla.PERIODIZATION)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Periodization extends BaseEntity implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String P_PERIODIZATION		= "periodization";
+	
+	public static final String P_NO_PERIODIZED		= "No periodizado";
+	public static final String P_LINEAL				= "Lineal";
+	public static final String P_NO_LINEAL			= "No lineal";
+	
+	private String periodization;
+
+	public String getPeriodization() {
+		return periodization;
+	}
+
+	public void setPeriodization(String periodization) {
+		this.periodization = periodization;
+	}
+}

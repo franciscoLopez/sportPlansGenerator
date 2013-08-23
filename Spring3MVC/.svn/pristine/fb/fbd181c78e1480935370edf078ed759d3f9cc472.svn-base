@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 		 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:security="http://www.springframework.org/schema/security"
+			 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/jee 
+	http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+	<security:http auto-config="true">
+		<security:intercept-url pattern="/welcome*" access="ROLE_SPORT_CENTRE,ROLE_ADMIN,ROLE_SPORT_TRAINER,ROLE_CUSTOMER" />
+		<security:intercept-url pattern="/private/*" access="ROLE_SPORT_CENTRE,ROLE_ADMIN,ROLE_SPORT_TRAINER,ROLE_CUSTOMER" />
+		<security:intercept-url pattern="/public/*" filters="none" />
+		<security:form-login login-page="/login.do" default-target-url="/welcome.do"
+			authentication-failure-url="/loginfailed.do" />
+		<security:logout logout-success-url="/logout.do" />
+	</security:http>
+
+  	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:password-encoder hash="sha" />					
+			<security:jdbc-user-service data-source-ref="dataSource"				
+				users-by-username-query="
+					select username,password, enabled 
+					from users where USERNAME=?" 				
+				authorities-by-username-query="
+					select u.username, ga.authority from users u, group_members gm, group_authorities ga
+					where u.username = gm.username and gm.group_id = ga.group_id and u.username =?  " />	
+		</security:authentication-provider>
+	</security:authentication-manager> 
+	
+<!-- 	<security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider user-service-ref="myUserDetailsService">
+            <security:password-encoder hash="md5"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+	
+	
+	<bean id="myUserDetailsService"
+      class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">       
+        <property name="dataSource" ref="dataSource"/>
+        <property name="enableGroups" value="true" />
+        <property name="enableAuthorities" value="true"/>
+        <property name="usersByUsernameQuery" value="select username ,password, enabled from users u where USERNAME=?"/>
+        <property name="authoritiesByUsernameQuery" value="select u.username, ga.authority from users u, group_authorities ga, group_members gm where u.id = gm.username and gm.group_id = ga.group_id and u.username =? "/>
+    </bean> -->
+	
+</beans>

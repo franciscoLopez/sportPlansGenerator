@@ -1,0 +1,20 @@
+package com.project.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.project.dao.DAOAcceso;
+import com.project.servicios.ValidarInfoSportTrainer;
+import com.project.servicios.ValidarSportCentre;
+import com.project.servicios.ValidarSportTrainer;
+
+public class GenericController extends DAOAcceso {
+	
+	@Autowired
+	protected ValidarSportCentre	validarSportCentre;
+	
+	@Autowired
+	protected ValidarSportTrainer	validarSportTrainer;
+	
+	@Autowired
+	protected ValidarInfoSportTrainer	validarInfoSportTrainer;
+}

@@ -1,0 +1,265 @@
+package com.project.model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.project.anotaciones.Codificacion;
+import com.project.enumerados.TipoRol;
+import com.project.util.Tabla;
+
+@Entity
+@Table(name = Tabla.USERS)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User extends BaseEntity implements Serializable, UserDetails {
+
+	private static final long serialVersionUID = 1L;
+
+	// Constantes para referencias externas a atributos con hibernate.
+	public static final String A_USERNAME = "username";
+	public static final String A_PASSWORD = "password";
+	public static final String A_ENABLED = "enabled";
+	public static final String A_FECHA_INSERCION = "fechaInserccion";
+	public static final String A_FECHA_MODIFICACION = "fechaModificacion";
+	public static final String A_EMAIL = "email";
+
+	// Constantes para definir nombres de columnas
+	private static final String C_USERNAME = "username";
+	private static final String C_PASSWORD = "password";
+	private static final String C_ENABLED = "enabled";
+	private static final String C_FECHA_INSERCION = "inser_date";
+	private static final String C_FECHA_MODIFICACION = "modify_date";
+	private static final String C_EMAIL = "email";
+
+	@Column(name = C_USERNAME, nullable = false)
+	private String username;
+
+	@Codificacion
+	@Column(name = C_PASSWORD, nullable = false)
+	private String password;
+
+	@Transient
+	private boolean cambioDeClave = false;
+
+	@Transient
+	private String repetirPassword;
+
+	@Column(name = C_ENABLED)
+	private short enabled = (short) 1;
+
+	@ManyToMany
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinTable(name = "group_members", joinColumns = @JoinColumn(name = "username", table = "users", referencedColumnName = "username"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+	private List<Group> grupos;
+
+	@Transient
+	String rolesUsuario;
+
+	@Transient
+	List<TipoRol> listaRoles;
+
+	@Column(name = C_FECHA_INSERCION)
+	
+	private Date insertDate;
+
+	@Column(name = C_FECHA_MODIFICACION)
+	
+	private Date modifyDate;
+
+	@Column(name = C_EMAIL)
+	private String email;
+
+	
+
+
+	public Date getInsertDate()  {
+		return this.insertDate;	
+	}
+
+	public Date getModifyDate() {
+		return this.modifyDate;	
+	}
+
+	public void setInsertDate(Date insertDate) {
+		if (insertDate != null) {
+	        this.insertDate = new Date(insertDate.getTime());
+	    } else {
+	        this.insertDate = null;
+	    }
+	}
+
+	public void setModifyDate(Date modifyDate) {
+		if (modifyDate != null) {
+	        this.modifyDate = new Date(modifyDate.getTime());
+	    } else {
+	        this.modifyDate = null;
+	    }
+	}
+
+	public boolean isCambioDeClave() {
+		return cambioDeClave;
+	}
+
+	public void setCambioDeClave(boolean cambioDeClave) {
+		this.cambioDeClave = cambioDeClave;
+	}
+
+	public String getRepetirPassword() {
+		return repetirPassword;
+	}
+
+	public void setRepetirPassword(String repetirPassword) {
+		this.repetirPassword = repetirPassword;
+	}
+
+	public String getRolesUsuario() {
+
+		rolesUsuario = "";
+		if (this.grupos != null && Hibernate.isInitialized(this.grupos)
+				&& this.grupos.size() > 0) {
+			for (Group rol : grupos) {
+				TipoRol rolAux = TipoRol.values()[rol.getId().intValue() - 1];
+				if (rolAux != null) {
+					rolesUsuario += rolAux.getTexto() + ", ";
+				}
+			}
+			rolesUsuario = rolesUsuario.substring(0, rolesUsuario.length() - 2);
+		}
+		return rolesUsuario;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setRolesUsuario(String rolesUsuario) {
+
+		this.rolesUsuario = rolesUsuario;
+	}
+
+	public User() {
+
+		super();
+		setGrupos(new ArrayList<Group>());
+	}
+
+	public void setGrupos(List<Group> grupos) {
+
+		this.grupos = grupos;
+	}
+
+	public void addGrupo(Group grupo) {
+		this.grupos.add(grupo);
+	}
+
+	public List<Group> getGrupos() {
+
+		if (grupos == null) {
+			grupos = new ArrayList<Group>();
+		}
+		return grupos;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		if (this.password != null && password != null) {
+			if (!this.password.equals(password)) {
+				this.cambioDeClave = true;
+			}
+		} else if ((this.password == null && password != null)
+				|| (this.password != null && password == null)) {
+			this.cambioDeClave = true;
+		}
+		this.password = password;
+	}
+
+	public short getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(short enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled() {
+
+		if (enabled == 0)
+			return false;
+		else
+			return true;
+	}
+
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	public boolean isAccountNonLocked() {
+
+		return true;
+	}
+
+	public boolean isCredentialsNonExpired() {
+
+		return true;
+	}
+
+	public List<Authority> getRoles() {
+
+		List<Authority> authorities = new ArrayList<Authority>();
+		for (Group g : getGrupos())
+			authorities.addAll(g.getAuthorities());
+		return authorities;
+	}
+
+	public List<TipoRol> getListaRoles() {
+
+		return listaRoles;
+	}
+
+	public void setListaRoles(List<TipoRol> listaRoles) {
+
+		this.listaRoles = listaRoles;
+	}
+
+	@Override
+	public Collection<GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		for (Group g : getGrupos()) {
+			authorities.addAll(g.getAuthorities());
+		}
+		return authorities;
+	}
+}

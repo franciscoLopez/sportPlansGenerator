@@ -1,0 +1,86 @@
+package com.project.dto;
+
+
+public class DTOSportPlan {
+
+	private Long customerId;
+	
+	private Long sportTrainerId;
+	
+	private String level;
+	
+	private String objetive;
+	
+	private String physicalQuality;
+	
+	private Integer periods;
+
+	private Integer weeks;	
+	
+	private Integer sessionsPerWeek;
+	
+
+	public Long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+
+	public Long getSportTrainerId() {
+		return sportTrainerId;
+	}
+
+	public void setSportTrainerId(Long sportTrainerId) {
+		this.sportTrainerId = sportTrainerId;
+	}
+
+	public String getObjetive() {
+		return objetive;
+	}
+
+	public void setObjetive(String objetive) {
+		this.objetive = objetive;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getPhysicalQuality() {
+		return physicalQuality;
+	}
+
+	public void setPhysicalQuality(String physicalQuality) {
+		this.physicalQuality = physicalQuality;
+	}
+
+	public Integer getWeeks() {
+		return weeks;
+	}
+
+	public void setWeeks(Integer weeks) {
+		this.weeks = weeks;
+	}
+
+	public Integer getSessionsPerWeek() {
+		return sessionsPerWeek;
+	}
+
+	public void setSessionsPerWeek(Integer sessionsPerWeek) {
+		this.sessionsPerWeek = sessionsPerWeek;
+	}
+
+	public Integer getPeriods() {
+		return periods;
+	}
+
+	public void setPeriods(Integer periods) {
+		this.periods = periods;
+	}
+}

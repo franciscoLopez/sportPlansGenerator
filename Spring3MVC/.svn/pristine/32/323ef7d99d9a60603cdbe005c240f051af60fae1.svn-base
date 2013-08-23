@@ -1,0 +1,321 @@
+package com.project.dao.impl;
+
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.project.dao.DAOMuscle;
+import com.project.dao.DAOSportTrainer;
+import com.project.dto.DTOExercise;
+import com.project.dto.DTOExerciseModify;
+import com.project.dto.DTOMuscle;
+import com.project.dto.DTOMuscleAndType;
+import com.project.model.Equipment;
+import com.project.model.Exercise;
+import com.project.model.ExerciseType;
+import com.project.model.Image;
+import com.project.model.Muscle;
+import com.project.model.MuscleType;
+import com.project.model.SportTrainer;
+
+public class DAOMuscleImpl extends DAOComunImpl implements DAOMuscle {
+
+//	@Autowired
+//	@Qualifier("sessionFactoryIMG")
+//	protected SessionFactory	sessionFactory;
+	@Autowired
+	protected DAOSportTrainer daoSportTrainer;
+	
+	public void addMuscle(String muscle) {
+		Muscle m = new Muscle();
+		m.setMuscle(muscle);
+		sessionFactory.getCurrentSession().saveOrUpdate(m);
+	}
+
+	public void addExercise(String name, String muscle) {
+		Muscle m = this.getMuscle(muscle);
+		Exercise e = new Exercise();
+		e.setName(name);
+		sessionFactory.getCurrentSession().saveOrUpdate(e);
+	}
+
+	public Muscle getMuscle(String muscle) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Muscle.class);
+		crit.add(Restrictions.eq("muscle",muscle));
+		Muscle m = (Muscle) crit.uniqueResult();
+		return m;
+	}
+
+	public List<DTOExercise> getDTOExercises() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Exercise.class);
+		List<Exercise> exercises = crit.list();
+		List<DTOExercise> lstDTO = new ArrayList<DTOExercise>();
+		for(Exercise e : exercises){
+			DTOExercise dto = new DTOExercise();
+			dto.setId(e.getId());
+			dto.setName(e.getName());
+			if(e.getPrincipalMuscleType() != null){
+				DTOMuscleAndType dtoMAT = new DTOMuscleAndType();
+				dtoMAT.setMuscle(e.getPrincipalMuscleType().getMuscle().getMuscle());
+				dtoMAT.setType(e.getPrincipalMuscleType().getType());
+				dto.setPrincipalMuscle(dtoMAT);
+				dto.setSrc(Exercise.RUTA+e.getPrincipalMuscleType().getMuscle().getMuscle()+"/"+e.getImage().getSrc());
+			}			
+			lstDTO.add(dto);
+		}
+		return lstDTO;
+	}
+	
+	public List<Exercise> getExercises() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Exercise.class);
+		List<Exercise> exercises = crit.list();
+		return exercises;
+	}
+
+	public void addImage(String codified,Exercise e) {		
+		Image img = new Image();
+		Calendar hoy = Calendar.getInstance();
+		img.setF_uploaded(hoy);
+		img.setF_modified(hoy);
+		img.setSrc(codified);
+		e.setImage(img);
+		sessionFactory.getCurrentSession().saveOrUpdate(e);
+		sessionFactory.getCurrentSession().saveOrUpdate(img);				
+	}
+
+	public void updateExercise(Exercise e) {
+		sessionFactory.getCurrentSession().saveOrUpdate(e);
+	}
+
+	public Exercise getExercise(Long exerciseId) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Exercise.class);
+		crit.add(Restrictions.idEq(exerciseId));
+		Exercise e = (Exercise) crit.uniqueResult();
+		return e;
+	}
+
+	public List<DTOMuscle> getDTOMuscles() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Muscle.class);
+		List<Muscle> lstMuscles = crit.list();
+		List<DTOMuscle> lstDTO = new ArrayList<DTOMuscle>();
+		for(Muscle m : lstMuscles){
+			DTOMuscle dto = new DTOMuscle();
+			dto.setName(m.getMuscle());
+			dto.setId(m.getId());
+			lstDTO.add(dto);
+		}
+		return lstDTO;
+	}
+	
+	private MuscleType getMuscleType(Long id){
+		Criteria crt = sessionFactory.getCurrentSession().createCriteria(MuscleType.class);
+		crt.add(Restrictions.idEq(id));
+		MuscleType mt = (MuscleType) crt.uniqueResult();
+		return mt;
+	}
+
+	public void updateDB() {
+		List<Exercise> exercises = this.getExercises();
+		MuscleType mt = getMuscleType((long)37);
+		for(Exercise e : exercises){
+			// 39-52
+			if(e.getId() >= 98 && e.getId() <= 103){
+				e.setPrincipalMuscleType(mt);
+				sessionFactory.getCurrentSession().saveOrUpdate(e);
+			}
+		}
+		
+	}
+
+	public List<DTOExercise> getDTOExercisesFilter(List<String> musculos) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Exercise.class);
+		int[] borrar = new int[musculos.size()];
+		if(musculos.size() == 1){
+			if(musculos.get(0).equals("Todos") || musculos.get(0).equals("Ninguno")){
+				
+			}
+		}else{			
+			int i = 0;
+			for(String s: musculos){
+				if(s.equals("Todos") || s.equals("Ninguno")){
+					borrar[i] = 1;
+					i++;
+				}
+			}
+			for(int j = 0; j < borrar.length; j++){
+				if(borrar[j] == 1){
+					musculos.remove(j);
+				}
+			}
+			crit.createAlias(Exercise.A_PRINCIPAL_MUSCLE, "ppalMuscle");
+			crit.createAlias("ppalMuscle.muscle", "muscle");
+			crit.add(Restrictions.in("muscle.muscle", musculos));
+		}		
+		List<Exercise> exercises = crit.list();
+		List<DTOExercise> lstDTO = new ArrayList<DTOExercise>();
+		for(Exercise e : exercises){
+			DTOExercise dto = new DTOExercise();
+			dto.setId(e.getId());
+			dto.setName(e.getName());
+			if(e.getPrincipalMuscleType() != null){
+				DTOMuscleAndType dtoMAT = new DTOMuscleAndType();
+				dtoMAT.setMuscle(e.getPrincipalMuscleType().getMuscle().getMuscle());
+				dtoMAT.setType(e.getPrincipalMuscleType().getType());
+				dto.setPrincipalMuscle(dtoMAT);				
+			}
+			if(e.getImage() != null && !e.getImage().getSrc().equals("")){
+				dto.setSrc(Exercise.RUTA+e.getPrincipalMuscleType().getMuscle().getMuscle()+"/"+e.getImage().getSrc());
+			}
+			if(e.getSecundaryMuscleType() != null && !e.getSecundaryMuscleType().isEmpty()){
+				List<DTOMuscleAndType> sm = new ArrayList<DTOMuscleAndType>();
+				for(MuscleType m : e.getSecundaryMuscleType()){
+					DTOMuscleAndType dtoMAT = new DTOMuscleAndType();
+					dtoMAT.setMuscle(m.getMuscle().getMuscle());
+					dtoMAT.setType(m.getType());
+					sm.add(dtoMAT);
+				}
+				dto.setSecundaryMuscle(sm);
+			}
+			lstDTO.add(dto);
+		}
+		return lstDTO;
+	}
+
+	public List<Muscle> getMuscles() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Muscle.class);
+//		crit.setProjection(Projections.groupProperty(Muscle.A_MUSCLE));
+		List<Muscle> muscles = crit.list();
+		return muscles;
+	}
+
+	public DTOExerciseModify getDTOExerciseModify(Long exerciseId) {
+		Exercise e = this.getExercise(exerciseId);
+		DTOExerciseModify dto = new DTOExerciseModify();
+		dto = dto.getDTO(e);
+		return dto;
+		
+	}
+
+	public void modifyExercise(DTOExerciseModify dtoExerciseModify) {
+		Exercise e = this.getExercise(dtoExerciseModify.getId());
+		// Name
+		if(dtoExerciseModify.getName() != null && !dtoExerciseModify.getName().isEmpty()){
+			e.setName(dtoExerciseModify.getName());
+		}
+		// Comment
+		if(dtoExerciseModify.getComment() != null ){
+			e.setComment(dtoExerciseModify.getComment());
+		}
+		// Equipment
+		if(dtoExerciseModify.getEquipment() != null && !dtoExerciseModify.getEquipment().equals("-")){
+			Equipment equipment = this.getEquipment(dtoExerciseModify.getEquipment());
+			e.setEquipment(equipment);
+		}
+		// Exercise Type
+		if(dtoExerciseModify.getExerciseType() != null && !dtoExerciseModify.getExerciseType().equals("-")){
+			ExerciseType eType = this.getExerciseType(dtoExerciseModify.getExerciseType());
+			e.setExerciseType(eType);
+		}
+		// Principal Muscle
+		if(dtoExerciseModify.getPrincipalMuscle() != null && !dtoExerciseModify.getPrincipalMuscle().getMuscle().isEmpty() && !dtoExerciseModify.getPrincipalMuscle().getType().isEmpty()){
+			MuscleType mType = this.getMuscleType(dtoExerciseModify.getPrincipalMuscle().getType(),dtoExerciseModify.getPrincipalMuscle().getMuscle());
+			e.setPrincipalMuscleType(mType);
+		}
+		// Secundary Muscles
+		if(dtoExerciseModify.getSecundaryMuscles() != null && !dtoExerciseModify.getSecundaryMuscles().isEmpty()){
+			List<DTOMuscleAndType> lst = dtoExerciseModify.getSecundaryMuscles();
+			for(DTOMuscleAndType dto : lst){
+				if(dto.getMuscle() != null && !dto.getMuscle().isEmpty() && dto.getType() != null && !dto.getType().isEmpty()){
+					MuscleType mType = this.getMuscleType(dto.getType(),dto.getMuscle());
+					e.getSecundaryMuscleType().add(mType);
+				}
+			}
+		}
+		Calendar hoy = Calendar.getInstance();
+		e.setF_modified(hoy);
+		sessionFactory.getCurrentSession().saveOrUpdate(e);		
+	}
+
+	public MuscleType getMuscleType(String type, String muscle) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(MuscleType.class);
+		crit.add(Restrictions.eq(MuscleType.A_TYPE, type));
+		crit.createAlias(MuscleType.A_MUSCLE, "muscle");
+		crit.add(Restrictions.eq("muscle.muscle", muscle));
+		
+		MuscleType mType = (MuscleType) crit.uniqueResult();
+		return mType;
+	}
+
+	private ExerciseType getExerciseType(String exerciseType) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ExerciseType.class);
+		crit.add(Restrictions.eq(ExerciseType.A_EXERCISE_TYPE, exerciseType));
+		ExerciseType e = new ExerciseType();
+		e = (ExerciseType) crit.uniqueResult();
+		return e;
+	}
+
+	private Equipment getEquipment(String equipment) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Equipment.class);
+		crit.add(Restrictions.eq(Equipment.A_EQUIPMENT, equipment));
+		Equipment e = new Equipment();
+		e = (Equipment) crit.uniqueResult();
+		return e;
+	}
+
+	public List<DTOMuscleAndType> getTypeMuscles() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(MuscleType.class);
+		List<MuscleType> mt = crit.list();
+		List<DTOMuscleAndType> res = new ArrayList<DTOMuscleAndType>();
+		for(MuscleType m : mt){
+			DTOMuscleAndType dto = new DTOMuscleAndType();
+			dto.setMuscle(m.getMuscle().getMuscle());
+			dto.setType(m.getType());
+			dto.setIdMuscle(m.getMuscle().getId());
+			res.add(dto);
+		}
+		return res;
+	}
+
+	public Image createImagen(String name) {
+		Image img = new Image();
+		Calendar hoy = Calendar.getInstance();
+		img.setF_uploaded(hoy);
+		img.setF_modified(hoy);
+		img.setSrc(name);
+		sessionFactory.getCurrentSession().saveOrUpdate(img);
+		return img;
+	}
+
+	public void createExercise(String name,Long imagenId,Long muscleTypeId) {
+		Exercise e = new Exercise();
+		Image img = this.getImage(imagenId);
+		e.setImage(img);
+		Calendar hoy = Calendar.getInstance();
+		e.setF_created(hoy);
+		e.setF_modified(hoy);
+		e.setName(name);
+		SportTrainer sp = this.daoSportTrainer.getSportTrainer((long) 39);
+		e.setOwner(sp);
+		MuscleType mt = this.getMuscleType(muscleTypeId);
+		e.setPrincipalMuscleType(mt);
+		sessionFactory.getCurrentSession().saveOrUpdate(e);
+		
+	}
+
+	private Image getImage(Long imagenId) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Image.class);
+		crit.add(Restrictions.idEq(imagenId));
+		Image img = (Image) crit.uniqueResult();
+		return img;
+		
+	}
+}

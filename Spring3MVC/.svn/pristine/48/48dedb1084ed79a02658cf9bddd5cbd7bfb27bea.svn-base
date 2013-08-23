@@ -1,0 +1,99 @@
+package com.project.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.project.dto.DTOSportPlan;
+import com.project.model.CustomerLevel;
+import com.project.model.DayOfWeek;
+import com.project.model.DurationLimit;
+import com.project.model.Objetive;
+import com.project.model.PhysicalQuality;
+import com.project.util.Vista;
+
+@Controller
+public class SportPlanController extends GenericController {
+
+	@RequestMapping(value = "/menuGenerarPlan.do", method = RequestMethod.GET)
+	public ModelAndView menuGenerarPlanGET(ModelMap model,HttpSession session,
+										@RequestParam("customerId") Long customerId,
+										@RequestParam(value ="sportPlanId", required = false) Long sportPlanId,
+										@ModelAttribute("dtoSportPlan") DTOSportPlan dtoSportPlan) {
+//		if(sportPlanId != null){
+//			
+//		}else{
+//			
+//		}
+		org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		DTOSportPlan dto = new DTOSportPlan();
+		dto.setSportTrainerId(this.daoUser.getIdByUsername(user.getUsername()));
+		dto.setCustomerId(customerId);
+		CustomerLevel cl = this.daoMuscle.getCustomerLevel(customerId);
+		if(cl != null && !cl.getLevel().equals("")){
+			dto.setLevel(cl.getLevel());
+			DurationLimit dl = this.daoMuscle.getDurationLimit(cl.getId());
+			model.addAttribute("weeks",dl.getWeeks());
+			model.addAttribute("periodsNumber",dl.getPeriods());
+			model.addAttribute("offset",dl.getOffset());
+			List<Objetive> objetives = this.daoMuscle.getObjetives(cl.getId());
+			model.addAttribute("objetives",objetives);
+			List<PhysicalQuality> physicalQualities = this.daoMuscle.getPhysicalQualities();
+			model.addAttribute("physicalQualities",physicalQualities);
+			List<DayOfWeek> daysOfWeek = this.daoMuscle.getDaysOfWeek();
+			model.addAttribute("daysOfWeek",daysOfWeek);
+		}else{
+			//TODO reenviar modifyProfile
+		}
+		model.addAttribute("dtoSportPlan",dto);		
+		return new ModelAndView(Vista.MENU_GENERATOR,model);
+	}
+	
+	@RequestMapping(value = "/getSessionsPerWeek.do", method = RequestMethod.GET)
+	public String getExercisesFilterGET(ModelMap model, HttpServletRequest request,
+			@RequestParam("level") String level,@RequestParam("objetive") String objetive) {
+		model.addAttribute("sessionsPerWeek", this.daoSportPlan.getSessionsPerWeek(level,objetive));
+		return "jsonView";
+	}
+	
+	@RequestMapping(value = "/getRecuperationTime.do", method = RequestMethod.GET)
+	public String getRecuperationTimeGET(ModelMap model, HttpServletRequest request,
+			@RequestParam("level") String level,@RequestParam("objetive") String objetive) {
+		model.addAttribute("recuperationTime", this.daoSportPlan.getRecuperationTime(level,objetive));
+		return "jsonView";
+	}
+	
+	@RequestMapping(value = "/generateSportPlanStep1.do", method = RequestMethod.POST)
+	public ModelAndView menuGenerarPlanPOST(ModelMap model,HttpSession session,
+										@ModelAttribute("dtoSportPlan") DTOSportPlan dtoSportPlan,
+										BindingResult result) {
+		ModelAndView res = null;
+		if(dtoSportPlan != null){
+			validarDTOSportPlan.validate(dtoSportPlan,result);
+			if(result.hasErrors()){
+				model.addAttribute("error", result);
+				res = new ModelAndView(Vista.MENU_GENERATOR,model);
+			}else{
+				this.daoSportPlan.createSportPlanStepOne(dtoSportPlan);
+				model.addAttribute("mensaje_ok","Paso 1 guardado correctamente");
+				res = new ModelAndView(Vista.MENU_GENERATOR_STEP2,model);
+			}
+		}else{
+			result.rejectValue("objetive","etiqueta.error.customerLevel");
+			model.addAttribute("error",result);
+			res = new ModelAndView(Vista.MENU_GENERATOR,model);
+		}
+		return res;
+	}
+}

@@ -1,0 +1,78 @@
+package com.project.dao;
+
+
+import java.util.List;
+
+import com.project.dto.DTOExercise;
+import com.project.dto.DTOExerciseModify;
+import com.project.dto.DTOMuscle;
+import com.project.dto.DTOMuscleAndType;
+import com.project.model.CustomerLevel;
+import com.project.model.DurationLimit;
+import com.project.model.Exercise;
+import com.project.model.Image;
+import com.project.model.Muscle;
+import com.project.model.MuscleType;
+import com.project.model.Objetive;
+import com.project.model.PhysicalQuality;
+
+public interface DAOMuscle {
+
+	public void addMuscle(String muscle);
+	
+	public void addExercise(String name,String muscle);
+	
+	public Muscle getMuscle(String muscle);
+	
+	public List<Exercise> getExercises();
+	
+	public List<DTOExercise> getDTOExercises();
+
+	public void addImage(String codified, Exercise e);
+
+	public void updateExercise(Exercise e);
+
+	public Exercise getExercise(Long exerciseId);
+
+	public List<DTOMuscle> getDTOMuscles();
+
+	public void updateDB();
+
+	public List<DTOExercise> getDTOExercisesFilter(List<String> musculos);
+
+	public List<Muscle> getMuscles();
+
+	public DTOExerciseModify getDTOExerciseModify(Long exerciseId);
+
+	public void modifyExercise(DTOExerciseModify dtoExerciseModify);
+
+	public List<DTOMuscleAndType> getTypeMuscles();
+	
+	public MuscleType getMuscleType(String type, String muscle);
+
+	public Image createImagen(String name);
+
+	public void createExercise(String name,Long imagenId,Long muscleTypeId);
+
+//	public void addDurationLimits();
+
+	public void createObjetives();
+
+	public void createObjetivesByLevel();
+
+	public void createPhysicalQualities();
+
+	public CustomerLevel getCustomerLevel(Long customerId);
+
+	public List<Objetive> getObjetives(Long id);
+
+	public List<PhysicalQuality> getPhysicalQualities();
+
+	public DurationLimit getDurationLimit(Long id);
+
+	public CustomerLevel getCustomerLevel(String level);
+
+	public Objetive getObjetive(String objetive);
+
+	public PhysicalQuality getPhysicalQuality(String physicalQuality);
+}

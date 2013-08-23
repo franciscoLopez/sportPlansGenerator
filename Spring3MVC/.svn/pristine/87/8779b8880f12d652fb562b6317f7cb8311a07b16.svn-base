@@ -1,0 +1,60 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+<section id="fModifyExercise">
+	<form:form id="formModifyExercise" action="modifyExercise.do"
+		commandName="dtoExerciseModify" class="redondeado shadow fondoForm">
+		<p class="titleForm">
+			<spring:message code="etiqueta.titulo.modify.exercise" />
+		</p>
+		<div>
+			<label for="name" class="labelForm"><spring:message
+					code="etiqueta.modelo.exercise.name" /></label>
+			<form:input path="name" class="required" />
+		</div>
+		<!-- IMAGEN -->
+		<div id="imgExercise">
+			<label><spring:message code="etiqueta.modelo.exercise.image"/></label>
+			<c:set var="src" value="${dtoExerciseModify.src}"/>
+			<c:set var="ruta" value="images\\storage\\exercises\\"/>
+			<c:set var="barra" value="\\"/>
+			<c:set var="ppalMuscle" value="${dtoExerciseModify.principalMuscle.muscle}"/>
+			<%-- <img alt="" src='<c:url value="<c:out value="${ruta}${ppalMuscle}${src}" />"/>"> --%>
+			<c:if test="${not empty ppalMuscle}">
+				<img alt="" src="<c:url value="${ruta}${ppalMuscle}${barra}${src}"/>">
+			</c:if>
+			<c:if test="${empty ppalMuscle}">
+				<img alt="" src="<c:url value="images\dialog-warning-2.png"/>">
+			</c:if>
+		</div>		
+		<!-- FIN IMAGEN -->
+		<div>
+			<label for="comment"><spring:message code="etiqueta.modelo.exercise.description"/></label>
+			<form:textarea path="comment" rows="5" cols="30" />	
+		</div>		
+<%-- 		<form:select path="principalMuscle" id="principalMuscle">
+			<c:forEach items="${musclesTypes}" var="muscle">
+				<form:option value="${muscle}" />
+				<c:out value="${muscle}" />
+			</c:forEach>
+		</form:select> --%>
+		
+		<form:select path="exerciseType" id="exerciseType">
+			<c:forEach items="${dtoExerciseModify.exerciseTypeDefault}" var="exerciseType">
+				<form:option value="${exerciseType}" />
+				<c:out value="${exerciseType}" />
+			</c:forEach>
+		</form:select>
+		
+		<form:select path="equipment" id="exerciseType">
+			<c:forEach items="${dtoExerciseModify.equipmentDefault}" var="equipmentDefault">
+				<form:option value="${equipmentDefault}" />
+				<c:out value="${equipmentDefault}" />
+			</c:forEach>
+		</form:select>
+		<input id="submitModifyExercise" name="submit" type="submit"
+			value="<spring:message code="etiqueta.link.modificar" />"
+			class="estiloBotones" />
+			
+	</form:form>
+	
+	
+</section>

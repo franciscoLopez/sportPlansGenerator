@@ -1,0 +1,3 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+<script>
+</script>

@@ -1,0 +1,72 @@
+<%@ include file="/WEB-INF/controllers/configuration/includes.jsp"%>
+	<meta name="tipo_contenido"  content="text/html;" http-equiv="content-type" charset="utf-8">
+
+	<tiles:useAttribute id="idPagina" name="idPagina" ignore="true" />	
+	<title>
+		<tiles:useAttribute id="keyTitulo" name="titulo" />
+		<spring:message	code="${keyTitulo}" />
+	</title>		
+	<script type="text/javascript" src="<c:url value="/js/jQuery/jquery-1.7.2.min.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/js/jQuery/jquery.form.js"/>"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>" />
+	
+	<div id="espaceMensaje">
+		<div id="slatMensaje">
+			<jsp:include page="showMensaje.jsp" />
+		</div>
+	</div>
+	
+	<c:if test="${!empty idPagina}">
+		<c:choose>
+			<c:when test="${idPagina == 'login'}">
+				<%-- <script type="text/javascript" src="<c:url value="/js/jshash-2.2/sha1-min.js"/>"></script> --%>							
+			</c:when>    
+			<c:when test="${idPagina == 'formSportCentre'}">
+				<script type="text/javascript" src="<c:url value="/js/jshash/sha1-min.js"/>"></script>
+				<!-- hosted by Microsoft Ajax CDN -->	
+				<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+			</c:when>
+			<c:when test="${idPagina == 'formSportTrainer'}">
+				<script type="text/javascript" src="<c:url value="/js/jshash/sha1-min.js"/>"></script>
+				<!-- <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>				
+				<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" /> -->
+			</c:when> 
+			<c:when test="${idPagina == 'formModifySportCentre'}">
+				<script type="text/javascript" src="<c:url value="/js/jshash/sha1-min.js"/>"></script>
+				<!-- hosted by Microsoft Ajax CDN -->	
+				<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+			</c:when>
+			<c:when test="${idPagina == 'menuSportCentre'}">
+				<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+				<script type="text/javascript" src="<c:url value="/js/jQuery/jnotify/jquery.jnotify.js"/>"></script>
+				<link rel="stylesheet" type="text/css" href="<c:url value="/js/jQuery/jnotify/jquery.jnotify.css"/>" />
+				<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+				<script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+				<script src="<c:url value="/js/jQuery/tableFilter/jquery.uitablefilter.js"/>"></script>
+			</c:when>	
+			<c:when test="${idPagina == 'formModifySportTrainer'}">
+				<script type="text/javascript" src="<c:url value="/js/jshash/sha1-min.js"/>"></script>
+				<!-- hosted by Microsoft Ajax CDN -->	
+				<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+			</c:when>	
+			<c:when test="${idPagina == 'menuSportTrainer'}">
+				<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+				<script type="text/javascript" src="<c:url value="/js/jQuery/jnotify/jquery.jnotify.js"/>"></script>
+				<link rel="stylesheet" type="text/css" href="<c:url value="/js/jQuery/jnotify/jquery.jnotify.css"/>" />
+				<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+				<script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+				<script src="<c:url value="/js/jQuery/tableFilter/jquery.uitablefilter.js"/>"></script>
+			</c:when>	  
+			<c:when test="${idPagina == 'modifyPassWord'}">
+				<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+			</c:when> 
+			<c:when test="${idPagina == 'modifyProfile'}">				
+				<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>			</c:when>
+			<c:when test="${idPagina == 'menuAdmin'}">				
+				<script src="<c:url value="/js/jQuery/tableFilter/jquery.uitablefilter.js"/>"></script>
+			</c:when>
+			
+				
+		</c:choose>
+	</c:if>

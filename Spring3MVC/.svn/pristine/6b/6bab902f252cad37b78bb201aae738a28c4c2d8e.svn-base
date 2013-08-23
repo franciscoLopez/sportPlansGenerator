@@ -1,0 +1,23 @@
+#Configuraci�n base de datos destino (almac�n de conocimiento)
+#Nombre del conector de mysql.
+jdbc.driverClassName = com.mysql.jdbc.Driver
+#URL de la conexion a la BD
+jdbc.url = jdbc:mysql://localhost:3306/proyectodb
+#Nombre de usuario de la base de datos.
+jdbc.username= root
+#Contrase�a del usuario de la base de datos.
+#jdbc.password= root
+jdbc.password= isw2
+
+
+#Configuraci�n de Hibernate 
+#Si est� habilitado, Hibernate recopilar� estad�sticas �tiles para el ajuste de rendimiento.
+hibernate.generate_statistics=false
+#Muestra las sentencias SQL en la consola.
+hibernate.show_sql=false
+#Autom�ticamente valida o exporta el esquema DLL a la base de datos cuando se crea el SessionFactory.
+hibernate.hbm2ddl.auto= update
+#Si esta a true, Hibernate generar� comentarios dentro del SQL, para facilitar la depuraci�n, por defecto a false.
+hibernate.use_sql_comments=false
+#Permite a Hibernate generar SQL optimizado para una base de datos relacional en particular.
+hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect

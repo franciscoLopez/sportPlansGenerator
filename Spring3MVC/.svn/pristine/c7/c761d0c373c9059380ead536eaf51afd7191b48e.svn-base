@@ -1,0 +1,1187 @@
+package com.project.dao.impl;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.tiles.context.MapEntry;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.project.dao.DAOCustomer;
+import com.project.dao.DAOMuscle;
+import com.project.dao.DAOSportPlan;
+import com.project.dao.DAOSportTrainer;
+import com.project.dto.DTOSportPlan;
+import com.project.model.Customer;
+import com.project.model.CustomerLevel;
+import com.project.model.DayOfWeek;
+import com.project.model.Duration;
+import com.project.model.Equipment;
+import com.project.model.Exercise;
+import com.project.model.ExerciseBlock;
+import com.project.model.ExerciseType;
+import com.project.model.Intensity;
+import com.project.model.Muscle;
+import com.project.model.MuscleType;
+import com.project.model.Objetive;
+import com.project.model.Orden;
+import com.project.model.Period;
+import com.project.model.Periodization;
+import com.project.model.PhysicalQuality;
+import com.project.model.Plan;
+import com.project.model.RoutineParams;
+import com.project.model.RoutineType;
+import com.project.model.Session;
+import com.project.model.SpeedExecution;
+import com.project.model.SportPlan;
+import com.project.model.SportTrainer;
+import com.project.model.Week;
+import com.project.servicios.SportPlanCreator;
+
+@Transactional
+public class DAOSportPlanImpl extends SportPlanCreator implements DAOSportPlan {
+
+	@Autowired
+	protected DAOSportTrainer daoSportTrainer;
+	
+	@Autowired
+	protected DAOCustomer daoCustomer;
+	
+	@Autowired
+	protected DAOMuscle daoMuscle;
+	
+	@Autowired
+	protected SessionFactory	sessionFactory;
+	
+	// Niveles
+	private final  String aclimatacion = remove1(CustomerLevel.C_L_ACLIMATACION);
+	private final  String principiante = remove1(CustomerLevel.C_L_PRINCIPIANTE);
+	private final  String intermedio = remove1(CustomerLevel.C_L_INTERMEDIO);
+	private final  String avanzado = remove1(CustomerLevel.C_L_AVANZADO);
+	
+	// Tipos de entrenamiento
+	private final   String mantenimiento = remove1(Objetive.O_MANTENIMIENTO);
+	private final   String ppeso = remove1(Objetive.O_PERDIDA_PESO);
+	private final   String adaptacion = remove1(Objetive.O_ADAPTACION);
+	private final   String hipertrofia = remove1(Objetive.O_HIPERTROFIA);
+	private final   String salud = remove1(Objetive.O_SALUD);
+	private final   String aFuerza = remove1(Objetive.O_AUMENTO_DE_LA_FUERZA);
+	
+	
+	public Long createSportPlanStepOne(DTOSportPlan dtoSportPlan) {
+		SportPlan sp = new SportPlan();
+		SportTrainer sTrainer = this.daoSportTrainer.getSportTrainer(dtoSportPlan.getSportTrainerId());
+		sp.setSportTrainer(sTrainer);
+		
+		sp.setName(dtoSportPlan.getName());
+		
+		Customer cus = this.daoCustomer.getCustomer(dtoSportPlan.getCustomerId());
+		sp.setCustomer(cus);
+		
+		CustomerLevel cl = this.daoMuscle.getCustomerLevel(dtoSportPlan.getLevel());
+		sp.setLevel(cl);
+		
+		Objetive obj = this.daoMuscle.getObjetive(dtoSportPlan.getObjetive());
+		sp.setObjetive(obj);
+		
+		PhysicalQuality pq = this.daoMuscle.getPhysicalQuality(dtoSportPlan.getPhysicalQuality());
+		sp.setPhysicalQuality(pq);
+		
+		Duration d = new Duration();
+		d.setPeriods(dtoSportPlan.getPeriods());
+		d.setWeeks(dtoSportPlan.getWeeks());
+		d.setSessionsPerWeek(dtoSportPlan.getSessionsPerWeek());
+		d.setRecuperationTime(dtoSportPlan.getRecuperationTime());
+		d.setRecuperationTimeMuscularGroup(dtoSportPlan.getRecuperationTimeMuscleGroup());
+		List<DayOfWeek> days = this.daoMuscle.getDaysOfWeek(dtoSportPlan.getDaysOfWeek());
+		d.setDays(days);
+		sessionFactory.getCurrentSession().saveOrUpdate(d);
+		sp.setDuration(d);
+		
+		Calendar hoy = Calendar.getInstance();
+		sp.setInsertDate(hoy.getTime());
+		sp.setModifyDate(hoy.getTime());
+		
+		// Aun no hemos creado el SportPlan por completo
+		sp.setDefined(false);
+		
+		sessionFactory.getCurrentSession().saveOrUpdate(sp);
+		return sp.getId();
+		
+	}
+
+	/**
+	 * FunciÛn que elimina acentos y caracteres especiales de
+	 * una cadena de texto.
+	 * @param input
+	 * @return cadena de texto limpia de acentos y caracteres especiales.
+	 */
+	private static String remove1(String input) {
+	    // Cadena de caracteres original a sustituir.
+	    String original = "·‡‰ÈËÎÌÏÔÛÚˆ˙˘uÒ¡¿ƒ…»ÀÕÃœ”“÷⁄Ÿ‹—Á«";
+	    // Cadena de caracteres ASCII que reemplazar·n los originales.
+	    String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+	    String output = input;
+	    for (int i=0; i<original.length(); i++) {
+	        // Reemplazamos los caracteres especiales.
+	        output = output.replace(original.charAt(i), ascii.charAt(i));
+	    }//for i
+	    return output;
+	}
+	
+	private static String changeLevel(String level){
+		String res ="";
+		if(level.startsWith("Aclimat")){
+			res = "Aclimatacion";
+		}else if(level.startsWith("Princip")){
+			res = "Principiante";
+		}else if(level.startsWith("Intermedio")){
+			res = "Intermedio";
+		}else if(level.startsWith("Avanzado")){
+			res = "Avanzado";
+		}
+		return res;
+	}
+	private static String changeObjetive(String objetive){
+		String res = "";
+		if(objetive.startsWith("Adaptac")){
+			res = "Adaptacion";
+		}else if(objetive.startsWith("Aumento de la fuerza")){
+			res = "Aumento de la fuerza";
+		}else if(objetive.startsWith("Hipertrofia")){
+			res = "Hipertrofia";
+		}else if(objetive.startsWith("Mantenimiento")){
+			res = "Mantenimiento";
+		}else if(objetive.endsWith("peso")){
+			res = "Perdida de peso";
+		}else if(objetive.startsWith("Salud")){
+			res = "Salud";
+		}
+		return res;
+	}
+	
+	
+	
+	public Integer getSessionsPerWeek(String level, String objetive) {
+		String nivel = changeLevel(level);
+		String objetivo = changeObjetive(objetive);
+		Integer res = 0;
+		if(nivel.equals(aclimatacion)){
+			if(objetivo.equals(mantenimiento)){
+				res = 1;
+			}else{
+				res = 2;
+			}
+		}else if (nivel.equals(principiante)){
+			if(objetivo.equals(mantenimiento) || objetivo.equals(ppeso)){
+				res = 2;
+			}else{
+				res = 3;
+			}
+		}else if (nivel.equals(intermedio) || nivel.equals(avanzado)){
+			if(objetivo.equals(mantenimiento)){
+				res = 2;
+			}else if (objetivo.equals(ppeso)){
+				res = 3;
+			}else{
+				res = 6;
+			}
+		}
+		return res;
+	}
+	/*
+	 * @param 
+	 * muscleGrop if true represents the recuperation time for the same muscular group
+	 * */
+	public Integer getRecuperationTime(String level, String objetive){
+		String nivel = changeLevel(level);
+		String objetivo = changeObjetive(objetive);
+		Integer res = 48;
+		if(nivel.equals(intermedio) || nivel.equals(avanzado)){
+			if(objetivo.equals(hipertrofia) || objetivo.equals(salud) || objetivo.equals(aFuerza)){
+				res = -1;
+			}
+		}
+		return res;
+	}
+
+	public List<Orden> getRoutineOrders() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Orden.class);
+		List<Orden> res = crit.list();
+		return res;
+	}
+
+	public List<RoutineType> getRoutineTypes() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(RoutineType.class);
+		List<RoutineType> res = crit.list();
+		return res;
+	}
+	
+	// Es necesario conocer el tipo de rutina para saber el orden
+	public Integer[] getExercisesPerSession(String level, String objetive,String routineType){
+		Integer exercises [] = new Integer[2];
+		String nivel = changeLevel(level);
+		String objetivo = changeObjetive(objetive);
+		if(nivel.equals(aclimatacion)){
+			exercises[0] = 6;
+			exercises[1] = 8;
+		}else if(nivel.equals(principiante)){
+			exercises[0] = 8;
+			exercises[1] = 12;
+		}else if(nivel.equals(intermedio)){
+			if(routineType.equals(RoutineType.R_TYPE_POR_GRUPO_MUSCULAR)){
+				exercises[0] = 6;
+				exercises[1] = 9;
+			}else{
+				exercises[0] = 8;
+				exercises[1] = 12;
+			}			
+		}else if(nivel.equals(avanzado)){
+			if(routineType.equals(RoutineType.R_TYPE_POR_GRUPO_MUSCULAR)){
+				exercises[0] = 9;
+				exercises[1] = 12;
+			}else{
+				exercises[0] = 8;
+				exercises[1] = 12;
+			}
+		}
+		return exercises;
+	}
+
+	public SportPlan createSportPlanStepTwo(DTOSportPlan dtoSportPlan) {
+		SportPlan sp = this.getSportPlan(dtoSportPlan.getSportPlanId());
+		
+		RoutineParams rp = new RoutineParams();
+		
+		Orden orden = this.getRoutineOrder(dtoSportPlan.getRoutineOrder());
+		rp.setRoutineOrder(orden);
+		
+		RoutineType rt = this.getRoutineType(dtoSportPlan.getRoutineType());
+		rp.setRoutineType(rt);
+		
+		rp.setExercisesPerSession(dtoSportPlan.getExercisesPerSession());
+		
+		sessionFactory.getCurrentSession().saveOrUpdate(rp);
+		
+		sp.setRoutineParams(rp);
+		
+		sp.setEquipmentFilter(this.getEquipments(dtoSportPlan.getEquipmentFilter()));
+		
+		this.createSportPlanStep1(sp);
+		
+		sessionFactory.getCurrentSession().persist(sp);
+		
+//		sessionFactory.getCurrentSession().saveOrUpdate(sp);
+		return sp;
+	}
+
+	public SportPlan getSportPlan(Long sportPlanId) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(SportPlan.class);
+		crit.add(Restrictions.idEq(sportPlanId));
+		return (SportPlan) crit.uniqueResult();
+	}
+
+	public Orden getRoutineOrder(String order) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Orden.class);
+		crit.add(Restrictions.eq("routineOrder", order));
+		return (Orden) crit.uniqueResult();
+	}
+
+	public RoutineType getRoutineType(String type) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(RoutineType.class);
+		crit.add(Restrictions.eq(RoutineType.RT_TYPE, type));
+		return (RoutineType) crit.uniqueResult();
+	}
+	
+	public List<Equipment> getEquipments() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Equipment.class);
+		return crit.list();
+	}
+
+	public List<Equipment> getEquipments(List<String> equipments) {
+		List<Equipment> res = new ArrayList<Equipment>();
+		for(String equipment : equipments){
+			Criteria crit = sessionFactory.getCurrentSession().createCriteria(Equipment.class);
+			crit.add(Restrictions.eq(Equipment.A_EQUIPMENT, equipment));
+			Equipment e = (Equipment) crit.uniqueResult();
+			res.add(e);
+		}
+		return res;
+	}
+
+	public List<Equipment> getEquipments(String level) {
+		String nivel = changeLevel(level);
+		List<Equipment> res = new ArrayList<Equipment>();
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Equipment.class);
+		crit.add(Restrictions.eq(Equipment.A_EQUIPMENT, Equipment.E_MAQUINAS));
+		Equipment maquinas = (Equipment) crit.uniqueResult();
+		if(nivel.equals(aclimatacion) || nivel.equals(principiante)){
+			res.add(maquinas);
+		}else{
+			res = this.getEquipments();
+		}
+		return res;
+	}
+
+	public SportPlan createSportPlanStructure(SportPlan sportPlan) {
+		Plan plan = new Plan();
+		sportPlan.setPlan(plan);
+		sessionFactory.getCurrentSession().save(plan);
+		
+		// N∫ periodos
+		Integer periods = sportPlan.getDuration().getPeriods();
+		// N∫ semanas
+		Integer weeks = sportPlan.getDuration().getWeeks();		
+		// Dias de la semana
+//		List<DayOfWeek> days = sportPlan.getDuration().getDays();
+		List<DayOfWeek> days = new ArrayList<DayOfWeek>();
+		for(DayOfWeek d : sportPlan.getDuration().getDays()){
+			DayOfWeek day = (DayOfWeek) sessionFactory.getCurrentSession().createCriteria(DayOfWeek.class).add(Restrictions.eq(DayOfWeek.DAY, d.getDay())).uniqueResult();
+			days.add(day);
+		}
+		
+		List<Period> periodsList = new ArrayList<Period>();
+		for(int i = 0 ; i < periods; i++){
+			Period p = new Period();
+			// Incluimos las semanas a cada periodo			
+			List<Week> weeksList = new ArrayList<Week>();
+			for(int j = 0 ; j < weeks; j ++){
+				Week w = new Week();							
+				// Incluimos los dias a cada semana
+				List<Session> sessionsList = new ArrayList<Session>();
+				for(int k = 0 ; k < days.size(); k++){
+					Session s = new Session();					
+					s.setDayOfWeek(days.get(k));
+					// Incluimos un ExerciseBlock por cada uno de los ejercicios tenga ese dÌa
+					Integer exercisesPerSession = sportPlan.getRoutineParams().getExercisesPerSession();
+					List<ExerciseBlock> exercises = new ArrayList<ExerciseBlock>();
+					for(int z = 0; z < exercisesPerSession; z++){
+						ExerciseBlock eb = new ExerciseBlock();
+						sessionFactory.getCurrentSession().save(eb);
+						exercises.add(eb);
+					}
+					s.setExercises(exercises);					
+					sessionsList.add(s);
+					sessionFactory.getCurrentSession().save(s);
+				}
+				w.setSessions(sessionsList);
+				
+				weeksList.add(w);
+				sessionFactory.getCurrentSession().saveOrUpdate(w);
+			}
+			
+			p.setWeeks(weeksList);			
+	
+			periodsList.add(p);
+			sessionFactory.getCurrentSession().saveOrUpdate(p);
+		}
+		plan.setPeriods(periodsList);
+		sessionFactory.getCurrentSession().saveOrUpdate(plan);
+		
+		return sportPlan;
+	}
+	
+	public ExerciseType getExerciseType(String exerciseType){
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ExerciseType.class);
+		crit.add(Restrictions.eq(ExerciseType.A_EXERCISE_TYPE, exerciseType));
+		ExerciseType e = (ExerciseType) crit.uniqueResult();
+		return e;
+	}
+	
+	public SpeedExecution getSpeedExecution(String speedExecution){
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(SpeedExecution.class);
+		crit.add(Restrictions.eq(SpeedExecution.SE_SPEED_EXECUTION, speedExecution));
+		SpeedExecution s = (SpeedExecution) crit.uniqueResult();
+		return s;
+	}
+	
+	public Periodization getPeriodization(String periodization){
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Periodization.class);
+		crit.add(Restrictions.eq(Periodization.P_PERIODIZATION, periodization));
+		Periodization p = (Periodization) crit.uniqueResult();
+		return p;
+	}
+
+	
+	public SportPlan definePeriodization(SportPlan sportPlan) {
+		String nivel = changeLevel(sportPlan.getLevel().getLevel());
+		String objetivo = changeObjetive(sportPlan.getObjetive().getObjetive());
+		Periodization noPeriod = getPeriodization(Periodization.P_NO_PERIODIZED);
+		Periodization lineal = getPeriodization(Periodization.P_LINEAL);
+		Periodization noLineal = getPeriodization(Periodization.P_NO_LINEAL);		
+		List<Periodization> listPeriodization = new ArrayList<Periodization>();
+		if(nivel.equals(aclimatacion) || objetivo.equals(mantenimiento) || objetivo.equals(ppeso)){
+			listPeriodization.add(noPeriod);
+		}else if(nivel.equals(principiante)){
+			if(objetivo.equals(hipertrofia)){
+				listPeriodization.add(lineal);
+			}else if(objetivo.equals(salud)){
+				listPeriodization.add(noPeriod);
+			}else if(objetivo.equals(aFuerza)){
+				listPeriodization.add(noLineal);
+			}
+		}else if(nivel.equals(intermedio)){
+			if(objetivo.equals(hipertrofia)){
+				listPeriodization.add(lineal);
+				listPeriodization.add(noLineal);
+			}else if(objetivo.equals(salud)){
+				listPeriodization.add(noPeriod);
+			}else if(objetivo.equals(aFuerza)){
+				listPeriodization.add(noLineal);
+			}
+		}else if(nivel.equals(avanzado)){
+			if(objetivo.equals(hipertrofia)){
+				listPeriodization.add(lineal);
+				listPeriodization.add(noLineal);
+			}else if(objetivo.equals(salud)){
+				listPeriodization.add(lineal);
+			}else if(objetivo.equals(aFuerza)){
+				listPeriodization.add(noLineal);
+			}
+		}
+		sportPlan.setPeriodization(listPeriodization);
+		sessionFactory.getCurrentSession().saveOrUpdate(sportPlan);
+		return sportPlan;
+	}
+
+	
+	public SportPlan defineExercisesType(SportPlan sportPlan) {
+		String nivel = changeLevel(sportPlan.getLevel().getLevel());
+		ExerciseType monoarticular = getExerciseType(ExerciseType.ET_MONOARTICULAR);
+		ExerciseType poliarticular = getExerciseType(ExerciseType.ET_POLIARTICULAR);
+		List<ExerciseType> exerciseTypes = new ArrayList<ExerciseType>();
+		if(nivel.equals(intermedio) || nivel.equals(avanzado)){
+			exerciseTypes.add(monoarticular);
+		}
+		exerciseTypes.add(poliarticular);
+		sportPlan.setExerciseTypes(exerciseTypes);
+		sessionFactory.getCurrentSession().saveOrUpdate(sportPlan);
+		return sportPlan;
+	}
+
+	
+	public SportPlan defineSpeedExecution(SportPlan sportPlan) {
+		String nivel = changeLevel(sportPlan.getLevel().getLevel());
+		String objetivo = changeObjetive(sportPlan.getObjetive().getObjetive());
+		SpeedExecution lenta = getSpeedExecution(SpeedExecution.SE_LENTA);
+		SpeedExecution moderada = getSpeedExecution(SpeedExecution.SE_MODERADA);
+		if(nivel.equals(aclimatacion) || objetivo.equals(mantenimiento)){
+			sportPlan.getRoutineParams().setSpeedExecution(lenta);
+		}else{
+			sportPlan.getRoutineParams().setSpeedExecution(moderada);
+		}
+		sessionFactory.getCurrentSession().saveOrUpdate(sportPlan);
+		return sportPlan;
+	}
+
+	
+	public SportPlan defineIntensity(SportPlan sportPlan) {
+		List<Periodization> periodizationList = sportPlan.getPeriodization();
+		if(periodizationList.size() == 1){
+			Periodization p = periodizationList.get(0);			
+			if(p.getPeriodization().equals(Periodization.P_NO_PERIODIZED)){ /* PERIODIZACION NO-PERIODIZADO*/
+				setNoPeriodization(sportPlan);				
+			}else if(p.getPeriodization().equals(Periodization.P_LINEAL)){ /* PERIODIZACION LINEAL*/							
+				setLinealPeriodization(sportPlan);				
+			}else if(p.getPeriodization().equals(Periodization.P_NO_LINEAL)){ /* PERIODIZACION NO-LINEAL*/
+				setNoLinealPeriodization(sportPlan);
+			}			
+		}else{/*CASO: periodizacion = lineal y no lineal (hipertrofia en intermedio y avanzado) */			
+			setLinealAndNoLinealPeriodization(sportPlan);
+		}
+		sessionFactory.getCurrentSession().saveOrUpdate(sportPlan);
+		return sportPlan;
+	}
+	
+	private SportPlan setNoPeriodization(SportPlan sportPlan){
+		Intensity intensity = getIntensity(sportPlan.getLevel().getLevel(),sportPlan.getObjetive().getObjetive()).get(0);
+		Integer [] restTime = getRestTime(sportPlan.getLevel().getLevel(),sportPlan.getObjetive().getObjetive());
+		int numSessions = getTotalNumSessions(sportPlan);
+		restTime[2] = restTime[1];
+		restTime[1] = (restTime[0] + restTime[2]) / 2;
+		for(Period p : sportPlan.getPlan().getPeriods()){
+			for(Week k : p.getWeeks()){
+				for(Session s : k.getSessions()){
+					s.setIntensity(intensity);
+					// TODO
+					int pos = numSessions % 3;
+					s.setRestTime(restTime[pos]);
+					numSessions--;
+				}
+			}
+		}
+		return sportPlan;
+	}
+	
+	private SportPlan setLinealPeriodization(SportPlan sportPlan){
+		List<Intensity> intensity = getIntensity(sportPlan.getLevel().getLevel(),sportPlan.getObjetive().getObjetive());
+		Integer totalNumSessions = this.getTotalNumSessions(sportPlan);
+		Double cont = 0.0;
+		for(Period p : sportPlan.getPlan().getPeriods()){
+			for(Week k : p.getWeeks()){
+				for(Session s : k.getSessions()){
+					Integer posicion = (int) Math.floor((cont / (double)totalNumSessions) * (double)intensity.size());
+					s.setIntensity(intensity.get(posicion));					
+					cont++;
+				}
+			}
+		}
+		return sportPlan;
+	}	
+
+	private SportPlan setNoLinealPeriodization(SportPlan sportPlan){
+		List<Intensity> intensity = getIntensity(sportPlan.getLevel().getLevel(),sportPlan.getObjetive().getObjetive());
+		Integer cont = 0;
+		for(Period p : sportPlan.getPlan().getPeriods()){
+			for(Week k : p.getWeeks()){
+				for(Session s : k.getSessions()){
+					Integer posicion = cont % intensity.size();
+					System.out.println(posicion);
+					s.setIntensity(intensity.get(posicion));					
+					cont++;
+				}
+			}
+		}
+		return sportPlan;
+	}
+	
+	// un mes lineal y otro no lineal
+	private SportPlan setLinealAndNoLinealPeriodization(SportPlan sportPlan){
+		List<Intensity> intensity = getIntensity(sportPlan.getLevel().getLevel(),sportPlan.getObjetive().getObjetive());
+		Integer totalNumSessions = this.getTotalNumSessions(sportPlan);
+		Integer week = 0;
+		Integer cont = 0;
+		for(Period p : sportPlan.getPlan().getPeriods()){
+			for(Week k : p.getWeeks()){
+				// cont < 4 => lineal
+				// cont > 4 && cont < 8 => no lineal
+				for(Session s : k.getSessions()){
+					if(week < 4){ // lineal
+						Integer posicion = (int) Math.floor((cont / (double)totalNumSessions) * (double)intensity.size());
+						System.out.println(posicion);
+						s.setIntensity(intensity.get(posicion));
+						
+					}else{ // no lineal
+						Integer posicion = cont % intensity.size();
+						System.out.println(posicion);
+						s.setIntensity(intensity.get(posicion));
+					}					
+					cont++;
+				}
+				if(week < 8){
+					week++;
+				}else{
+					week = 0;
+				}					
+			}
+		}
+		return sportPlan;
+	}
+	
+	private Integer getTotalNumSessions(SportPlan sportPlan) {
+		Integer periods = sportPlan.getPlan().getPeriods().size();
+		Integer weeks = sportPlan.getPlan().getPeriods().get(0).getWeeks().size();
+		Integer sessions = sportPlan.getPlan().getPeriods().get(0).getWeeks().get(0).getSessions().size();
+		
+		return periods * weeks * sessions;
+	}
+	
+	private List<Intensity> getIntensity(String level, String objetive){
+		String nivel = changeLevel(level);
+		String objetivo = changeObjetive(objetive);
+		List<Intensity> lstIntensity = new ArrayList<Intensity>();
+		if(nivel.equals(aclimatacion)){
+			if(objetivo.equals(mantenimiento) || objetivo.equals(adaptacion)){
+				lstIntensity.add(getIntensity(Intensity.I_DESC_EASY));
+			}else if(objetivo.equals(ppeso)){
+				lstIntensity.add(getIntensity(Intensity.I_DESC_S_EASY));
+			}			
+		}else if(nivel.equals(principiante) || nivel.equals(intermedio)){
+			if(objetivo.equals(mantenimiento) || objetivo.equals(ppeso) || objetivo.equals(salud)){
+				lstIntensity.add(getIntensity(Intensity.I_DESC_TIRED));
+			}else{
+				lstIntensity.add(getIntensity(Intensity.I_DESC_TIRED));
+				lstIntensity.add(getIntensity(Intensity.I_DESC_S_TIRED));
+				lstIntensity.add(getIntensity(Intensity.I_DESC_HARD));
+			}
+		}else if(nivel.equals(avanzado)){
+			if(objetivo.equals(mantenimiento) || objetivo.equals(ppeso) ){
+				lstIntensity.add(getIntensity(Intensity.I_DESC_TIRED));
+			}else{
+				lstIntensity.add(getIntensity(Intensity.I_DESC_TIRED));
+				lstIntensity.add(getIntensity(Intensity.I_DESC_S_TIRED));
+				lstIntensity.add(getIntensity(Intensity.I_DESC_HARD));
+				lstIntensity.add(getIntensity(Intensity.I_DESC_S_HARD));
+			}
+		}
+		return lstIntensity;
+	}
+	
+	private Intensity getIntensity(String intensity){
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Intensity.class);
+		crit.add(Restrictions.eq(Intensity.I_DESCRIPTOR, intensity));
+		Intensity i = (Intensity) crit.uniqueResult();
+		return i;
+	}
+
+	
+	public SportPlan defineRestTime(SportPlan sportPlan) {
+//		Integer[] restTimeLimits = getRestTime(sportPlan.getLevel().getLevel(),sportPlan.getObjetive().getObjetive());
+//		Integer numSessions = getTotalNumSessions(sportPlan);
+//		Integer numRest = 0;
+//		for(int i = 0 ; i < restTimeLimits.length; i++){
+//			if(restTimeLimits[i] != -1){
+//				numRest++;
+//			}
+//		}
+//		Integer top = restTimeLimits[0];
+//		Integer bottom = restTimeLimits[numRest - 1];
+//		Integer rest = (Integer)( top - bottom ) / numSessions;
+//		top = top + rest;
+//		for(Period p : sportPlan.getPlan().getPeriods()){
+//			for(Week w : p.getWeeks()){
+//				for(Session s : w.getSessions()){
+//					Integer[] restT = {top, (top-rest)};
+//					s.setRestTime(restT);
+//					rest = rest + rest;
+//				}
+//			}
+//		}
+//		sessionFactory.getCurrentSession().saveOrUpdate(sportPlan);
+		return sportPlan;
+	}
+
+	
+	public SportPlan defineNumOfSeries(SportPlan sportPlan) {
+		String nivel = changeLevel(sportPlan.getLevel().getLevel());
+		Integer mitad = getTotalNumExercises(sportPlan) / 2;		
+		Integer cont = 0;
+		for(Period p : sportPlan.getPlan().getPeriods()){
+			for(Week w : p.getWeeks()){
+				for(Session s : w.getSessions()){
+					for(ExerciseBlock e: s.getExercises()){
+						Exercise ex = e.getExercise();											
+						if(nivel.equals(aclimatacion) || (nivel.equals(principiante))){
+							if(isHemisferioInferior(ex.getPrincipalMuscleType().getMuscle())){
+								e.setNumSeries(2);
+							}else{
+								if(nivel.equals(aclimatacion)){
+									e.setNumSeries(1);
+								}else{
+									e.setNumSeries(2);
+								}
+							}						
+						}else if(nivel.equals(intermedio) || nivel.equals(avanzado)){
+							if(ex.getExerciseType().getExerciseType().equals(ExerciseType.ET_MONOARTICULAR)){
+								if(cont < mitad ){
+									e.setNumSeries(2);
+								}else{
+									e.setNumSeries(3);
+								}
+							}else{
+								if(cont < mitad ){
+									e.setNumSeries(3);
+								}else{
+									e.setNumSeries(4);
+								}
+							}
+						}
+						cont++;
+					}
+				}
+			}			
+		}		
+		sessionFactory.getCurrentSession().saveOrUpdate(sportPlan);
+		return sportPlan;
+	}
+	
+	private Integer getTotalNumExercises(SportPlan sportPlan) {
+		Integer periods = sportPlan.getPlan().getPeriods().size();
+		Integer weeks = sportPlan.getPlan().getPeriods().get(0).getWeeks().size();
+		Integer sessions = sportPlan.getPlan().getPeriods().get(0).getWeeks().get(0).getSessions().size();
+		Integer exercises = sportPlan.getPlan().getPeriods().get(0).getWeeks().get(0).getSessions().get(0).getExercises().size();
+		
+		return periods * weeks * sessions * exercises;
+	}
+
+	private Boolean isHemisferioInferior(Muscle m){
+		//False => Superior
+		//True => Inferior
+		Boolean res = false;
+		if(m.getMuscle().equals(Muscle.M_PIERNAS) || m.getMuscle().equals(Muscle.M_ABDOMINALES)){
+			res = true;
+		}
+		return res;
+	}	
+
+	public List<Exercise> getExercises(SportPlan sportPlan) {
+		List<Equipment> equipments = sportPlan.getEquipmentFilter();
+		List<ExerciseType> exerciseType = sportPlan.getExerciseTypes();
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Exercise.class);
+		crit.createAlias(Exercise.A_EQUIPMENT, "equipment");
+		crit.createAlias(Exercise.A_EXERCISE_TYPE, "exerciseType");		
+		crit.createAlias(Exercise.A_PRINCIPAL_MUSCLE, "ppal");
+		crit.createAlias("ppal.muscle", "muscle");
+		crit.add(Restrictions.or(Restrictions.in("equipment", equipments), Restrictions.in("exerciseType", exerciseType)));
+		
+		//Excluimos ejercicios de estiramientos y explosivos
+		crit.add(Restrictions.and(Restrictions.not(Restrictions.eq("muscle.muscle", Muscle.M_EXPLOSIVOS)), Restrictions.not(Restrictions.eq("muscle.muscle", Muscle.M_ESTIRAMIENTOS))));		
+		List<Exercise> exercises = crit.list();	
+		return exercises;
+	}
+	
+	/****************************************************************************************************************
+	 * 
+	 * 
+	  FUNCION TOCHO  
+	 * 
+	 * 
+	 * **************************************************************************************************************/
+	
+	public SportPlan defineExercises(SportPlan sportPlan,List<Exercise> exercises) {
+		//Map para contar el numero de veces que incluimos cada ejercicio
+		Map<Exercise,Integer> ejercicios = new HashMap<Exercise, Integer>();		
+		for(Exercise e : exercises){
+			ejercicios.put(e, 0);
+		}
+		Map<Exercise,Map<Exercise,Integer>> map = new HashMap<Exercise, Map<Exercise,Integer>>();
+		
+		// Si RoutineType == Global
+		if(sportPlan.getRoutineParams().getRoutineType().getType().equals(RoutineType.R_TYPE_GLOBAL)){		// Si RoutineType == Global
+			// Lista para mostrar ejercicios de todos los tipos 
+			List<String> tipos = new ArrayList<String>();
+			tipos.add(Muscle.M_ABDOMINALES);
+			tipos.add(Muscle.M_ANTEBRAZOS);
+			tipos.add(Muscle.M_BICEPS);
+			tipos.add(Muscle.M_ESPALDA);
+			tipos.add(Muscle.M_DELTOIDES);
+			tipos.add(Muscle.M_LUMBARES);
+			tipos.add(Muscle.M_TRICEPS);
+			tipos.add(Muscle.M_TRAPECIO);
+			tipos.add(Muscle.M_PIERNAS);
+			tipos.add(Muscle.M_PECHO);			
+			
+			// de 0 a tipos.size()
+			Integer cont = 0;															
+			
+			for(Period p : sportPlan.getPlan().getPeriods()){
+				for(Week w : p.getWeeks()){
+					for(Session s : w.getSessions()){
+						for(ExerciseBlock exBlock: s.getExercises()){
+							map = this.getConcretExercise(ejercicios, tipos.get(cont));
+							Exercise e = map.entrySet().iterator().next().getKey();
+							ejercicios = map.entrySet().iterator().next().getValue();
+							if(e == null){				
+								if(cont < tipos.size() - 1){
+									cont++;								
+								}else{
+									cont = 0;
+								}
+								map = this.getConcretExercise(ejercicios, tipos.get(cont));
+								e = map.entrySet().iterator().next().getKey();
+								ejercicios = map.entrySet().iterator().next().getValue();
+							}
+							
+							exBlock.setExercise(e);
+							this.sessionFactory.getCurrentSession().saveOrUpdate(exBlock);
+							if(cont < tipos.size() - 1){
+								cont++;								
+							}else{
+								cont = 0;
+							}
+						}
+					}
+				}
+			}
+			
+		}else if(sportPlan.getRoutineParams().getRoutineType().getType().equals(RoutineType.R_TYPE_POR_HEMISFERIOS)){ 		// Si RoutineType == Por hemisferios
+			// Lista para controlar los hemisferios
+			List<List<String>> hemisferios = new ArrayList<List<String>>();
+			// Hemisferio superior
+			List<String> hemSup = new ArrayList<String>();
+			hemSup.add(Muscle.M_PECHO);
+			hemSup.add(Muscle.M_ANTEBRAZOS);
+			hemSup.add(Muscle.M_BICEPS);
+			hemSup.add(Muscle.M_ESPALDA);
+			hemSup.add(Muscle.M_DELTOIDES);
+			hemSup.add(Muscle.M_LUMBARES);
+			hemSup.add(Muscle.M_TRICEPS);
+			hemSup.add(Muscle.M_TRAPECIO);
+			
+			// Hemisferio superior
+			List<String> hemInf = new ArrayList<String>();
+			hemInf.add(Muscle.M_PIERNAS);
+			hemInf.add(Muscle.M_ABDOMINALES);
+			
+			hemisferios.add(hemSup);
+			hemisferios.add(hemInf);
+			
+			// 0 => superior, 1 => inferior
+			Integer hemCont = 0;
+			
+			// de 0 a hemSup.size()
+			Integer hemSupCont = 0;
+			
+			// de 0 a hemSup.size()
+			Integer hemInfCont = 0;
+						
+			
+			
+			for(Period p : sportPlan.getPlan().getPeriods()){
+				System.out.println("[PERIODO] " + p.getId());
+				for(Week w : p.getWeeks()){
+					System.out.println("\t[SEMANA] " + w.getId());
+					for(Session s : w.getSessions()){
+						System.out.println("\t\t[SESION] " + s.getId());
+						for(ExerciseBlock exBlock: s.getExercises()){
+							//hemisferio superior
+							if(hemCont == 0){
+								map = this.getConcretExercise(ejercicios, hemisferios.get(hemCont).get(hemSupCont));
+								Exercise e = map.entrySet().iterator().next().getKey();
+								ejercicios = map.entrySet().iterator().next().getValue();
+								if(e == null){				
+									if(hemSupCont < hemSup.size() - 1){
+										hemSupCont++;								
+									}else{
+										hemSupCont = 0;
+									}
+									map = this.getConcretExercise(ejercicios, hemSup.get(hemSupCont));
+									e = map.entrySet().iterator().next().getKey();
+									ejercicios = map.entrySet().iterator().next().getValue();
+								}
+								
+								exBlock.setExercise(e);
+								System.out.println("\t\t\t[EXERCISE] " + e.getName() + "("+e.getPrincipalMuscleType().getMuscle().getMuscle()+" - "+e.getPrincipalMuscleType().getType()+")");
+								this.sessionFactory.getCurrentSession().saveOrUpdate(exBlock);
+								if(hemSupCont < hemSup.size() - 1){
+									hemSupCont++;								
+								}else{
+									hemSupCont = 0;
+								}
+								
+							//hemisferio inferior
+							}else{
+								map = this.getConcretExercise(ejercicios, hemisferios.get(hemCont).get(hemInfCont));
+								Exercise e = map.entrySet().iterator().next().getKey();
+								ejercicios = map.entrySet().iterator().next().getValue();
+								if(e == null){				
+									if(hemInfCont < hemInf.size() - 1){
+										hemInfCont++;								
+									}else{
+										hemInfCont = 0;
+									}
+									map = this.getConcretExercise(ejercicios, hemInf.get(hemInfCont));
+									e = map.entrySet().iterator().next().getKey();
+									ejercicios = map.entrySet().iterator().next().getValue();
+								}
+								
+								exBlock.setExercise(e);
+								System.out.println("\t\t\t[EXERCISE] " + e.getName() + "("+e.getPrincipalMuscleType().getMuscle().getMuscle()+" - "+e.getPrincipalMuscleType().getType()+")");
+								this.sessionFactory.getCurrentSession().saveOrUpdate(exBlock);
+								if(hemInfCont < hemInf.size() - 1){
+									hemInfCont++;								
+								}else{
+									hemInfCont = 0;
+								}
+							}
+							
+						}
+						if(hemCont == 0){
+							hemCont = 1;
+						}else{
+							hemCont = 0;
+						}
+					}					
+				}
+			}
+			
+			
+		}else if(sportPlan.getRoutineParams().getRoutineType().getType().equals(RoutineType.R_TYPE_POR_GRUPO_MUSCULAR)){ 		// Si RoutineType == Por grupo muscular
+			// Lista para controlar los grupos musculares
+			List<List<String>> grupos = new ArrayList<List<String>>();
+			
+			// Pectorales & Triceps & Abdominales
+			List<String> pecANDTriceps = new ArrayList<String>();
+			pecANDTriceps.add(Muscle.M_PECHO);
+			pecANDTriceps.add(Muscle.M_ABDOMINALES);
+			pecANDTriceps.add(Muscle.M_TRICEPS);
+			
+			
+			// Espalda & Biceps & Lumbares
+			List<String> espANDBiceps = new ArrayList<String>();
+			espANDBiceps.add(Muscle.M_ESPALDA);
+			espANDBiceps.add(Muscle.M_BICEPS);
+			espANDBiceps.add(Muscle.M_LUMBARES);
+			
+			// Espalda & Biceps & Lumbares
+			List<String> piernasANDHombros = new ArrayList<String>();
+			piernasANDHombros.add(Muscle.M_PIERNAS);
+			piernasANDHombros.add(Muscle.M_DELTOIDES);
+			
+			grupos.add(pecANDTriceps);
+			grupos.add(espANDBiceps);
+			grupos.add(piernasANDHombros);
+			
+			Integer gruposCont = 0;
+			
+			Integer pectoralesCont = 0;
+			
+			Integer espaldaCont = 0;
+			
+			Integer piernasCont = 0;
+			
+			for(Period p : sportPlan.getPlan().getPeriods()){
+				System.out.println("[PERIODO] " + p.getId());
+				for(Week w : p.getWeeks()){
+					System.out.println("\t[SEMANA] " + w.getId());
+					for(Session s : w.getSessions()){
+						System.out.println("\t\t[SESION] " + s.getId());
+						for(ExerciseBlock exBlock: s.getExercises()){
+							//grupo de pecho & triceps & abdominales
+							if(gruposCont == 0){
+								map = this.getConcretExercise(ejercicios, grupos.get(gruposCont).get(pectoralesCont));
+								Exercise e = map.entrySet().iterator().next().getKey();
+								ejercicios = map.entrySet().iterator().next().getValue();
+								if(e == null){				
+									if(pectoralesCont < pecANDTriceps.size() - 1){
+										pectoralesCont++;								
+									}else{
+										pectoralesCont = 0;
+									}
+									map = this.getConcretExercise(ejercicios, pecANDTriceps.get(pectoralesCont));
+									e = map.entrySet().iterator().next().getKey();
+									ejercicios = map.entrySet().iterator().next().getValue();
+								}
+								
+								exBlock.setExercise(e);
+								System.out.println("\t\t\t[EXERCISE] " + e.getName() + "("+e.getPrincipalMuscleType().getMuscle().getMuscle()+" - "+e.getPrincipalMuscleType().getType()+")");
+								this.sessionFactory.getCurrentSession().saveOrUpdate(exBlock);
+								if(pectoralesCont < pecANDTriceps.size() - 1){
+									pectoralesCont++;								
+								}else{
+									pectoralesCont = 0;
+								}
+								
+							//grupo de espalda & biceps & lumbares
+							}else if(gruposCont == 1){
+								map = this.getConcretExercise(ejercicios, grupos.get(gruposCont).get(espaldaCont));
+								Exercise e = map.entrySet().iterator().next().getKey();
+								ejercicios = map.entrySet().iterator().next().getValue();
+								if(e == null){				
+									if(espaldaCont < espANDBiceps.size() - 1){
+										espaldaCont++;								
+									}else{
+										espaldaCont = 0;
+									}
+									map = this.getConcretExercise(ejercicios, espANDBiceps.get(espaldaCont));
+									e = map.entrySet().iterator().next().getKey();
+									ejercicios = map.entrySet().iterator().next().getValue();
+								}
+								
+								exBlock.setExercise(e);
+								System.out.println("\t\t\t[EXERCISE] " + e.getName() + "("+e.getPrincipalMuscleType().getMuscle().getMuscle()+" - "+e.getPrincipalMuscleType().getType()+")");
+								this.sessionFactory.getCurrentSession().saveOrUpdate(exBlock);
+								if(espaldaCont < espANDBiceps.size() - 1){
+									espaldaCont++;								
+								}else{
+									espaldaCont = 0;
+								}
+							// grupo de piernas & hombros
+							}else{
+								map = this.getConcretExercise(ejercicios, grupos.get(gruposCont).get(piernasCont));
+								Exercise e = map.entrySet().iterator().next().getKey();
+								ejercicios = map.entrySet().iterator().next().getValue();
+								if(e == null){				
+									if(piernasCont < piernasANDHombros.size() - 1){
+										piernasCont++;								
+									}else{
+										piernasCont = 0;
+									}
+									map = this.getConcretExercise(ejercicios, piernasANDHombros.get(piernasCont));
+									e = map.entrySet().iterator().next().getKey();
+									ejercicios = map.entrySet().iterator().next().getValue();
+								}
+								
+								exBlock.setExercise(e);
+								System.out.println("\t\t\t[EXERCISE] " + e.getName() + "("+e.getPrincipalMuscleType().getMuscle().getMuscle()+" - "+e.getPrincipalMuscleType().getType()+")");
+								this.sessionFactory.getCurrentSession().saveOrUpdate(exBlock);
+								if(piernasCont < piernasANDHombros.size() - 1){
+									piernasCont++;								
+								}else{
+									piernasCont = 0;
+								}
+							}
+							
+						}
+						if(gruposCont < grupos.size() - 1){
+							gruposCont++;
+						}else{
+							gruposCont = 0;
+						}
+					}					
+				}
+			}
+			
+			
+		}
+		sessionFactory.getCurrentSession().saveOrUpdate(sportPlan);
+		return sportPlan;
+	}		
+	
+	private Map<Exercise,Map<Exercise,Integer>> getConcretExercise(Map<Exercise,Integer> ejercicios,String tipo){
+		Iterator<Entry<Exercise, Integer>> it = ejercicios.entrySet().iterator();
+		Integer menor = Integer.MAX_VALUE;
+		Exercise selected = null;
+		while(it.hasNext()){
+			Entry<Exercise, Integer> e = it.next();
+			if(e.getKey().getPrincipalMuscleType().getMuscle().getMuscle().equals(tipo)){
+				if(e.getValue() < menor){
+					menor = e.getValue();
+					selected = e.getKey();										
+				}
+			}
+		}
+		if(selected != null){
+			ejercicios.put(selected, ejercicios.get(selected) + 1);
+//			if(ejercicios.get(selected) > 1){
+//				System.out.println("[REPETIDO] - ("+selected.getPrincipalMuscleType().getMuscle().getMuscle()+") "+ selected.getName());
+//			}
+		}		
+		Map<Exercise,Map<Exercise,Integer>> res = new HashMap<Exercise, Map<Exercise,Integer>>();
+		res.put(selected, ejercicios);
+		return res;
+	}
+	
+	private Integer[] getRestTime(String level, String objetive){
+		String nivel = changeLevel(level);
+		String objetivo = changeObjetive(objetive);
+		Integer [] res = new Integer[4];
+		// ACLIMATACION
+		if(nivel.equals(aclimatacion)){
+			if(objetivo.equals(mantenimiento)){
+				res[0] = 90;
+				res[1] = 60;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(ppeso)){
+				res[0] = 60;
+				res[1] = 45;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(adaptacion)){
+				res[0] = 90;
+				res[1] = 45;
+				res[2] = -1;
+				res[3] = -1;
+			}
+		}
+		else if(nivel.equals(principiante)){
+			if(objetivo.equals(mantenimiento)){
+				res[0] = 90;
+				res[1] = 60;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(ppeso)){
+				res[0] = 90;
+				res[1] = 60;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(hipertrofia)){
+				res[0] = 180;
+				res[1] = 90;
+				res[2] = 60;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(salud)){
+				res[0] = 90;
+				res[1] = 45;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(aFuerza)){
+				res[0] = 180;
+				res[1] = 90;
+				res[2] = 60;
+				res[3] = -1;
+			}
+		}
+		else if(nivel.equals(intermedio)){
+			if(objetivo.equals(mantenimiento)){
+				res[0] = 90;
+				res[1] = 60;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(ppeso)){
+				res[0] = 90;
+				res[1] = 45;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(hipertrofia)){
+				res[0] = 180;
+				res[1] = 90;
+				res[2] = 60;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(salud)){
+				res[0] = 90;
+				res[1] = 45;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(aFuerza)){
+				res[0] = 180;
+				res[1] = 90;
+				res[2] = 60;
+				res[3] = -1;
+			}
+		}
+		else if(nivel.equals(avanzado)){
+			if(objetivo.equals(mantenimiento)){
+				res[0] = 90;
+				res[1] = 60;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(ppeso)){
+				res[0] = 90;
+				res[1] = 45;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(hipertrofia)){
+				res[0] = 60;
+				res[1] = 45;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(salud)){
+				res[0] = 90;
+				res[1] = 45;
+				res[2] = -1;
+				res[3] = -1;
+			}
+			else if(objetivo.equals(aFuerza)){
+				res[0] = 300;
+				res[1] = 180;
+				res[2] = 90;
+				res[3] = 60;
+			}
+		}
+		return res;
+	}
+}
